@@ -7,8 +7,8 @@ CardioBuddy
 #### 3. Team Overview
 
 -   Bang Cao: MorElf7
--   Vi Doan:
--   Nhan Lai:
+-   Vi Doan: vitdoan
+-   Nhan Lai: laithiennhan
 
 #### 4. Innovative Idea
 
