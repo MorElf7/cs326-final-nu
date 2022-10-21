@@ -1,0 +1,52 @@
+#wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  
+}
+
+#left-container {
+  padding: 10px;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-items: center;
+}
+#right-container {
+  padding: 10px;
+  width: 50%;
+  display: flex;
+  flex-direction: column; 
+}
+
+#personal-info {
+  height: auto;
+}
+#create-route{
+  height: auto;
+}
+
+#date-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.day {
+  width: 40px;
+  height: 40px;
+  background-color: pink;
+  text-align: center;
+  align-items: center;
+}
+
+#temp-map {
+  width: 50%;
+}
+
+#bio {
+  resize: none;
+}
