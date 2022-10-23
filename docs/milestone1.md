@@ -1,14 +1,24 @@
 ## Login/Signup
 
-![login](./login.png)
-![signup](./signup.png)
+![login](./img/login.png)
+![signup](./img/signup.png)
 
 User upon arriving at out site would be required to login or signup in order to continue using the application.
 
 ## Matches
-![matches](./matches.png)
+
+![matches](./img/matches.png)
 This page would consist of all matches/connections of a user
 
-![matches](./matchRequest.png)
+![matches](./img/matchRequest.png)
 This page would consist of all matches/connections request of a user
 
+# Labour Division
+
+#### Login/Signup
+
+Bang Cao
+
+#### Matches
+
+Bang Cao
