@@ -3,7 +3,7 @@ body{
     font-family: 'Josefin Sans', sans-serif;
 }
 #leftNav{
-    width: 15vw;
+    width: 17vw;
     height: 100vh;
     position: fixed;
     display: inline-block;
@@ -43,7 +43,7 @@ hr{
     color: #696969;
 }
 #board{
-    margin-left: 15vw;
+    margin-left: 17vw;
 }
 .navbar{
     border-bottom: solid #585858; 
