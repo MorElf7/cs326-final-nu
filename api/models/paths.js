@@ -13,4 +13,9 @@ export const Path = new Schema({
     type: String,
     required: true,
   },
+  date: {
+    type: Object,
+    required: true,
+  },
+  
 })
