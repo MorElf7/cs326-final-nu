@@ -10,8 +10,10 @@
 
 ### Match CRUD
 
-- GET /api/users/:userId/request : Get all the match requests for the user
-- GET /api/users/:userId/request/:requestId : Get the match request for the user with the given id 
-- POST /api/users/:userId/request : Create/Request a match request from the current/logged-in user to the user with the specified id
-- UPDATE /api/users/:userId/request/:requestId : Accept/Decline the match request with the given id
+- GET /api/request : Get all the match requests for a user
+- GET /api/request/:requestId : Get the specific match request with the given id 
+- POST /api/request : Create/Request a match request from the current/logged-in user to another user
+- UPDATE /api/request/:requestId : The receiver accept/decline the match request with the given id
+- DELETE /api/request/:requestId : The request sender delete the match request with the given id
 - GET /api/users/:userId/match : Get the list of users that has matched with the user with the specified id
+
