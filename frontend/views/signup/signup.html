@@ -11,6 +11,8 @@
 			crossorigin="anonymous"
 		/>
 		<title>Signup</title>
+		<base href="/">
+		<script type="module" src="/static/signup/signup.js" defer></script>
 	</head>
 	<body>
 		<div class="container">
@@ -35,7 +37,7 @@
 									<input type="password" class="form-control" id="confirm" />
 								</div>
 								<div class="text-right mt-3">
-									<button type="submit" class="btn btn-primary">Submit</button>
+									<button id="submit" type="submit" class="btn btn-primary">Submit</button>
 								</div>
 							</form>
 						</div>
