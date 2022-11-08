@@ -19,7 +19,7 @@ const submitLogin = async (event) => {
 };
 
 onload = function () {
-	// Fetch all the forms we want to apply custom Bootstrap validation styles to
+	// Fetch all the forms we wangit to apply custom Bootstrap validation styles to
 	var forms = document.getElementsByClassName("needs-validation");
 	// Loop over them and prevent submission
 	var validation = Array.prototype.filter.call(forms, function (form) {
