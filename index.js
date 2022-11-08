@@ -9,6 +9,12 @@ const __dirname = path.dirname(__filename);
 import express from "express";
 import mongoose from "mongoose";
 
+//Backend Router
+import UserBackendRouter from "./api/routes/users.js";
+
+// Frontend Router
+import UserFrontendRouter from "./frontend/routes/users.js";
+
 const app = express();
 
 const port = process.env.PORT || 3000;
@@ -23,9 +29,15 @@ db.once("open", () => {
 });
 
 // https://stackoverflow.com/questions/54173476/js-file-gets-a-neterr-aborted-404-not-found
-app.use("/static", express.static(path.resolve(__dirname, "./frontend/static")));
 app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
+app.use("/static", express.static(path.resolve(__dirname, "./frontend/static")));
+
+// Backend Router
+app.use("/api/users", UserBackendRouter)
+
+// Frontend Router
+app.use("/users", UserFrontendRouter);
 
 app.listen(port, () => {
 	console.log(`Serving on port ${port}`);
