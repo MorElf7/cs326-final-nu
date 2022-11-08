@@ -22,7 +22,8 @@ db.once("open", () => {
 	console.log("Database connected");
 });
 
-app.use(express.static(path.resolve(__dirname, "./frontend")));
+// https://stackoverflow.com/questions/54173476/js-file-gets-a-neterr-aborted-404-not-found
+app.use("/static", express.static(path.resolve(__dirname, "./frontend/static")));
 app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 
