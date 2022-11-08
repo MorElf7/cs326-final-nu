@@ -22,17 +22,9 @@ db.once("open", () => {
 	console.log("Database connected");
 });
 
-// app.use(express.static(path.resolve(__dirname, "./frontend")));
+app.use(express.static(path.resolve(__dirname, "./frontend")));
 app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
-
-app.get("/users/login", (req, res) => {
-	res.sendFile(path.resolve(__dirname, "./frontend/login/login.html"));
-})
-
-app.get("/api/users", (req, res) => {
-	res.send({ message: "Testing" });
-});
 
 app.listen(port, () => {
 	console.log(`Serving on port ${port}`);
