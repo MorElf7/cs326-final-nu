@@ -11,17 +11,19 @@
 			crossorigin="anonymous"
 		/>
 		<title>Login</title>
+		<base href="/">
+		<script type="module" src="/static/login/login.js" defer></script>
 	</head>
 	<body>
 		<div class="container">
 			<div class="row pt-5">
 				<div class="col-md-6 offset-3">
 					<div class="card bg-light">
-						<div class="card-title text-center pt-2 ">
+						<div class="card-title text-center pt-2">
 							<h4>Log In</h4>
 						</div>
 						<div class="card-body">
-							<form action="">
+							<form>
 								<div class="form-group">
 									<label for="email">Email</label>
 									<input type="email" class="form-control" id="email" />
@@ -31,7 +33,9 @@
 									<input type="password" class="form-control" id="password" />
 								</div>
 								<div class="text-right mt-3">
-									<button type="submit" class="btn btn-primary">Submit</button>
+									<button id="submit" type="submit" class="btn btn-primary">
+										Submit
+									</button>
 								</div>
 							</form>
 						</div>
