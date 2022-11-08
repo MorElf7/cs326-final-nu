@@ -6,7 +6,7 @@
 -   POST /api/users : Create and register a new user
 -   UPDATE /api/users/:userId : Update user information
 -   DELETE /api/users/:userId : Delete the user
--   POST /api/users/:userId/login : Login the user
+-   POST /api/users/login : Login the user
 
 ### Match CRUD
 
