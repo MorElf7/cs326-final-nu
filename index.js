@@ -11,6 +11,7 @@ import mongoose from "mongoose";
 
 //Backend Router
 import UserBackendRouter from "./api/routes/users.js";
+import RequestBackendRouter from "./api/routes/request.js";
 
 // Frontend Router
 import UserFrontendRouter from "./frontend/routes/users.js";
@@ -35,6 +36,7 @@ app.use("/static", express.static(path.resolve(__dirname, "./frontend/static")))
 
 // Backend Router
 app.use("/api/users", UserBackendRouter)
+app.use("/api/request", RequestBackendRouter)
 
 // Frontend Router
 app.use("/users", UserFrontendRouter);
