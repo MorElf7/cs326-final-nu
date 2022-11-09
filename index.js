@@ -19,6 +19,7 @@ import UserBackendRouter from "./api/routes/users.js";
 
 // Frontend Router
 import RoutesPanelFrontendRouter from "./frontend/routes/paths.js";
+import HomeFrontendRouter from './frontend/routes/home.js'
 import UserFrontendRouter from "./frontend/routes/users.js";
 
 const app = express();
@@ -46,6 +47,7 @@ app.use("/api/request", RequestBackendRouter);
 // Frontend Router
 app.use("/users", UserFrontendRouter);
 app.use("/routesPanel", RoutesPanelFrontendRouter);
+app.use('/home', HomeFrontendRouter)
 
 app.all("*", (req, res, next) => {
 	next(new ExpressError("Page not found", 404));
