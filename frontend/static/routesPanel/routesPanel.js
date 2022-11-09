@@ -1,7 +1,20 @@
 const pinpointList = document.getElementById('pinpoint-list');
 
-document.getElementById("add-pinpoint").addEventListener("click", () => {
-  const pinpoint = document.getElementById("pinpoint-input").value
-  console.log(pinpoint)
-})
+const addPinpointBtn = document.getElementById('add-pinpoint')
+
+const pinpoints = []
+
+const addPinpoint = (e) => {
+  const location = document.getElementById("pinpoint-input").value
+  pinpoints.push(location)
+}
+
+const renderPinpointList = () => {
+  
+}
+
+const createRoute = (e) => {
+
+}
+addPinpointBtn.addEventListener("click", addPinpoint)
 
