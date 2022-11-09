@@ -16,6 +16,8 @@
 - UPDATE /api/request/:requestId : The receiver accept/decline the match request with the given id
 - DELETE /api/request/:requestId : The request sender delete the match request with the given id
 - GET /api/users/:userId/match : Get the list of users that has matched with the user with the specified id
+- POST /api/suggestion : Get a list of suggestion with information specified in the request body
+- POST /api/users/search : Search for users with the specified info in the request body
 
 ### Path CRUD
 
