@@ -15,3 +15,6 @@ export const updateUser = async (req, res, next) => {
 export const deleteUser = async (req, res, next) => {
     res.status(200).json({message: "Being developed! Please stay tuned"});
 };
+export const getMatches = async (req, res, next) => {
+    res.status(200).json({message: "Being developed! Please stay tuned"});
+};
