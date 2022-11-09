@@ -2,6 +2,7 @@ const pinpointList = document.getElementById('pinpoint-list');
 
 const addPinpointBtn = document.getElementById('add-pinpoint')
 const createRouteBtn = document.getElementById('create-route-btn');
+const loadRouteBtn = document.getElementById('load-routes-btn');
 
 const pinpoints = []
 
@@ -24,6 +25,8 @@ const timeInput = document.getElementById("time-input")
 const speedInput = document.getElementById("speed-input")
 
 const createRoute = async (e) => {
+  e.stopPropagation()
+  e.preventDefault()
   speed = speedInput.value
   time = timeInput.value
   if (speed === ''){
@@ -57,11 +60,26 @@ const createRoute = async (e) => {
   if (status === 200) {
     location.href = "";
   } else {
-    const messageDiv = document.getElementById("message");
-    messageDiv.innerHtml = "";
-    messageDiv.appendChild(document.createTextNode(message));
+    console.log("Error: " + status)
   }
+}
 
+const getUserRoutes = async (e) => {
+  e.stopPropagation(); 
+  e.preventDefault();
+  const response = await fetch('api/paths/',{
+    method: 'GET',
+    credentials: 'same-origin',
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+  const { data, message, status } = await response.json();
+  if (status === 200) {
+    location.href = "";
+  } else {
+    console.log("Error: " + status)
+  }
 }
 
 const getDate = () => {
@@ -76,3 +94,4 @@ const getDate = () => {
 
 addPinpointBtn.addEventListener("click", addPinpoint)
 createRouteBtn.addEventListener("click", createRoute)
+loadRouteBtn.addEventListener("click", getUserRoutes)

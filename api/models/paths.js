@@ -2,7 +2,7 @@ import {mongoose, Schema} from "mongoose";
 
 const pathSchema = new mongoose.Schema({
 	pinponts: {
-		type: [[Number]],
+		type: [[String]],
 		required: true,
 	},
 	user: {

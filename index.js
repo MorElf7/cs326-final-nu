@@ -6,7 +6,7 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-import express from "express";
+import express, { application } from "express";
 import mongoose from "mongoose";
 
 //Import utils function
@@ -43,6 +43,7 @@ app.use("/static", express.static(path.resolve(__dirname, "./frontend/static")))
 // Backend Router
 app.use("/api/users", UserBackendRouter);
 app.use("/api/request", RequestBackendRouter);
+app.use("/api/paths", PathBackendRouter);
 
 // Frontend Router
 app.use("/users", UserFrontendRouter);

@@ -18,7 +18,7 @@ export const showPath = async (req, res, next) => {
 export const showAllPaths = async (req, res, next) => {
 
   const fakeData = []
-  
+
   for (const i = 0; i < 10; i++) {
     fakeData.push(
       {
@@ -35,6 +35,7 @@ export const showAllPaths = async (req, res, next) => {
   }
 
   res.status(200).json({
+    data: fakeData,
 		message: "Being developed! Please stay tuned",
 		status: 200,
 	});
