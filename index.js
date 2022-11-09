@@ -27,13 +27,13 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017";
-mongoose.connect(dbUrl);
+// mongoose.connect(dbUrl);
 
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", () => {
-	console.log("Database connected");
-});
+// const db = mongoose.connection;
+// db.on("error", console.error.bind(console, "connection error:"));
+// db.once("open", () => {
+// 	console.log("Database connected");
+// });
 
 // https://stackoverflow.com/questions/54173476/js-file-gets-a-neterr-aborted-404-not-found
 app.use(express.json({ extended: true }));

@@ -11,8 +11,10 @@ export const createPath = async (req, res, next) => {
 }
 
 export const showPath = async (req, res, next) => {
-  const path = await Path.findById(req.params.id)
-  return path;
+  res.status(200).json({
+		message: "Being developed! Please stay tuned",
+		status: 200,
+	});
 }
 
 export const showAllPaths = async (req, res, next) => {
@@ -43,10 +45,15 @@ export const showAllPaths = async (req, res, next) => {
 }
 
 export const updatePath = async (req, res) => {
-
+  res.status(200).json({
+		message: "Being developed! Please stay tuned",
+		status: 200,
+	});
 }
 
 export const deletePath = async (req, res) => {
-  const id = req.params;
-  await Path.findByIdAndDelete(id);
+  res.status(200).json({
+		message: "Being developed! Please stay tuned",
+		status: 200,
+	});
 }
