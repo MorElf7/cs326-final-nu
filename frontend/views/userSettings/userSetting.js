@@ -1,7 +1,0 @@
-routes = [
-
-]
-
-const routeSeeding = () => {
-  
-}

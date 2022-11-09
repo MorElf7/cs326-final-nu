@@ -11,9 +11,12 @@ import mongoose from "mongoose";
 
 //Backend Router
 import UserBackendRouter from "./api/routes/users.js";
+import RequestBackendRouter from "./api/routes/request.js";
+import PathBackendRouter from "./api/routes/paths.js";
 
 // Frontend Router
 import UserFrontendRouter from "./frontend/routes/users.js";
+import RoutesPanelFrontendRouter from "./frontend/routes/paths.js";
 
 const app = express();
 
@@ -35,9 +38,11 @@ app.use("/static", express.static(path.resolve(__dirname, "./frontend/static")))
 
 // Backend Router
 app.use("/api/users", UserBackendRouter)
+app.use("/api/request", RequestBackendRouter)
 
 // Frontend Router
 app.use("/users", UserFrontendRouter);
+app.use("/routesPanel", RoutesPanelFrontendRouter);
 
 app.listen(port, () => {
 	console.log(`Serving on port ${port}`);

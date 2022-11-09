@@ -6,12 +6,10 @@ import { renderHtml } from "../utils/index.js";
 
 router.get("/login", renderHtml("login/login.html"));
 
-// router.post("/signup", wrapAsync(createUser));
+router.get("/signup", renderHtml("signup/signup.html"));
 
-// router.get("/:userId", wrapAsync(getUser));
+router.get("/:userId/match", renderHtml("match/match.html"));
 
-// router.update("/:userId", wrapAsync(updateUser));
-
-// router.delete("/:userId", wrapAsync(deleteUser));
+router.get("/:userId/request", renderHtml("match/request.html"));
 
 export default router;

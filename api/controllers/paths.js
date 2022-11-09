@@ -1,4 +1,4 @@
-import Path from "../models/paths"
+import Path from "../models/paths.js"
 
 export const createPath = async (req, res, next) => {
   const path = new Path(req.body.path);
