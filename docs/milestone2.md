@@ -10,14 +10,14 @@
 
 ### Match CRUD
 
-- GET /api/request : Get all the match requests for a user
-- GET /api/request/:requestId : Get the specific match request with the given id 
-- POST /api/request : Create/Request a match request from the current/logged-in user to another user
-- UPDATE /api/request/:requestId : The receiver accept/decline the match request with the given id
-- DELETE /api/request/:requestId : The request sender delete the match request with the given id
-- GET /api/users/:userId/match : Get the list of users that has matched with the user with the specified id
-- POST /api/suggestion : Get a list of suggestion with information specified in the request body
-- POST /api/users/search : Search for users with the specified info in the request body
+-   GET /api/request : Get all the match requests for a user
+-   GET /api/request/:requestId : Get the specific match request with the given id
+-   POST /api/request : Create/Request a match request from the current/logged-in user to another user
+-   UPDATE /api/request/:requestId : The receiver accept/decline the match request with the given id
+-   DELETE /api/request/:requestId : The request sender delete the match request with the given id
+-   GET /api/users/:userId/match : Get the list of users that has matched with the user with the specified id
+-   POST /api/request/suggestion : Get a list of suggestion with information specified in the request body
+-   POST /api/users/search : Search for users with the specified info in the request body
 
 ### Path CRUD
 
