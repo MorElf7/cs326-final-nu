@@ -5,6 +5,6 @@ const __dirname = path.dirname(__filename);
 
 export const renderHtml = (filename) => {
 	return (req, res, next) => {
-		return res.sendFile(filename, {root: path.resolve(__dirname, '../../frontend/views')});
+		return res.sendFile(filename, { root: path.resolve(__dirname, "../../frontend/views") });
 	};
 };

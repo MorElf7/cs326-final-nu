@@ -12,4 +12,6 @@ router.get("/:userId/match", renderHtml("match/match.html"));
 
 router.get("/:userId/request", renderHtml("match/request.html"));
 
+router.get("/:userId/suggestion", renderHtml("match/suggestion.html"));
+
 export default router;

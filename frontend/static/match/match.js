@@ -1,5 +1,7 @@
 const matchList = document.getElementById("matchesList");
 
+import { httpRequest } from "../utils.js";
+
 const createCarouselItem = (image, i) => {
 	const carouselItem = document.createElement("div");
 	carouselItem.classList.add("carousel-item");
@@ -51,20 +53,31 @@ const createCarouselButton = (carousel) => {
 	carousel.appendChild(next);
 };
 
+const createCarousel = (id, pictures) => {
+	const carousel = document.createElement("div");
+	carousel.id = `carousel${id}`;
+	carousel.classList.add("carousel");
+	carousel.setAttribute("data-interval", false);
+
+	const carouselfInner = document.createElement("div");
+	carouselfInner.classList.add("carousel-inner");
+	carousel.appendChild(carouselfInner);
+
+	pictures.forEach((v, i, arr) => {
+		carouselfInner.appendChild(createCarouselItem(v, i));
+	});
+
+	createCarouselButton(carousel);
+
+	return carousel;
+};
+
 onload = async () => {
 	const accessToken = localStorage.getItem("accessToken");
 	const refreshToken = localStorage.getItem("refreshToken");
-    const currentUser = localStorage.getItem("currentUser");
+	const currentUser = localStorage.getItem("currentUser");
 
-	const response = await fetch(`/api/users/${currentUser}/match`, {
-		credentials: "same-origin",
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${accessToken}`,
-		},
-	});
-
-	const res = await response.json();
+	const res = await httpRequest(`/api/users/${currentUser}/match`, accessToken, "GET", {}, []);
 
 	const matches = res.data;
 
@@ -82,21 +95,7 @@ onload = async () => {
 		col1.classList.add("col-md-3", "text-left");
 		row.appendChild(col1);
 
-		const carousel = document.createElement("div");
-		carousel.id = `carousel${index}`;
-		carousel.classList.add("carousel");
-		carousel.setAttribute("data-interval", false);
-		col1.appendChild(carousel);
-
-		const carouselfInner = document.createElement("div");
-		carouselfInner.classList.add("carousel-inner");
-		carousel.appendChild(carouselfInner);
-
-		pictures.forEach((v, i, arr) => {
-			carouselfInner.appendChild(createCarouselItem(v, i));
-		});
-
-		createCarouselButton(carousel);
+		col1.appendChild(createCarousel(index, pictures));
 
 		const col2 = document.createElement("div");
 		col2.classList.add("col-md-5", "offset-1", "text-left", "align-self-center");
@@ -128,3 +127,5 @@ onload = async () => {
 		col22.appendChild(bioNode);
 	});
 };
+
+export { createCarousel };
