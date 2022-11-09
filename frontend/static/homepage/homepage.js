@@ -13,7 +13,7 @@ const displayMatchDeck = ({img, name, description, route, schedule}) => {
 
     const scheduleElem = document.createElement('div');
     const scheduleHeader = document.createElement('h6');
-    scheduleHeader.innerText = 'Schedule:';
+    scheduleHeader.innerText = '\nSchedule:';
     const daysElem = document.createElement('div');
     for(const day of schedule.days){
         daysElem.innerText += day + ' ';
@@ -22,7 +22,11 @@ const displayMatchDeck = ({img, name, description, route, schedule}) => {
     time.innerText = 'From: ' + schedule.time.from + '\n' + 'To: ' + schedule.time.to;
     scheduleElem.append(scheduleHeader, daysElem, time);
 
+    const routeElem = document.createElement('div');
+    routeElem.innerText = 'From: ' + route.from + '\n' + 'To: ' + route.to;
+
     displayInfo.append(nameElem, descripElem, scheduleElem);
+    document.getElementById('routeInfo').append(routeElem);
 }
 
 onload = async () => {
