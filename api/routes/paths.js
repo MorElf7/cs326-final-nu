@@ -6,7 +6,7 @@ import { createPath, updatePath, showPath, deletePath, showAllPaths } from "../c
 import { wrapAsync } from "../utils/index.js";
 
 router.get('/:pathId', wrapAsync(showPath))
-router.get('/', wrapAsync(showAllPaths))
+router.get('/all/:userId', wrapAsync(showAllPaths))
 router.post('/', wrapAsync(createPath))
 router.put('/:pathId', wrapAsync(updatePath))
 router.delete('/:pathId', wrapAsync(deletePath))
