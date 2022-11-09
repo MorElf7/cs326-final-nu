@@ -1,3 +1,4 @@
+import { httpRequest } from "../utils.js";
 import { createCarousel } from "./match.js";
 
 const requestList = document.getElementById("requestList");
@@ -7,15 +8,7 @@ onload = async () => {
 	const refreshToken = localStorage.getItem("refreshToken");
 	const currentUser = localStorage.getItem("currentUser");
 
-	const response = await fetch(`/api/request?id=${currentUser}`, {
-		credentials: "same-origin",
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${accessToken}`,
-		},
-	});
-
-	const res = await response.json();
+	const res = await httpRequest(`/api/request?id=${currentUser}`, accessToken, "GET", {}, []);
 
 	const requests = res.data;
 
@@ -33,7 +26,7 @@ onload = async () => {
 		col1.classList.add("col-md-3", "text-left");
 		row.appendChild(col1);
 
-		col1.appendChild(createCarousel(pictures, index));
+		col1.appendChild(createCarousel(index, pictures));
 
 		const col2 = document.createElement("div");
 		col2.classList.add("col-md-5", "text-left", "align-self-center");

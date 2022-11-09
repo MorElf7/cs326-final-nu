@@ -1,5 +1,7 @@
 const matchList = document.getElementById("matchesList");
 
+import { httpRequest } from "../utils.js";
+
 const createCarouselItem = (image, i) => {
 	const carouselItem = document.createElement("div");
 	carouselItem.classList.add("carousel-item");
@@ -53,7 +55,7 @@ const createCarouselButton = (carousel) => {
 
 const createCarousel = (id, pictures) => {
 	const carousel = document.createElement("div");
-	carousel.id = `carousel${index}`;
+	carousel.id = `carousel${id}`;
 	carousel.classList.add("carousel");
 	carousel.setAttribute("data-interval", false);
 
@@ -75,15 +77,7 @@ onload = async () => {
 	const refreshToken = localStorage.getItem("refreshToken");
 	const currentUser = localStorage.getItem("currentUser");
 
-	const response = await fetch(`/api/users/${currentUser}/match`, {
-		credentials: "same-origin",
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${accessToken}`,
-		},
-	});
-
-	const res = await response.json();
+	const res = await httpRequest(`/api/users/${currentUser}/match`, accessToken, "GET", {}, []);
 
 	const matches = res.data;
 
@@ -101,7 +95,7 @@ onload = async () => {
 		col1.classList.add("col-md-3", "text-left");
 		row.appendChild(col1);
 
-		col1.appendChild(createCarousel(pictures, index));
+		col1.appendChild(createCarousel(index, pictures));
 
 		const col2 = document.createElement("div");
 		col2.classList.add("col-md-5", "offset-1", "text-left", "align-self-center");
