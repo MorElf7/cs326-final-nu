@@ -14,7 +14,7 @@ onload = async () => {
 	const requests = res.data;
 
 	requests.forEach((value, index, array) => {
-		const { username, pictures, bio } = value;
+		const { username, pictures, bio, message, id } = value;
 		const listItem = document.createElement("li");
 		listItem.classList.add("list-group-item");
 		requestList.appendChild(listItem);
@@ -71,5 +71,29 @@ onload = async () => {
 		declineBtn.classList.add("btn", "btn-secondary");
 		declineBtn.appendChild(document.createTextNode("Decline"));
 		col3.appendChild(declineBtn);
+
+		acceptBtn.addEventListener("click", async (event) => {
+			event.preventDefault();
+			event.stopPropagation();
+
+			const body = { pending: false, id, status: "accepted" };
+			const res = await httpRequest(`/api/request`, accessToken, "PUT", body, []);
+			if (res.status === 200) {
+				col3.removeChild(acceptBtn);
+				col3.removeChild(declineBtn);
+			}
+		});
+
+		declineBtn.addEventListener("click", async (event) => {
+			event.preventDefault();
+			event.stopPropagation();
+
+			const body = { pending: false, id, status: "rejected" };
+			const res = await httpRequest(`/api/request`, accessToken, "PUT", body, []);
+			if (res.status === 200) {
+				col3.removeChild(acceptBtn);
+				col3.removeChild(declineBtn);
+			}
+		});
 	});
 };
