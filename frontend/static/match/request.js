@@ -1,55 +1,6 @@
+import { createCarousel } from "./match.js";
+
 const requestList = document.getElementById("requestList");
-
-const createCarouselItem = (image, i) => {
-	const carouselItem = document.createElement("div");
-	carouselItem.classList.add("carousel-item");
-	if (i === 0) carouselItem.classList.add("active");
-
-	const img = document.createElement("img");
-	img.src = image.src;
-	img.classList.add("img-fluid", "float-left");
-	img.width = "400";
-	img.height = "400";
-	img.alt = image.name;
-	carouselItem.appendChild(img);
-	return carouselItem;
-};
-
-const createCarouselButton = (carousel) => {
-	const id = carousel.id;
-	const prev = document.createElement("a");
-	prev.classList.add("carousel-control-prev");
-	prev.href = `#${id}`;
-	prev.setAttribute("role", "button");
-	prev.setAttribute("data-slide", "prev");
-
-	const prevIcon = document.createElement("span");
-	prevIcon.classList.add("carousel-control-prev-icon");
-	prevIcon.setAttribute("aria-hidden", "true");
-	const prevText = document.createElement("span");
-	prevText.classList.add("sr-only");
-	prevText.appendChild(document.createTextNode("Previous"));
-	prev.appendChild(prevIcon);
-	prev.appendChild(prevText);
-
-	const next = document.createElement("a");
-	next.classList.add("carousel-control-next");
-	next.href = `#${id}`;
-	next.setAttribute("role", "button");
-	next.setAttribute("data-slide", "next");
-
-	const nextIcon = document.createElement("span");
-	nextIcon.classList.add("carousel-control-next-icon");
-	nextIcon.setAttribute("aria-hidden", "true");
-	const nextText = document.createElement("span");
-	nextText.classList.add("sr-only");
-	nextText.appendChild(document.createTextNode("Next"));
-	next.appendChild(nextIcon);
-	next.appendChild(nextText);
-
-	carousel.appendChild(prev);
-	carousel.appendChild(next);
-};
 
 onload = async () => {
 	const accessToken = localStorage.getItem("accessToken");
@@ -82,21 +33,7 @@ onload = async () => {
 		col1.classList.add("col-md-3", "text-left");
 		row.appendChild(col1);
 
-		const carousel = document.createElement("div");
-		carousel.id = `carousel${index}`;
-		carousel.classList.add("carousel");
-		carousel.setAttribute("data-interval", false);
-		col1.appendChild(carousel);
-
-		const carouselfInner = document.createElement("div");
-		carouselfInner.classList.add("carousel-inner");
-		carousel.appendChild(carouselfInner);
-
-		pictures.forEach((v, i, arr) => {
-			carouselfInner.appendChild(createCarouselItem(v, i));
-		});
-
-		createCarouselButton(carousel);
+		col1.appendChild(createCarousel(pictures, index));
 
 		const col2 = document.createElement("div");
 		col2.classList.add("col-md-5", "text-left", "align-self-center");
