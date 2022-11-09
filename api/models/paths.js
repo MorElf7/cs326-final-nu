@@ -1,6 +1,6 @@
-import { Schema } from "mongoose";
+import {mongoose, Schema} from "mongoose";
 
-const pathSchema = new Schema({
+const pathSchema = new mongoose.Schema({
 	pinponts: {
 		type: [Number],
 		required: true,
