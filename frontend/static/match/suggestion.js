@@ -1,13 +1,17 @@
+import { httpRequest } from "../utils.js";
 import { createCarousel } from "./match.js";
 
 const suggestionList = document.getElementById("suggestionList");
+
+// let suggestion = [];
+// let index = 0;
 
 onload = async () => {
 	const accessToken = localStorage.getItem("accessToken");
 	const refreshToken = localStorage.getItem("refreshToken");
 	const currentUser = localStorage.getItem("currentUser");
 
-	const response = await fetch(`/api/suggestion`, {
+	const response = await fetch(`/api/request/suggestion`, {
 		method: "POST",
 		credentials: "same-origin",
 		headers: {
@@ -22,7 +26,7 @@ onload = async () => {
 	const suggestion = res.data;
 
 	suggestion.forEach((value, index, array) => {
-		const { username, pictures, bio } = value;
+		const { username, pictures, bio, id } = value;
 		const listItem = document.createElement("li");
 		listItem.classList.add("list-group-item");
 		suggestionList.appendChild(listItem);
@@ -35,7 +39,7 @@ onload = async () => {
 		col1.classList.add("col-md-3", "text-left");
 		row.appendChild(col1);
 
-		col1.appendChild(createCarousel(pictures, index));
+		col1.appendChild(createCarousel(index, pictures));
 
 		const col2 = document.createElement("div");
 		col2.classList.add("col-md-5", "text-left", "align-self-center");
@@ -74,26 +78,27 @@ onload = async () => {
 		acceptBtn.classList.add("btn", "btn-primary", "mr-1");
 		acceptBtn.appendChild(document.createTextNode("Match"));
 		col3.appendChild(acceptBtn);
-		acceptBtn.addEventListener("click", async (event) => {
-			event.preventDefault();
-			event.stopPropagation();
-		
-			const  = await fetch(`/api/request`, {
-				method: "POST",
-				credentials: "same-origin",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${accessToken}`,
-				},
-				body: JSON.stringify({ sender: currentUser, receiver:  }),
-			});
-		
-			const res = await response.json();
-		};);
 
 		const declineBtn = document.createElement("button");
 		declineBtn.classList.add("btn", "btn-secondary");
 		declineBtn.appendChild(document.createTextNode("Pass"));
 		col3.appendChild(declineBtn);
+
+		acceptBtn.addEventListener("click", async (event) => {
+			event.preventDefault();
+			event.stopPropagation();
+
+			const body = { sender: currentUser, receiver: id };
+			const res = await httpRequest(`/api/request`, accessToken, "POST", body, []);
+			if (res.status === 200) {
+				col3.removeChild(acceptBtn);
+				col3.removeChild(declineBtn);
+			}
+		});
+
+		declineBtn.addEventListener("click", (event) => {
+			col3.removeChild(acceptBtn);
+			col3.removeChild(declineBtn);
+		});
 	});
 };
