@@ -1,10 +1,15 @@
 const matchDeck = document.getElementById('matchDeck');
+const like = document.getElementById('like');
+const reject = document.getElementById('reject');
+const reload = document.getElementById('reload');
 
-const displayMatchDeck = ({img, name, description, route, schedule}) => {
+const displayMatchDeck = ({src, name, description, route, schedule}) => {
     // const imgElem = document.createElement('img');
-    // imgElem.setAttribute('src',img)
-    const displayInfo = document.getElementById('displayInfo');
+    // imgElem.setAttribute('src',src)
+    // document.getElementById('displayMap').append(imgElem);
 
+    const displayInfo = document.getElementById('displayInfo');
+    removeAllChildNodes(displayInfo);
     const nameElem = document.createElement('h5');
     nameElem.innerText = name;
 
@@ -26,56 +31,50 @@ const displayMatchDeck = ({img, name, description, route, schedule}) => {
     routeElem.innerText = 'From: ' + route.from + '\n' + 'To: ' + route.to;
 
     displayInfo.append(nameElem, descripElem, scheduleElem);
-    document.getElementById('routeInfo').append(routeElem);
+    const routeInfo = document.getElementById('routeInfo');
+    const routeHeader = document.createElement('h6');
+    removeAllChildNodes(routeInfo);
+    routeHeader.innerText = 'Route: ';
+    routeInfo.append(routeHeader, routeElem);
 }
 
 onload = async () => {
-    // const response = await fetch('/api/suggestion', {
-	// 	credentials: "same-origin",
-	// 	headers: {
-	// 		"Content-Type": "application/json",
-	// 		Authorization: `Bearer ${accessToken}`,
-	// 	},
-	// })
+	const accessToken = localStorage.getItem("accessToken");
+	const currentUser = localStorage.getItem("currentUser");
 
-	// const res = await response.json();
-    // const suggestions = res.data;
+    const response = await fetch('/api/request/suggestion', {
+		method: "POST",
+		credentials: "same-origin",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${accessToken}`,
+		},
+		body: JSON.stringify({ id: currentUser }),
+	})
+    const res = await response.json();
 
-    const curDate = new Date();
-    let suggestions = [
-        {
-            img: './img/route.avif',
-            name: 'Name',
-            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Some thing...',
-            route: {
-                from: 'Some place',
-                to: 'Some destination'
-            },
-            schedule: {
-                days: ['Monday','Tuesday','Friday'],
-                time: {
-                    from: curDate.getHours()+ ":" + curDate.getMinutes(),
-                    to: curDate.getHours()+ ":" + curDate.getMinutes()
-                }
-            }
-        },
-        {
-            map: './img/route.avif',
-            name: 'Some name',
-            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Some thing...',
-            route: {
-                from: 'Some place',
-                to: 'Some destination'
-            },
-            schedule: {
-                days: ['Monday','Tuesday','Friday'],
-                time: {
-                    from: curDate.getHours()+ ":" + curDate.getMinutes(),
-                    to: curDate.getHours()+ ":" + curDate.getMinutes()
-                }
-            }
-        }
-    ];
+	let suggestions = res.data;
+
     displayMatchDeck(suggestions.pop());
-    localStorage.setItem('suggestions', suggestions);
+    localStorage.setItem('suggestions', JSON.stringify(suggestions));
 };
+
+like.addEventListener('click', () => {
+
+});
+
+reject.addEventListener('click', () => {
+    let suggestions = JSON.parse(localStorage.getItem('suggestions'));
+    if(suggestions.length > 0){
+        displayMatchDeck(suggestions.pop());
+    }
+    else{
+        alert('No more users to show');
+    }
+});
+
+const removeAllChildNodes = (parent) => {
+    while(parent.firstChild){
+        parent.removeChild(parent.firstChild)
+    }
+}
