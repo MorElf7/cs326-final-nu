@@ -1,7 +1,28 @@
 const matchDeck = document.getElementById('matchDeck');
 
-const displayMatchDeck = (curSuggestion) => {
-    
+const displayMatchDeck = ({img, name, description, route, schedule}) => {
+    // const imgElem = document.createElement('img');
+    // imgElem.setAttribute('src',img)
+    const displayInfo = document.getElementById('displayInfo');
+
+    const nameElem = document.createElement('h5');
+    nameElem.innerText = name;
+
+    const descripElem = document.createElement('div');
+    descripElem.innerText = description;
+
+    const scheduleElem = document.createElement('div');
+    const scheduleHeader = document.createElement('h6');
+    scheduleHeader.innerText = 'Schedule:';
+    const daysElem = document.createElement('div');
+    for(const day of schedule.days){
+        daysElem.innerText += day + ' ';
+    }
+    const time = document.createElement('div');
+    time.innerText = 'From: ' + schedule.time.from + '\n' + 'To: ' + schedule.time.to;
+    scheduleElem.append(scheduleHeader, daysElem, time);
+
+    displayInfo.append(nameElem, descripElem, scheduleElem);
 }
 
 onload = async () => {
@@ -19,14 +40,14 @@ onload = async () => {
     const curDate = new Date();
     let suggestions = [
         {
-            map: './img/route.avif',
-            name: 'Some name',
-            description: 'Some description',
+            img: './img/route.avif',
+            name: 'Name',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Some thing...',
             route: {
                 from: 'Some place',
                 to: 'Some destination'
             },
-            Schedule: {
+            schedule: {
                 days: ['Monday','Tuesday','Friday'],
                 time: {
                     from: curDate.getHours()+ ":" + curDate.getMinutes(),
@@ -37,12 +58,12 @@ onload = async () => {
         {
             map: './img/route.avif',
             name: 'Some name',
-            description: 'Some description',
+            description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Some thing...',
             route: {
                 from: 'Some place',
                 to: 'Some destination'
             },
-            Schedule: {
+            schedule: {
                 days: ['Monday','Tuesday','Friday'],
                 time: {
                     from: curDate.getHours()+ ":" + curDate.getMinutes(),
@@ -51,7 +72,6 @@ onload = async () => {
             }
         }
     ];
-
     displayMatchDeck(suggestions.pop());
-    localStorage.setItem('suggestions', suggestions)
+    localStorage.setItem('suggestions', suggestions);
 };
