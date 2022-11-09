@@ -17,3 +17,11 @@
 - DELETE /api/request/:requestId : The request sender delete the match request with the given id
 - GET /api/users/:userId/match : Get the list of users that has matched with the user with the specified id
 
+### Path CRUD
+
+-   GET /api/paths/:pathId : get any path by its id
+-   GET /api/paths/userId : get a user's paths
+-   POST /api/paths/ : create a new path
+-   UPDATE /api/paths/:pathId : update a path's data
+-   DELETE /api/paths/:pathId : delete a path with its id
+-   GET /api/paths/:pathId/matches : Get list of users matched with current user on current path
