@@ -16,7 +16,7 @@
 	</head>
 	<body>
 		<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-			<a class="navbar-brand" href="#">CardioBuddy</a>
+			<a class="navbar-brand" href="/">CardioBuddy</a>
 			<button
 				class="navbar-toggler"
 				type="button"
@@ -32,16 +32,19 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active">
-						<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+						<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Matches</a>
+						<a id="matchLink" class="nav-link" href="#">Matches</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Suggestion</a>
+						<a id="suggestionLink" class="nav-link" href="#">Suggestion</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Profile</a>
+						<a id="requestLink" class="nav-link" href="#">Request</a>
+					</li>
+					<li class="nav-item">
+						<a id="profileLink" class="nav-link" href="/routesPanel">Profile</a>
 					</li>
 				</ul>
 				<a class="nav-link text-light pr-5" style="font-size: 21px" href="#">User 1</a>
@@ -51,9 +54,6 @@
 			<div class="row pt-3 text-center">
 				<div class="col-md-4 offset-4">
 					<h2>Matches</h2>
-				</div>
-				<div class="col-auto align-self-end text-left">
-					<a class="btn btn-outline-primary" href="">Matches request</a>
 				</div>
 			</div>
 			<ul id="matchesList" class="list-group-flush"></ul>

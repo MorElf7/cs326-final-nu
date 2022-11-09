@@ -72,7 +72,22 @@ const createCarousel = (id, pictures) => {
 	return carousel;
 };
 
+export const fillOutHref = () => {
+	const matchLink = document.getElementById("matchLink"),
+		suggestionLink = document.getElementById("suggestionLink"),
+		requestLink = document.getElementById("requestLink");
+
+	let path = location.pathname.split("/");
+	path.pop();
+
+	matchLink.href = path.join("/") + "/match";
+	suggestionLink.href = path.join("/") + "/suggestion";
+	requestLink.href = path.join("/") + "/request";
+};
+
 onload = async () => {
+	fillOutHref();
+
 	const accessToken = localStorage.getItem("accessToken");
 	const refreshToken = localStorage.getItem("refreshToken");
 	const currentUser = localStorage.getItem("currentUser");

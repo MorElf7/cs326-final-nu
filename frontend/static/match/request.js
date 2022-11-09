@@ -1,9 +1,10 @@
 import { httpRequest } from "../utils.js";
-import { createCarousel } from "./match.js";
+import { createCarousel, fillOutHref } from "./match.js";
 
 const requestList = document.getElementById("requestList");
 
 onload = async () => {
+	fillOutHref();
 	const accessToken = localStorage.getItem("accessToken");
 	const refreshToken = localStorage.getItem("refreshToken");
 	const currentUser = localStorage.getItem("currentUser");

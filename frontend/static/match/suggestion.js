@@ -1,5 +1,5 @@
 import { httpRequest } from "../utils.js";
-import { createCarousel } from "./match.js";
+import { createCarousel, fillOutHref } from "./match.js";
 
 const suggestionList = document.getElementById("suggestionList");
 
@@ -7,6 +7,7 @@ const suggestionList = document.getElementById("suggestionList");
 // let index = 0;
 
 onload = async () => {
+	fillOutHref();
 	const accessToken = localStorage.getItem("accessToken");
 	const refreshToken = localStorage.getItem("refreshToken");
 	const currentUser = localStorage.getItem("currentUser");
