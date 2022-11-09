@@ -17,6 +17,7 @@ import PathBackendRouter from "./api/routes/paths.js";
 // Frontend Router
 import UserFrontendRouter from "./frontend/routes/users.js";
 import RoutesPanelFrontendRouter from "./frontend/routes/paths.js";
+import HomeFrontendRouter from './frontend/routes/home.js'
 
 const app = express();
 
@@ -43,6 +44,7 @@ app.use("/api/request", RequestBackendRouter)
 // Frontend Router
 app.use("/users", UserFrontendRouter);
 app.use("/routesPanel", RoutesPanelFrontendRouter);
+app.use('/home', HomeFrontendRouter)
 
 app.listen(port, () => {
 	console.log(`Serving on port ${port}`);
