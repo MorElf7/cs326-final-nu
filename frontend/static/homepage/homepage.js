@@ -59,18 +59,32 @@ onload = async () => {
     localStorage.setItem('suggestions', JSON.stringify(suggestions));
 };
 
-like.addEventListener('click', () => {
+like.addEventListener('click', async() => {
+    const accessToken = localStorage.getItem("accessToken");
+	const currentUser = localStorage.getItem("currentUser");
 
+    const response = await fetch('/api/request/suggestion', {
+		method: "POST",
+		credentials: "same-origin",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${accessToken}`,
+		},
+		body: JSON.stringify({ id: currentUser }),
+	})
+    const res = await response.json();
 });
 
 reject.addEventListener('click', () => {
     let suggestions = JSON.parse(localStorage.getItem('suggestions'));
+
     if(suggestions.length > 0){
         displayMatchDeck(suggestions.pop());
     }
     else{
         alert('No more users to show');
     }
+    localStorage.setItem('suggestions', JSON.stringify(suggestions));
 });
 
 const removeAllChildNodes = (parent) => {
