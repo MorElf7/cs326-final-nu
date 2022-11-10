@@ -59,26 +59,37 @@ const getSuggestions = async () => {
 onload = async () => {
 	let suggestions = await getSuggestions();
 
-    displayMatchDeck(suggestions.pop());
+    const curSuggestion = suggestions.pop();
+    localStorage.setItem('curSuggestion', JSON.stringify(curSuggestion));
+    displayMatchDeck(curSuggestion);
     localStorage.setItem('suggestions', JSON.stringify(suggestions));
 
     displayUserInfo();
 };
 
 like.addEventListener('click', async() => {
+    let curSuggestion = JSON.parse(localStorage.getItem('curSuggestion'));
+
     const accessToken = localStorage.getItem("accessToken");
 	const currentUser = localStorage.getItem("currentUser");
 
-    const response = await fetch('/api/request/suggestion', {
-		method: "POST",
+    const response = await fetch('/api/request', {
+		method: "PUT",
 		credentials: "same-origin",
 		headers: {
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${accessToken}`,
 		},
-		body: JSON.stringify({ id: currentUser }),
+		body: JSON.stringify({ 
+            id : currentUser,
+            matchId: curSuggestion.id 
+        }),
 	})
-    const res = await response.json();
+    let suggestions = JSON.parse(localStorage.getItem('suggestions'));
+    const newSuggestion = suggestions.pop();
+    alert('Added into matched list!')
+    displayMatchDeck(newSuggestion);
+    localStorage.setItem('curSuggestion', JSON.stringify(newSuggestion));
 });
 
 reject.addEventListener('click', () => {
