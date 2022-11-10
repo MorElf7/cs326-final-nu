@@ -47,6 +47,7 @@ When the user hit unmatch, the specified match request will be delete from the d
 All of the above page has Read operation to fetch the data to display for the user.
 
 ![](./img/routesPanelCrud.png)
+https://cardio-buddy.herokuapp.com/routesPanel
 
 When user updates their profile and hit the "Save Info" button, their info in the database would be updated using PUT
 
