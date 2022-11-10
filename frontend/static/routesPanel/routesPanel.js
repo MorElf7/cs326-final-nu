@@ -4,9 +4,33 @@ const addPinpointBtn = document.getElementById('add-pinpoint')
 const createRouteBtn = document.getElementById('create-route-btn');
 const loadRouteBtn = document.getElementById('load-routes-btn');
 const routesList = document.getElementById('routes-list');
+const saveInfoBtn = document.getElementById('save-info-btn');
 
 const pinpoints = []
 const fakeUserId = "0123456789" 
+
+
+
+const saveInfo = async (e) => {
+  e.preventDefault();
+  const newName = document.getElementById('user-name').value
+  const newDescription = document.getElementById('user-bio').value
+
+  const response = await fetch(`/api/users/${fakeUserId}/`, {
+    method: 'PUT',
+    credentials: 'same-origin',
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({name: newName, description: newDescription})
+  })
+  const { message, status } = await response.json();
+  if (status === 200) {
+    alert("Successfully saved info")
+  } else {
+    console.log("Error: " + status)
+  }
+}
 
 const addPinpoint = (e) => {
   const location = document.getElementById("pinpoint-input").value
@@ -99,7 +123,7 @@ const displayAllRoutes = (data) => {
   for (const route of data){
     const fakePathId = "1234"
     const r = document.createElement("li")
-    r.className = "list-group-item"
+    r.className = "list-group-item flex justify-content-between align-items-center border-top border-left border-right border-bottom rounded"
     const date = document.createElement("div")
     date.innerText = `Date: ${route.date}`
     const time = document.createElement("div")
@@ -150,3 +174,4 @@ const getDate = () => {
 addPinpointBtn.addEventListener("click", addPinpoint)
 createRouteBtn.addEventListener("click", createRoute)
 loadRouteBtn.addEventListener("click", getUserRoutes)
+saveInfoBtn.addEventListener('click', saveInfo)

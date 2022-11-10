@@ -31,7 +31,7 @@ export const createUser = async (req, res, next) => {
 	res.status(200).json({ message: "Being developed! Please stay tuned" });
 };
 export const updateUser = async (req, res, next) => {
-	res.status(200).json({ message: "Being developed! Please stay tuned" });
+	res.status(200).json({ message: "Being developed! Please stay tuned", status: 200});
 };
 export const deleteUser = async (req, res, next) => {
 	res.status(200).json({ message: "Being developed! Please stay tuned" });
