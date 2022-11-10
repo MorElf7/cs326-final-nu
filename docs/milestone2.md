@@ -56,6 +56,6 @@ match, request, suggestion, userRequest page (include routing) - Bang Cao
 
 paths backend api (routing and mongo models in progress) - Nhan Lai
 
-creating paths, adding pinpoints in paths, showing all paths in frontend (routing and API calling) - Nhan Lai
+creating paths, adding pinpoints in paths, showing all paths, updating user info in frontend (routing and API calling) - Nhan Lai
 
 heorku deployment - Nhan Lai
