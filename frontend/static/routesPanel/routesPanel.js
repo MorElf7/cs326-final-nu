@@ -26,7 +26,6 @@ const timeInput = document.getElementById("time-input")
 const speedInput = document.getElementById("speed-input")
 
 const createRoute = async (e) => {
-  e.stopPropagation()
   e.preventDefault()
   speed = speedInput.value
   time = timeInput.value
@@ -66,9 +65,9 @@ const createRoute = async (e) => {
 }
 
 const getUserRoutes = async (e) => {
-  e.stopPropagation(); 
   e.preventDefault();
-  const response = await fetch(`/api/paths/all?id=${fakeUserId}`,{
+  e.stopPropagation()
+  const response = await fetch(`/api/paths/all/${fakeUserId}`,{
     method: 'GET',
     credentials: 'same-origin',
     headers: {
@@ -77,7 +76,7 @@ const getUserRoutes = async (e) => {
   })
   const { data, message, status } = await response.json();
   if (status === 200) {
-    location.href = "";
+    // location.href = "";
   } else {
     console.log("Error: " + response)
   }

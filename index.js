@@ -18,7 +18,6 @@ import RequestBackendRouter from "./api/routes/request.js";
 import UserBackendRouter from "./api/routes/users.js";
 
 // Frontend Router
-import requests from "./api/models/requests.js";
 import HomeFrontendRouter from "./frontend/routes/home.js";
 import RoutesPanelFrontendRouter from "./frontend/routes/paths.js";
 import UserFrontendRouter from "./frontend/routes/users.js";
@@ -46,6 +45,10 @@ app.get("/", (req, res) => {
 });
 
 // Backend Router
+// app.get("/api/paths/all/:userId", (req, res) => {
+// 	console.log("hello");
+// 	res.send("test");
+// });
 app.use("/api/users", UserBackendRouter);
 app.use("/api/request", RequestBackendRouter);
 app.use("/api/paths", PathBackendRouter);
