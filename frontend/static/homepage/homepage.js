@@ -57,6 +57,8 @@ onload = async () => {
 
     displayMatchDeck(suggestions.pop());
     localStorage.setItem('suggestions', JSON.stringify(suggestions));
+
+    displayUserInfo();
 };
 
 like.addEventListener('click', async() => {
@@ -91,4 +93,40 @@ const removeAllChildNodes = (parent) => {
     while(parent.firstChild){
         parent.removeChild(parent.firstChild)
     }
+}
+
+
+const displayUserInfo = async () => {
+    const accessToken = localStorage.getItem("accessToken");
+	const currentUser = localStorage.getItem("currentUser");
+
+    const response = await fetch(`/api/users/${currentUser}`, {
+		method: "GET",
+		credentials: "same-origin",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${accessToken}`,
+		},
+	})
+    const res = await response.json();
+    
+    const userInfo = res.data;
+    console.log(userInfo);
+    // const userInfo = {
+    //     src: './img/route.avif',
+    //     name: "User's Name",
+    //     description: 'Some description about the user.',
+    //     route: {
+    //         from: "User's Route - from",
+    //         to: "User's Route - to"
+    //     },
+    //     schedule: {
+    //         days: ['Monday','Tuesday','Friday'],
+    //         time: {
+    //             from: new Date().getHours()+ ":" + new Date().getMinutes(),
+    //             to: new Date().getHours()+ ":" + new Date().getMinutes()
+    //         }
+    //     },
+    //     dateJoined: new Date().getHours()+ ":" + new Date().getMinutes(),
+    // }
 }
