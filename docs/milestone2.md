@@ -31,7 +31,7 @@ https://cardio-buddy.herokuapp.com/home
 -   UPDATE /api/paths/:pathId : update a path's data
 -   DELETE /api/paths/:pathId : delete a path with its id
 -   GET /api/paths/:pathId/matches : Get list of users matched with current user on current path
--   GET /api/paths/
+-   GET /api/paths/all/:userId: Get all paths of a user
 
 # Part 2, Frontend Implementation
 
@@ -53,3 +53,9 @@ All of the above page has Read operation to fetch the data to display for the us
 users, requests backend api (include routing, mongo models still in progress) - Bang Cao
 
 match, request, suggestion, userRequest page (include routing) - Bang Cao
+
+paths backend api (routing and mongo models in progress) - Nhan Lai
+
+creating paths, adding pinpoints in paths, showing all paths in frontend (routing and API calling) - Nhan Lai
+
+heorku deployment - Nhan Lai

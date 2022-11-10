@@ -59,7 +59,7 @@ const createRoute = async (e) => {
 
   const { data, message, status } = await response.json();
   if (status === 200) {
-    location.href = "";
+    alert(`Successfully added new route:\nDate: ${dates}\nSpeed: ${speed}\nTime: ${time}\nRoute: ${pinpoints}`)
   } else {
     console.log("Error: " + status)
   }
@@ -97,6 +97,7 @@ const displayAllRoutes = (data) => {
 //   </div>
 // </li>
   for (const route of data){
+    const fakePathId = "1234"
     const r = document.createElement("li")
     r.className = "list-group-item"
     const date = document.createElement("div")
@@ -111,6 +112,27 @@ const displayAllRoutes = (data) => {
     r.appendChild(time)
     r.appendChild(points)
     r.appendChild(speed)
+    const deleteRouteBtn = document.createElement("button");
+    deleteRouteBtn.innerText = "DELETE"
+    deleteRouteBtn.addEventListener("click", async (e) => {
+      e.preventDefault()
+      e.stopPropagation()
+      const response = await fetch(`/api/paths/${fakePathId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      const { data, message, status } = await response.json();
+      if (status === 200) {
+        // location.href = "";
+        alert("Deleted route")
+        routesList.removeChild(r)
+      } else {
+        console.log("Error: " + response)
+      }
+    })
+    r.appendChild(deleteRouteBtn)
     routesList.appendChild(r)
   }
 }
