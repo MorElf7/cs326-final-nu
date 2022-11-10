@@ -137,3 +137,23 @@ const displayUserInfo = async () => {
     route.innerText = 'From: ' + userInfo.route.from + '\n' + 'To: ' + userInfo.route.to;
     userRoute.append(route);
 }
+
+const matchesPage = document.getElementById('matchesPage');
+matchesPage.addEventListener('click', () => {
+    window.location.assign("/match");
+})
+
+const profilePage = document.getElementById('profilePage');
+profilePage.addEventListener('click', () => {
+    window.location.assign("/users");
+})
+
+const chatPage = document.getElementById('chatPage');
+chatPage.addEventListener('click', () => {
+    window.location.assign("/chatroom");
+})
+
+const logout = document.getElementById('logoutPage');
+logout.addEventListener('click', () => {
+    window.location.assign("/login");
+})
