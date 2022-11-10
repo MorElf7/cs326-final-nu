@@ -54,6 +54,16 @@ When the user click 'X', the current rejected user will be removed from the deck
 
 ![](./img/home-reload.png)
 When the user click 'Reload', the match deck will be refreshed. The new suggestion list is fetched and rendered.
+![](./img/routesPanelCrud.png)
+https://cardio-buddy.herokuapp.com/routesPanel
+
+When user updates their profile and hit the "Save Info" button, their info in the database would be updated using PUT
+
+When user click "CREATE ROUTE", a new route would be created in the database (POST)
+
+Users can view their routes by clicking "Load your routes" (GET)
+
+Users can delete any route they created using the "DELETE" button (DELETE)
 
 # Work distributions
 
@@ -63,7 +73,7 @@ match, request, suggestion, userRequest page (include routing) - Bang Cao
 
 paths backend api (routing and mongo models in progress) - Nhan Lai
 
-creating paths, adding pinpoints in paths, showing all paths in frontend (routing and API calling) - Nhan Lai
+creating paths, adding pinpoints in paths, showing all paths, updating user info in frontend (routing and API calling) - Nhan Lai
 
 heorku deployment - Nhan Lai
 
