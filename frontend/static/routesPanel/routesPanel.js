@@ -5,6 +5,7 @@ const createRouteBtn = document.getElementById('create-route-btn');
 const loadRouteBtn = document.getElementById('load-routes-btn');
 
 const pinpoints = []
+const fakeUserId = "0123456789" 
 
 const addPinpoint = (e) => {
   const location = document.getElementById("pinpoint-input").value
@@ -47,7 +48,7 @@ const createRoute = async (e) => {
     return
   }
 
-  const response = await fetch('api/paths/', {
+  const response = await fetch('/api/paths', {
     method: 'POST',
     credentials: 'same-origin',
     headers: {
@@ -67,7 +68,7 @@ const createRoute = async (e) => {
 const getUserRoutes = async (e) => {
   e.stopPropagation(); 
   e.preventDefault();
-  const response = await fetch('api/paths/',{
+  const response = await fetch(`/api/paths/all?id=${fakeUserId}`,{
     method: 'GET',
     credentials: 'same-origin',
     headers: {
@@ -78,8 +79,10 @@ const getUserRoutes = async (e) => {
   if (status === 200) {
     location.href = "";
   } else {
-    console.log("Error: " + status)
+    console.log("Error: " + response)
   }
+  console.log(data)
+  return data
 }
 
 const getDate = () => {

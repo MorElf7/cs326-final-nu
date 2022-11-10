@@ -24,7 +24,7 @@ export const showAllPaths = async (req, res, next) => {
   for (const i = 0; i < 10; i++) {
     fakeData.push(
       {
-        _id: i,
+        _id: req.params.id,
         pinpoints: [
           [i, i * 100]
           [i + 10, i * 100]

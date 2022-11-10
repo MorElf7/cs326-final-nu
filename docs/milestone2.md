@@ -28,3 +28,4 @@
 -   UPDATE /api/paths/:pathId : update a path's data
 -   DELETE /api/paths/:pathId : delete a path with its id
 -   GET /api/paths/:pathId/matches : Get list of users matched with current user on current path
+-   GET /api/paths/
