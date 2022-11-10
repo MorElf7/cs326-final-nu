@@ -6,6 +6,7 @@ import {
 	createUser,
 	deleteUser,
 	getMatches,
+	getOutgoingRequest,
 	getUser,
 	login,
 	updateUser,
@@ -17,6 +18,8 @@ router.post("/login", wrapAsync(login));
 router.post("/", wrapAsync(createUser));
 
 router.get("/:userId/match", wrapAsync(getMatches));
+
+router.get("/:userId/request", wrapAsync(getOutgoingRequest));
 
 router.get("/:userId", wrapAsync(getUser));
 

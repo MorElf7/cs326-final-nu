@@ -20,8 +20,8 @@ router.post("/suggestion", wrapAsync(getSuggestions));
 
 router.get("/:requestId", wrapAsync(getRequest));
 
-router.put("/:requestId", wrapAsync(updateRequest));
+router.put("/", wrapAsync(updateRequest));
 
-router.delete("/:requestId", wrapAsync(deleteRequest));
+router.delete("/", wrapAsync(deleteRequest));
 
 export default router;

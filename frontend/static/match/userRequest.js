@@ -4,16 +4,18 @@ import { createCarousel, fillOutHref } from "./match.js";
 const requestList = document.getElementById("requestList");
 
 fillOutHref();
-const myRequestLink = document.getElementById("myRequest");
-let path = location.pathname.split("/");
-path.pop();
-myRequestLink.href = path.join("/") + "/userRequest";
 const accessToken = localStorage.getItem("accessToken");
 const refreshToken = localStorage.getItem("refreshToken");
 const currentUser = localStorage.getItem("currentUser");
 
 onload = async () => {
-	const res = await httpRequest(`/api/request?id=${currentUser}`, accessToken, "GET", {}, []);
+	const res = await httpRequest(
+		`/api/users/id=${currentUser}/request`,
+		accessToken,
+		"GET",
+		{},
+		[]
+	);
 
 	const requests = res.data;
 
@@ -66,37 +68,19 @@ onload = async () => {
 		col3.classList.add("col-md-auto", "align-self-center");
 		row.appendChild(col3);
 
-		const acceptBtn = document.createElement("button");
-		acceptBtn.classList.add("btn", "btn-primary", "mr-1");
-		acceptBtn.appendChild(document.createTextNode("Accept"));
-		col3.appendChild(acceptBtn);
+		const deleteBtn = document.createElement("button");
+		deleteBtn.classList.add("btn", "btn-info");
+		deleteBtn.appendChild(document.createTextNode("Unmatch"));
+		col3.appendChild(deleteBtn);
 
-		const declineBtn = document.createElement("button");
-		declineBtn.classList.add("btn", "btn-secondary");
-		declineBtn.appendChild(document.createTextNode("Decline"));
-		col3.appendChild(declineBtn);
-
-		acceptBtn.addEventListener("click", async (event) => {
+		deleteBtn.addEventListener("click", async (event) => {
 			event.preventDefault();
 			event.stopPropagation();
 
-			const body = { pending: false, id, status: "accepted" };
-			const res = await httpRequest(`/api/request`, accessToken, "PUT", body, []);
+			const body = { id };
+			const res = await httpRequest(`/api/request`, accessToken, "DELETE", body, []);
 			if (res.status === 200) {
-				col3.removeChild(acceptBtn);
-				col3.removeChild(declineBtn);
-			}
-		});
-
-		declineBtn.addEventListener("click", async (event) => {
-			event.preventDefault();
-			event.stopPropagation();
-
-			const body = { pending: false, id, status: "rejected" };
-			const res = await httpRequest(`/api/request`, accessToken, "PUT", body, []);
-			if (res.status === 200) {
-				col3.removeChild(acceptBtn);
-				col3.removeChild(declineBtn);
+				col3.removeChild(deleteBtn);
 			}
 		});
 	});
