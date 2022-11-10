@@ -4,7 +4,28 @@ export const login = async (req, res, next) => {
 	res.status(200).json({ message: "Being developed! Please stay tuned" });
 };
 export const getUser = async (req, res, next) => {
-	res.status(200).json({ message: "Being developed! Please stay tuned" });
+	const user =  {
+        src: './img/route.avif',
+        name: "My Name",
+        description: 'Some description about the user.',
+        route: {
+            from: "My Route - from",
+            to: "My Route - to"
+        },
+        schedule: {
+            days: ['Monday','Tuesday','Friday'],
+            time: {
+                from: new Date().getHours()+ ":" + new Date().getMinutes(),
+                to: new Date().getHours()+ ":" + new Date().getMinutes()
+            }
+        },
+        dateJoined: new Date().getHours()+ ":" + new Date().getMinutes(),
+    };
+	res.status(200).json({
+		message: "Being developed! Please stay tuned",
+		data: user,
+		status: 200,
+	});
 };
 export const createUser = async (req, res, next) => {
 	res.status(200).json({ message: "Being developed! Please stay tuned" });
