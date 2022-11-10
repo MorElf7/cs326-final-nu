@@ -111,22 +111,9 @@ const displayUserInfo = async () => {
     const res = await response.json();
     
     const userInfo = res.data;
-    console.log(userInfo);
-    // const userInfo = {
-    //     src: './img/route.avif',
-    //     name: "User's Name",
-    //     description: 'Some description about the user.',
-    //     route: {
-    //         from: "User's Route - from",
-    //         to: "User's Route - to"
-    //     },
-    //     schedule: {
-    //         days: ['Monday','Tuesday','Friday'],
-    //         time: {
-    //             from: new Date().getHours()+ ":" + new Date().getMinutes(),
-    //             to: new Date().getHours()+ ":" + new Date().getMinutes()
-    //         }
-    //     },
-    //     dateJoined: new Date().getHours()+ ":" + new Date().getMinutes(),
-    // }
+
+    const userRoute = document.getElementById('userRoute');
+    const route = document.createElement('div');
+    route.innerText = 'From: ' + userInfo.route.from + '\n' + 'To: ' + userInfo.route.to;
+    userRoute.append(route);
 }

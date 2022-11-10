@@ -6,11 +6,11 @@ export const login = async (req, res, next) => {
 export const getUser = async (req, res, next) => {
 	const user =  {
         src: './img/route.avif',
-        name: "User's Name",
+        name: "My Name",
         description: 'Some description about the user.',
         route: {
-            from: "User's Route - from",
-            to: "User's Route - to"
+            from: "My Route - from",
+            to: "My Route - to"
         },
         schedule: {
             days: ['Monday','Tuesday','Friday'],
