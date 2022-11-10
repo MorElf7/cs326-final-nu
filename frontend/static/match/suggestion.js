@@ -12,18 +12,13 @@ onload = async () => {
 	const refreshToken = localStorage.getItem("refreshToken");
 	const currentUser = localStorage.getItem("currentUser");
 
-	const response = await fetch(`/api/request/suggestion`, {
-		method: "POST",
-		credentials: "same-origin",
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${accessToken}`,
-		},
-		body: JSON.stringify({ id: currentUser }),
-	});
-
-	const res = await response.json();
-
+	const res = await httpRequest(
+		`/api/request/suggestion`,
+		accessToken,
+		"POST",
+		{ id: currentUser },
+		[]
+	);
 	const suggestion = res.data;
 
 	suggestion.forEach((value, index, array) => {

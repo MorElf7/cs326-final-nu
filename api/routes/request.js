@@ -16,12 +16,12 @@ router.get("/", wrapAsync(getAllRequest));
 
 router.post("/", wrapAsync(createRequest));
 
-router.post("/suggestion", wrapAsync(getSuggestions));
-
-router.get("/:requestId", wrapAsync(getRequest));
-
 router.put("/", wrapAsync(updateRequest));
 
 router.delete("/", wrapAsync(deleteRequest));
+
+router.post("/suggestion", wrapAsync(getSuggestions));
+
+router.get("/:requestId", wrapAsync(getRequest));
 
 export default router;
