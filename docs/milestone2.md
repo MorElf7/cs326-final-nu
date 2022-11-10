@@ -46,7 +46,14 @@ When the user hit unmatch, the specified match request will be delete from the d
 
 All of the above page has Read operation to fetch the data to display for the user.
 
+![](./img/home-like.png)
+When user click '♥', the information of the liked user will get sent to the database and check if it is a match. Alert will be triggered to notify user that they clicked 'like'. The new suggested user will be rendered on the match deck.
 
+![](./img/home-reject.png)
+When the user click 'X', the current rejected user will be removed from the deck and the new new suggested user will be rendered on the match deck.
+
+![](./img/home-reload.png)
+When the user click 'Reload', the match deck will be refreshed. The new suggestion list is fetched and rendered.
 
 # Work distributions
 
@@ -59,3 +66,9 @@ paths backend api (routing and mongo models in progress) - Nhan Lai
 creating paths, adding pinpoints in paths, showing all paths in frontend (routing and API calling) - Nhan Lai
 
 heorku deployment - Nhan Lai
+
+home routes, homepage (render suggested cardio buddies and user map/information) - Vi Doan
+
+getSuggestions and users backend api (modified and constructed a sample api) - Vi Doan
+
+redirect matches page, my profile page, chat page, logout page from home page - Vi Doan

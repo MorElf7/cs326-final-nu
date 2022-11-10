@@ -140,12 +140,12 @@ const displayUserInfo = async () => {
 
 const matchesPage = document.getElementById('matchesPage');
 matchesPage.addEventListener('click', () => {
-    window.location.assign("/match");
+    window.location.assign("/users/1234/match");
 })
 
 const profilePage = document.getElementById('profilePage');
 profilePage.addEventListener('click', () => {
-    window.location.assign("/users");
+    window.location.assign("/users/1234");
 })
 
 const chatPage = document.getElementById('chatPage');
