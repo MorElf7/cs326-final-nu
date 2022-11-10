@@ -45,10 +45,6 @@ app.get("/", (req, res) => {
 });
 
 // Backend Router
-// app.get("/api/paths/all/:userId", (req, res) => {
-// 	console.log("hello");
-// 	res.send("test");
-// });
 app.use("/api/users", UserBackendRouter);
 app.use("/api/request", RequestBackendRouter);
 app.use("/api/paths", PathBackendRouter);

@@ -1,3 +1,6 @@
+# Heroku
+https://cardio-buddy.herokuapp.com/home
+
 # Part 0, Backend API planning
 
 ### User CRUD
@@ -29,3 +32,24 @@
 -   DELETE /api/paths/:pathId : delete a path with its id
 -   GET /api/paths/:pathId/matches : Get list of users matched with current user on current path
 -   GET /api/paths/
+
+# Part 2, Frontend Implementation
+
+![](./img/matchSuggestion_create.png)
+When user press match, it will trigger a Create operation that create a new match request
+
+![](./img/matchSuggestion_update.png)
+When user accept or decline a match request, an Update operation will be triggered and update the status of the specific match request.
+
+![](./img/matchSuggestion_delete.png)
+When the user hit unmatch, the specified match request will be delete from the database.
+
+All of the above page has Read operation to fetch the data to display for the user.
+
+
+
+# Work distributions
+
+users, requests backend api (include routing, mongo models still in progress) - Bang Cao
+
+match, request, suggestion, userRequest page (include routing) - Bang Cao
