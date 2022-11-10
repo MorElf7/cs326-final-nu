@@ -38,8 +38,8 @@ const displayMatchDeck = ({src, name, description, route, schedule}) => {
     routeInfo.append(routeHeader, routeElem);
 }
 
-onload = async () => {
-	const accessToken = localStorage.getItem("accessToken");
+const getSuggestions = async () => {
+    const accessToken = localStorage.getItem("accessToken");
 	const currentUser = localStorage.getItem("currentUser");
 
     const response = await fetch('/api/request/suggestion', {
@@ -50,10 +50,14 @@ onload = async () => {
 			Authorization: `Bearer ${accessToken}`,
 		},
 		body: JSON.stringify({ id: currentUser }),
-	})
+	});
     const res = await response.json();
 
-	let suggestions = res.data;
+	return res.data;
+}
+
+onload = async () => {
+	let suggestions = await getSuggestions();
 
     displayMatchDeck(suggestions.pop());
     localStorage.setItem('suggestions', JSON.stringify(suggestions));
@@ -89,12 +93,17 @@ reject.addEventListener('click', () => {
     localStorage.setItem('suggestions', JSON.stringify(suggestions));
 });
 
+reload.addEventListener('click', async () => {
+    let suggestions = await getSuggestions();
+    displayMatchDeck(suggestions.pop());
+    localStorage.setItem('suggestions', JSON.stringify(suggestions));
+})
+
 const removeAllChildNodes = (parent) => {
     while(parent.firstChild){
         parent.removeChild(parent.firstChild)
     }
 }
-
 
 const displayUserInfo = async () => {
     const accessToken = localStorage.getItem("accessToken");
