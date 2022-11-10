@@ -3,6 +3,7 @@ const pinpointList = document.getElementById('pinpoint-list');
 const addPinpointBtn = document.getElementById('add-pinpoint')
 const createRouteBtn = document.getElementById('create-route-btn');
 const loadRouteBtn = document.getElementById('load-routes-btn');
+const routesList = document.getElementById('routes-list');
 
 const pinpoints = []
 const fakeUserId = "0123456789" 
@@ -77,11 +78,41 @@ const getUserRoutes = async (e) => {
   const { data, message, status } = await response.json();
   if (status === 200) {
     // location.href = "";
+    displayAllRoutes(data)
+
   } else {
     console.log("Error: " + response)
   }
-  console.log(data)
-  return data
+}
+
+const displayAllRoutes = (data) => {
+  while (routesList.firstChild){
+    routesList.removeChild(routesList.lastChild);
+  }
+//   <li class="list-group-item">
+//   <div>Dates:</div>
+//   <div>Time:</div>
+//   <div>
+    
+//   </div>
+// </li>
+  for (const route of data){
+    const r = document.createElement("li")
+    r.className = "list-group-item"
+    const date = document.createElement("div")
+    date.innerText = `Date: ${route.date}`
+    const time = document.createElement("div")
+    time.innerText = `Time: ${route.time}`
+    const points = document.createElement("div")
+    points.innerText = `Route: ${route.pinpoints}`
+    const speed = document.createElement("div")
+    speed.innerText = `Speed: ${route.speed}`
+    r.appendChild(date)
+    r.appendChild(time)
+    r.appendChild(points)
+    r.appendChild(speed)
+    routesList.appendChild(r)
+  }
 }
 
 const getDate = () => {

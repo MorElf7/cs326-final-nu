@@ -22,7 +22,8 @@ export const showAllPaths = async (req, res) => {
   for (let i = 0; i < 10; i++) {
     fakeData.push({
       _id: i,
-      pinpoints: [[i, i * 100][(i + 10, i * 100)]],
+      pinpoints: ["1 East Pleasant", "UMass", "Puffers Pond"],
+      time: "10:00",
       user: i,
       speed: ["Slow", "Medium", "Fast"][i % 3],
       date: ["mon", "tue", "wed", "thu"],
