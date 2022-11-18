@@ -6,11 +6,14 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-import express, { application } from "express";
+import express from "express";
+import session from "express-session";
 import mongoose from "mongoose";
+import passport from "passport";
 
 //Import utils function
 import { ExpressError } from "./api/utils/index.js";
+import { deserializeUser, serializeUser, strategy } from "./api/utils/localStrategy.js";
 
 //Backend Router
 import PathBackendRouter from "./api/routes/paths.js";
@@ -39,6 +42,20 @@ const dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017";
 app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use("/static", express.static(path.resolve(__dirname, "./frontend/static")));
+
+const sessionConfig = {
+	secret: process.env.SECRET || "developmentsecret", // set this encryption key in Heroku config (never in GitHub)!
+	resave: false,
+	saveUninitialized: false,
+};
+
+app.use(session(sessionConfig));
+passport.use(strategy);
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser(serializeUser);
+passport.deserializeUser(deserializeUser);
 
 app.get("/", (req, res) => {
 	res.redirect("/home");
