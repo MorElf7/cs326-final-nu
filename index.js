@@ -77,16 +77,6 @@ passport.deserializeUser(deserializeUser);
 
 app.use("/static", express.static(path.resolve(__dirname, "./frontend/static")));
 
-app.use(function (req, res, next) {
-	if (req.isAuthenticated()) {
-		res.cookie("checkSession", true, {
-			expires: Date.now() + 1000 * 60 * 60 * 24,
-			maxAge: 1000 * 60 * 60 * 24,
-		});
-	}
-	next();
-});
-
 app.get("/", (req, res) => {
 	res.redirect("/home");
 });
