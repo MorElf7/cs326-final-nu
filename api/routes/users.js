@@ -2,20 +2,22 @@ import express from "express";
 
 const router = express.Router({ mergeParams: true });
 
+import { login, signup, logout } from "../controllers/auth.js";
 import {
-	createUser,
 	deleteUser,
 	getMatches,
 	getOutgoingRequest,
 	getUser,
-	login,
 	updateUser,
 } from "../controllers/users.js";
 import { wrapAsync } from "../utils/index.js";
+import passport from "passport"
 
-router.post("/login", wrapAsync(login));
+router.post("/login", passport.authenticate("local", {failureRedirect: "/users/signin"}), login);
 
-router.post("/", wrapAsync(createUser));
+router.post("/signup", wrapAsync(signup));
+
+router.post("/logout", logout);
 
 router.get("/:userId/match", wrapAsync(getMatches));
 
