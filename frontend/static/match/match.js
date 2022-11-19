@@ -1,6 +1,6 @@
 const matchList = document.getElementById("matchesList");
 
-import { httpRequest } from "../utils.js";
+import { getUserId, httpRequest } from "../utils.js";
 
 const createCarouselItem = (image, i) => {
 	const carouselItem = document.createElement("div");
@@ -88,57 +88,65 @@ export const fillOutHref = () => {
 onload = async () => {
 	fillOutHref();
 
-	const currentUser = localStorage.getItem("currentUser");
+	const currentUser = getUserId();
 
-	const res = await httpRequest(`/api/users/${currentUser}/match`, "GET", {}, []);
+	const { data, status, message } = await httpRequest(
+		`/api/users/${currentUser}/match`,
+		"GET",
+		{},
+		[]
+	);
 
-	const matches = res.data;
+	if (status === 200) {
+		const matches = data;
 
-	matches.forEach((value, index, array) => {
-		const { username, pictures, bio } = value;
-		const listItem = document.createElement("li");
-		listItem.classList.add("list-group-item");
-		matchList.appendChild(listItem);
+		matches.forEach((value, index, array) => {
+			const { username, pictures, bio } = value;
+			const listItem = document.createElement("li");
+			listItem.classList.add("list-group-item");
+			matchList.appendChild(listItem);
 
-		const row = document.createElement("div");
-		row.classList.add("row");
-		listItem.appendChild(row);
+			const row = document.createElement("div");
+			row.classList.add("row");
+			listItem.appendChild(row);
 
-		const col1 = document.createElement("div");
-		col1.classList.add("col-md-3", "text-left");
-		row.appendChild(col1);
+			const col1 = document.createElement("div");
+			col1.classList.add("col-md-3", "text-left");
+			row.appendChild(col1);
 
-		col1.appendChild(createCarousel(index, pictures));
+			col1.appendChild(createCarousel(index, pictures));
 
-		const col2 = document.createElement("div");
-		col2.classList.add("col-md-5", "offset-1", "text-left", "align-self-center");
-		row.appendChild(col2);
+			const col2 = document.createElement("div");
+			col2.classList.add("col-md-5", "offset-1", "text-left", "align-self-center");
+			row.appendChild(col2);
 
-		const innerRow1 = document.createElement("div");
-		innerRow1.classList.add("row", "pb-5");
-		col2.appendChild(innerRow1);
+			const innerRow1 = document.createElement("div");
+			innerRow1.classList.add("row", "pb-5");
+			col2.appendChild(innerRow1);
 
-		const col21 = document.createElement("div");
-		col21.classList.add("col-auto", "text-md-left");
-		innerRow1.appendChild(col21);
+			const col21 = document.createElement("div");
+			col21.classList.add("col-auto", "text-md-left");
+			innerRow1.appendChild(col21);
 
-		const usernameNode = document.createElement("a");
-		usernameNode.href = "#";
-		usernameNode.appendChild(document.createTextNode(username));
-		col21.appendChild(usernameNode);
+			const usernameNode = document.createElement("a");
+			usernameNode.href = "#";
+			usernameNode.appendChild(document.createTextNode(username));
+			col21.appendChild(usernameNode);
 
-		const innerRow2 = document.createElement("div");
-		innerRow2.classList.add("row", "pt-3");
-		col2.appendChild(innerRow2);
+			const innerRow2 = document.createElement("div");
+			innerRow2.classList.add("row", "pt-3");
+			col2.appendChild(innerRow2);
 
-		const col22 = document.createElement("div");
-		col22.classList.add("col-auto");
-		innerRow2.appendChild(col22);
+			const col22 = document.createElement("div");
+			col22.classList.add("col-auto");
+			innerRow2.appendChild(col22);
 
-		const bioNode = document.createElement("p");
-		bioNode.appendChild(document.createTextNode(bio));
-		col22.appendChild(bioNode);
-	});
+			const bioNode = document.createElement("p");
+			bioNode.appendChild(document.createTextNode(bio));
+			col22.appendChild(bioNode);
+		});
+	} else {
+	}
 };
 
 export { createCarousel };

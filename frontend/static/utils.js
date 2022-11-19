@@ -11,9 +11,6 @@ export const httpRequest = async (uri, type, body, query) => {
 		const response = await fetch(url, {
 			method: type || "GET",
 			credentials: "same-origin",
-			headers: {
-				Authorization: `Bearer ${auth}`,
-			},
 		});
 		return await response.json();
 	} else {
@@ -27,4 +24,11 @@ export const httpRequest = async (uri, type, body, query) => {
 		});
 		return await response.json();
 	}
+};
+
+export const getUserId = () => {
+	const path = location.pathname.split("/");
+	const reg = new RegExp("^[0-9a-fA-F]{24}$");
+	if (reg.test(path[path.indexOf("users") + 1])) return path[path.indexOf("users") + 1];
+	else return null;
 };

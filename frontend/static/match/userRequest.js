@@ -1,21 +1,13 @@
-import { httpRequest } from "../utils.js";
+import { getUserId, httpRequest } from "../utils.js";
 import { createCarousel, fillOutHref } from "./match.js";
 
 const requestList = document.getElementById("requestList");
 
 fillOutHref();
-const accessToken = localStorage.getItem("accessToken");
-const refreshToken = localStorage.getItem("refreshToken");
-const currentUser = localStorage.getItem("currentUser");
+const currentUser = getUserId();
 
 onload = async () => {
-	const res = await httpRequest(
-		`/api/users/id=${currentUser}/request`,
-		accessToken,
-		"GET",
-		{},
-		[]
-	);
+	const res = await httpRequest(`/api/users/id=${currentUser}/request`, "GET", {}, []);
 
 	const requests = res.data;
 
