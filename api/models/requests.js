@@ -3,20 +3,22 @@ const { Schema } = mongoose;
 
 const requestSchema = new Schema(
 	{
-		userId: {
+		sender: {
 			type: Schema.Types.ObjectId,
 			ref: "User",
+			required: true,
+		},
+		receiver: {
+			type: Schema.Types.ObjectId,
+			ref: "User",
+			required: true,
 		},
 		message: {
 			type: String,
 			required: true,
 			default: "Hey there, I would like to connect with you!",
 		},
-		pending: {
-			type: Boolean,
-			required: true,
-			default: true,
-		},
+		// Status: PENDING, ACCEPTED, REJECTED
 		status: {
 			type: String,
 			required: true,

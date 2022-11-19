@@ -145,7 +145,7 @@ matchesPage.addEventListener('click', () => {
 
 const profilePage = document.getElementById('profilePage');
 profilePage.addEventListener('click', () => {
-    window.location.assign("/users/1234");
+    window.location.assign("/routesPanel");
 })
 
 const chatPage = document.getElementById('chatPage');
