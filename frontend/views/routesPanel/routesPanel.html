@@ -59,7 +59,7 @@
             <h2>About You</h2>
           </div>
           <form action="">
-            <div class="form-gr h-50">
+            <div class="form-group h-50">
               <div class="row-fluid">
                 <label for=""> Name: </label>
                 <input type="text" class="form-control" name="" placeholder="Your Name..." id="user-name" />
@@ -67,10 +67,10 @@
                 <input type="text" class="form-control" name="" placeholder="Something about you..." id="user-bio" />
               </div>
             </div>
-            <button id="save-info-btn">Save info</button>
+            <button class="btn btn-primary" id="save-info-btn">Save info</button>
           </form>
 
-          <div class="">
+          <div class="form-group">
             <div class="col offset-4">
               <h2>Create A Route</h2>
             </div>
@@ -89,7 +89,7 @@
               placeholder="Enter an address"
               id="pinpoint-input"
             />
-            <button id="add-pinpoint" class="col">Add point</button>
+            <button id="add-pinpoint" class="btn btn-primary">Add point</button>
             <ul class="container d-flex flex-row row justify-content-between">
               <input type="checkbox" name="" id="mon">
               <div>Mon</div>
@@ -106,30 +106,21 @@
               <input type="checkbox" name="" id="sun">
               <div>Sun</div>
             </ul>
-            <label for="">Pick a time: </label>
-            <input type="time" id="time-input"/>
-            <label for="">Pick your speed</label>
-            <select name="" id="speed-input">
+            <label for="">Pick a start time: </label>
+            <input type="time" class="form-control  w-25 col-6" id="time-input"/>
+            <label for="">Pick your speed:</label>
+            <select name="" class="form-control w-25 col-6" id="speed-input">
               <option value="slow">Slow</option>
               <option value="medium">Medium</option>
               <option value="fast">Fast</option>
             </select>
           </div>
-          <button id="create-route-btn">CREATE ROUTE!</button>
+          <button class="btn btn-primary" id="create-route-btn">CREATE ROUTE!</button>
         </div>
-        <div class="col-6">
-          <div class="container">
-            <div class="row pt-3 text-center">
-              <div class="col offset-2">
-                <h2>Your Routes</h2>
-                <button type="" id="load-routes-btn">Load your routes</button>
-                <div>
-                  <ul id="routes-list" class="list-group-flush">
-                  </ul>
-                </div>
-
-              </div>
-
+        <div class="col-6 container d-flex justify-content-center">
+          <h2>Your Route</h2>
+          <div id="map">
+            
           </div>
         </div>
       </div>

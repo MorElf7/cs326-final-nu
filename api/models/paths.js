@@ -2,9 +2,10 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const pathSchema = new Schema({
-	pinponts: [
+	pinpoints: [
 		{
-			type: String,
+			name: String,
+			zipcode: String,
 		},
 	],
 	user: {

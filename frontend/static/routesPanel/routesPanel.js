@@ -51,7 +51,6 @@ const addPinpoint = async (e) => {
     } catch (error) {
       alert(error)
     }
-    
   } 
 }
 
@@ -96,6 +95,8 @@ const createRoute = async (e) => {
     console.log("Error: " + status)
   }
 }
+
+
 
 const getUserRoutes = async (e) => {
   e.preventDefault();
