@@ -6,6 +6,7 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+import MongoStore from "connect-mongo";
 import express from "express";
 import session from "express-session";
 import mongoose from "mongoose";
@@ -30,23 +31,40 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017";
-// mongoose.connect(dbUrl);
 
-// const db = mongoose.connection;
-// db.on("error", console.error.bind(console, "connection error:"));
-// db.once("open", () => {
-// 	console.log("Database connected");
-// });
+const secret = process.env.SECRET || "developmentsecret";
+mongoose.connect(dbUrl);
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", () => {
+	console.log("Database connected");
+});
 
 // https://stackoverflow.com/questions/54173476/js-file-gets-a-neterr-aborted-404-not-found
 app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
-app.use("/static", express.static(path.resolve(__dirname, "./frontend/static")));
+
+const store = MongoStore.create({
+	mongoUrl: dbUrl,
+	secret,
+	touchAfter: 3600,
+});
+
+store.on("error", function (e) {
+	console.log("Session store error", e);
+});
 
 const sessionConfig = {
-	secret: process.env.SECRET || "developmentsecret", // set this encryption key in Heroku config (never in GitHub)!
+	store,
+	name: "session",
+	secret,
 	resave: false,
 	saveUninitialized: false,
+	cookie: {
+		httpOnly: true,
+		maxAge: 1000 * 3600 * 6,
+	},
 };
 
 app.use(session(sessionConfig));
@@ -56,6 +74,18 @@ app.use(passport.session());
 
 passport.serializeUser(serializeUser);
 passport.deserializeUser(deserializeUser);
+
+app.use("/static", express.static(path.resolve(__dirname, "./frontend/static")));
+
+app.use(function (req, res, next) {
+	if (req.isAuthenticated()) {
+		res.cookie("checkSession", true, {
+			expires: Date.now() + 1000 * 60 * 60 * 24,
+			maxAge: 1000 * 60 * 60 * 24,
+		});
+	}
+	next();
+});
 
 app.get("/", (req, res) => {
 	res.redirect("/home");
