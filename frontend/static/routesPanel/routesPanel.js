@@ -1,3 +1,5 @@
+import { validateAddress } from "../geocodingUtils.js"
+
 const pinpointList = document.getElementById('pinpoint-list');
 
 const addPinpointBtn = document.getElementById('add-pinpoint')
@@ -32,18 +34,24 @@ const saveInfo = async (e) => {
   }
 }
 
-const addPinpoint = (e) => {
+const addPinpoint = async (e) => {
   const location = document.getElementById("pinpoint-input").value
   if (location === ''){
     alert('Please enter a location')
   } else {
-    document.getElementById("pinpoint-input").value = ""
-    const pinpoint = document.createElement("li")
-    const t = document.createTextNode(location)
-    pinpoint.className = "list-group-item d-flex justify-content-between align-items-center";
-    pinpoint.appendChild(t)
-    pinpointList.appendChild(pinpoint);
-    pinpoints.push(location)
+    try {
+      document.getElementById("pinpoint-input").value = ""
+      const pinpoint = document.createElement("li")
+      const temp = await validateAddress(location)
+      const t = document.createTextNode(temp)
+      pinpoint.className = "list-group-item d-flex justify-content-between align-items-center";
+      pinpoint.appendChild(t)
+      pinpointList.appendChild(pinpoint);
+      pinpoints.push(location)
+    } catch (error) {
+      alert(error)
+    }
+    
   } 
 }
 
@@ -175,3 +183,6 @@ addPinpointBtn.addEventListener("click", addPinpoint)
 createRouteBtn.addEventListener("click", createRoute)
 loadRouteBtn.addEventListener("click", getUserRoutes)
 saveInfoBtn.addEventListener('click', saveInfo)
+
+
+
