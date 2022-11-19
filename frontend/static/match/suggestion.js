@@ -1,5 +1,5 @@
 import { getUserId, httpRequest } from "../utils.js";
-import { createCarousel, fillOutHref } from "./match.js";
+import { createAvatar, fillOutHref } from "./match.js";
 
 const suggestionList = document.getElementById("suggestionList");
 
@@ -10,7 +10,7 @@ onload = async () => {
 	fillOutHref();
 	const currentUser = getUserId();
 
-	const { data, message, status } = await httpRequest(
+	const { data, status } = await httpRequest(
 		`/api/request/suggestion`,
 		"POST",
 		{ id: currentUser },
@@ -21,7 +21,7 @@ onload = async () => {
 		const suggestion = data;
 
 		suggestion.forEach((value, index, array) => {
-			const { username, pictures, bio, id } = value;
+			const { username, bio, id } = value;
 			const listItem = document.createElement("li");
 			listItem.classList.add("list-group-item");
 			suggestionList.appendChild(listItem);
@@ -34,7 +34,7 @@ onload = async () => {
 			col1.classList.add("col-md-3", "text-left");
 			row.appendChild(col1);
 
-			col1.appendChild(createCarousel(index, pictures));
+			col1.appendChild(createAvatar(username));
 
 			const col2 = document.createElement("div");
 			col2.classList.add("col-md-5", "text-left", "align-self-center");

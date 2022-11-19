@@ -1,3 +1,4 @@
+import { connections } from "mongoose";
 import User from "../models/users.js";
 import { ExpressError } from "../utils/index.js";
 
@@ -33,8 +34,24 @@ export const deleteUser = async (req, res, next) => {
 };
 
 export const getMatches = async (req, res, next) => {
+	// const fakeData = [];
+	// for (let i = 1; i <= 10; i++) {
+	// 	fakeData.push({
+	// 		_id: i,
+	// 		bio: "Hey, just some fake bio here",
+	// 		username: `Username ${i}`,
+	// 	});
+	// }
+	// res.status(200).json({
+	// 	message: "Being developed! Please stay tuned",
+	// 	data: fakeData,
+	// 	status: 200,
+	// });
 	const { userId } = req.params;
-	const user = await User.findById(userId);
+	const user = await User.findById(userId).populate({
+		path: connections,
+		select: ["username", "_id", "bio"],
+	});
 	if (!user) {
 		throw new ExpressError("User not found", 404);
 	}

@@ -1,5 +1,5 @@
 import { getUserId, httpRequest } from "../utils.js";
-import { createCarousel, fillOutHref } from "./match.js";
+import { createAvatar, fillOutHref } from "./match.js";
 
 const requestList = document.getElementById("requestList");
 
@@ -11,9 +11,8 @@ myRequestLink.href = path.join("/") + "/userRequest";
 const currentUser = getUserId();
 
 onload = async () => {
-	const { data, message, status } = await httpRequest(
-		`/api/request?id=${currentUser}`,
-		accessToken,
+	const { data, status } = await httpRequest(
+		`/api/request?receiver=${currentUser}`,
 		"GET",
 		{},
 		[]
@@ -23,7 +22,7 @@ onload = async () => {
 		const requests = data;
 
 		requests.forEach((value, index, array) => {
-			const { username, pictures, bio, message, id } = value;
+			const { username, message, id } = value;
 			const listItem = document.createElement("li");
 			listItem.classList.add("list-group-item");
 			requestList.appendChild(listItem);
@@ -36,7 +35,7 @@ onload = async () => {
 			col1.classList.add("col-md-3", "text-left");
 			row.appendChild(col1);
 
-			col1.appendChild(createCarousel(index, pictures));
+			col1.appendChild(createAvatar(username));
 
 			const col2 = document.createElement("div");
 			col2.classList.add("col-md-5", "text-left", "align-self-center");
@@ -63,9 +62,9 @@ onload = async () => {
 			col22.classList.add("col-auto");
 			innerRow2.appendChild(col22);
 
-			const bioNode = document.createElement("p");
-			bioNode.appendChild(document.createTextNode(bio));
-			col22.appendChild(bioNode);
+			const messageNode = document.createElement("p");
+			messageNode.appendChild(document.createTextNode(message));
+			col22.appendChild(messageNode);
 
 			const col3 = document.createElement("div");
 			col3.classList.add("col-md-auto", "align-self-center");
@@ -85,7 +84,7 @@ onload = async () => {
 				event.preventDefault();
 				event.stopPropagation();
 
-				const body = { pending: false, id, status: "accepted" };
+				const body = { id, status: "ACCEPTED" };
 				const res = await httpRequest(`/api/request`, "PUT", body, []);
 				if (res.status === 200) {
 					col3.removeChild(acceptBtn);
@@ -97,7 +96,7 @@ onload = async () => {
 				event.preventDefault();
 				event.stopPropagation();
 
-				const body = { pending: false, id, status: "rejected" };
+				const body = { id, status: "REJECTED" };
 				const res = await httpRequest(`/api/request`, accessToken, "PUT", body, []);
 				if (res.status === 200) {
 					col3.removeChild(acceptBtn);
