@@ -23,7 +23,7 @@ const userSchema = new Schema({
 	},
 	connections: [
 		{
-			type: mongoose.Schema.Types.ObjectId,
+			type: Schema.Types.ObjectId,
 			ref: "User",
 		},
 	],
