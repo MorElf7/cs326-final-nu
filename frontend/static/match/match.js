@@ -88,11 +88,9 @@ export const fillOutHref = () => {
 onload = async () => {
 	fillOutHref();
 
-	const accessToken = localStorage.getItem("accessToken");
-	const refreshToken = localStorage.getItem("refreshToken");
 	const currentUser = localStorage.getItem("currentUser");
 
-	const res = await httpRequest(`/api/users/${currentUser}/match`, accessToken, "GET", {}, []);
+	const res = await httpRequest(`/api/users/${currentUser}/match`, "GET", {}, []);
 
 	const matches = res.data;
 

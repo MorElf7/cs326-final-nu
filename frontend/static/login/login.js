@@ -1,3 +1,5 @@
+import { httpRequest } from "../utils.js";
+
 const form = document.getElementById("loginForm");
 
 const submitLogin = async (event) => {
@@ -6,17 +8,15 @@ const submitLogin = async (event) => {
 	if (form.checkValidity()) {
 		const email = document.getElementById("email").value;
 		const password = document.getElementById("password").value;
-		const response = await fetch("/api/users/login", {
-			method: "POST",
-			credentials: "same-origin",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ email, password }),
-		});
-		const { data, message, status } = await response.json();
+		const { data, message, status } = await httpRequest(
+			"/api/users/login",
+			"POST",
+			{ email, password },
+			[]
+		);
 		if (status === 200) {
-			location.href = "";
+			console.log(status);
+			// location.href = "";
 		} else {
 			const messageDiv = document.getElementById("message");
 			messageDiv.innerHtml = "";

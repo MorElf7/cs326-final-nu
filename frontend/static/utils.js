@@ -1,4 +1,4 @@
-export const httpRequest = async (uri, auth, type, body, query) => {
+export const httpRequest = async (uri, type, body, query) => {
 	let url = uri;
 	if (Object.keys(query).length > 0) {
 		url += "?";
@@ -21,7 +21,6 @@ export const httpRequest = async (uri, auth, type, body, query) => {
 			method: type,
 			credentials: "same-origin",
 			headers: {
-				Authorization: `Bearer ${auth}`,
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify(body),
