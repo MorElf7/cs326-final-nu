@@ -26,7 +26,7 @@ https://cardio-buddy.herokuapp.com/home
 ### Path CRUD
 
 -   GET /api/paths/:pathId : get any path by its id
--   GET /api/paths/userId : get a user's paths
+-   GET /api/paths/:userId : get a user's paths
 -   POST /api/paths/ : create a new path
 -   UPDATE /api/paths/:pathId : update a path's data
 -   DELETE /api/paths/:pathId : delete a path with its id
