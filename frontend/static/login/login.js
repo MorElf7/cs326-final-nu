@@ -6,20 +6,20 @@ const submitLogin = async (event) => {
 	event.preventDefault();
 	event.stopPropagation();
 	if (form.checkValidity()) {
-		const email = document.getElementById("email").value;
+		const username = document.getElementById("username").value;
 		const password = document.getElementById("password").value;
 		const { data, message, status } = await httpRequest(
 			"/api/users/login",
 			"POST",
-			{ email, password },
+			{ username, password },
 			[]
 		);
 		if (status === 200) {
-			console.log(status);
-			// location.href = "";
+			// console.log(status);
+			location.href = data.redirectUrl;
 		} else {
 			const messageDiv = document.getElementById("message");
-			messageDiv.innerHtml = "";
+			messageDiv.innerText = "";
 			messageDiv.appendChild(document.createTextNode(message));
 		}
 	}
