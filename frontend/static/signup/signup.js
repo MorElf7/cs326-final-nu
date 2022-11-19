@@ -13,15 +13,6 @@ const submitSignup = async (event) => {
 			document.getElementById("not-match").hidden = false;
 		} else {
 			document.getElementById("not-match").hidden = true;
-			// const response = await fetch("/api/users", {
-			// 	method: "POST",
-			// 	credentials: "same-origin",
-			// 	headers: {
-			// 		"Content-Type": "application/json",
-			// 	},
-			// 	body: JSON.stringify({ email, password, confirm }),
-			// });
-			// const { data, message, status } = await response.json();
 			const { data, message, status } = await httpRequest(
 				"/api/users/signup",
 				"POST",
