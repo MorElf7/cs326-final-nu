@@ -30,7 +30,8 @@ const app = express();
 
 const port = process.env.PORT || 3000;
 
-const dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017";
+// const dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017";
+const dbUrl = "mongodb://127.0.0.1:27017";
 
 const secret = process.env.SECRET || "developmentsecret";
 mongoose.connect(dbUrl);
@@ -68,9 +69,9 @@ const sessionConfig = {
 };
 
 app.use(session(sessionConfig));
-passport.use(strategy);
 app.use(passport.initialize());
 app.use(passport.session());
+passport.use(strategy);
 
 passport.serializeUser(serializeUser);
 passport.deserializeUser(deserializeUser);
@@ -96,10 +97,10 @@ app.all("*", (req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-	const { statusCode = 500 } = err;
+	const { status = 500 } = err;
 	if (!err.message) err.message = "Something went wrong!";
-	res.status(statusCode);
-	res.send({ err });
+	const data = { status, message: err.message };
+	res.status(status).json(data);
 });
 
 app.listen(port, () => {

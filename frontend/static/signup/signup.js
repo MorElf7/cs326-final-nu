@@ -5,6 +5,7 @@ const submitSignup = async (event) => {
 	event.stopPropagation();
 	if (form.checkValidity()) {
 		const email = document.getElementById("email").value;
+		const username = document.getElementById("username").value;
 		const password = document.getElementById("password").value;
 		const confirm = document.getElementById("confirm").value;
 
@@ -12,20 +13,17 @@ const submitSignup = async (event) => {
 			document.getElementById("not-match").hidden = false;
 		} else {
 			document.getElementById("not-match").hidden = true;
-			const response = await fetch("/api/users", {
-				method: "POST",
-				credentials: "same-origin",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({ email, password, confirm }),
-			});
-			const { data, message, status } = await response.json();
+			const { data, message, status } = await httpRequest(
+				"/api/users/signup",
+				"POST",
+				{ email, username, password },
+				[]
+			);
 			if (status === 200) {
-				location.href = "";
+				location.href = "/home";
 			} else {
 				const messageDiv = document.getElementById("message");
-				messageDiv.innerHtml = "";
+				messageDiv.innerText = "";
 				messageDiv.appendChild(document.createTextNode(message));
 			}
 		}

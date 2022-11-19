@@ -14,6 +14,19 @@ export const getAllRequest = async (req, res) => {
 		const requests = await Request.find({ status: "PENDING" });
 		return res.status(200).json({ ...response, data: requests });
 	}
+	// const fakeData = [];
+	// for (let i = 1; i <= 10; i++) {
+	// 	fakeData.push({
+	// 		_id: i,
+	// 		username: `Username ${i}`,
+	// 		message: "Hey, just some fake message here",
+	// 	});
+	// }
+	// res.status(200).json({
+	// 	message: "Being developed! Please stay tuned",
+	// 	data: fakeData,
+	// 	status: 200,
+	// });
 };
 
 export const getRequest = async (req, res, next) => {
@@ -103,12 +116,6 @@ export const getSuggestions = async (req, res, next) => {
 			_id: 1,
 			bio: "Hey, just some fake request message here",
 			username: `Username 1`,
-			pictures: [
-				{ src: "https://github.com/identicons/jasonlong.png", name: "some file name 1" },
-				{ src: "https://github.com/identicons/morelf7.png", name: "some file name 2" },
-				{ src: "https://github.com/identicons/laithiennhan.png", name: "some file name 3" },
-				{ src: "https://github.com/identicons/vtdoan.png", name: "some file name 4" },
-			],
 		},
 		{
 			src: "./img/route.avif",
@@ -128,12 +135,6 @@ export const getSuggestions = async (req, res, next) => {
 			_id: 2,
 			bio: "Hey, just some fake request message here",
 			username: `Username 2`,
-			pictures: [
-				{ src: "https://github.com/identicons/jasonlong.png", name: "some file name 1" },
-				{ src: "https://github.com/identicons/morelf7.png", name: "some file name 2" },
-				{ src: "https://github.com/identicons/laithiennhan.png", name: "some file name 3" },
-				{ src: "https://github.com/identicons/vtdoan.png", name: "some file name 4" },
-			],
 		},
 	];
 

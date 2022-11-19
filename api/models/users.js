@@ -27,6 +27,10 @@ const userSchema = new Schema({
 			ref: "User",
 		},
 	],
+	path: {
+		type: Schema.Types.ObjectId,
+		ref: "Path",
+	},
 });
 
 export default mongoose.model("User", userSchema);
