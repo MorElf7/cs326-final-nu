@@ -2,9 +2,11 @@ import express from "express";
 
 const router = express.Router({ mergeParams: true });
 
-import { login, logout, postLogin, signup } from "../controllers/auth.js";
+import { getCurrentUser, login, logout, postLogin, signup } from "../controllers/auth.js";
 import { deleteUser, getMatches, getUser, updateUser } from "../controllers/users.js";
 import { wrapAsync } from "../utils/index.js";
+
+router.get("/currentUser", getCurrentUser);
 
 router.post("/login", login, postLogin);
 
