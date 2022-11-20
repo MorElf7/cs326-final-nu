@@ -3,25 +3,27 @@ import User from "../models/users.js";
 import { ExpressError } from "../utils/index.js";
 
 export const getUser = async (req, res, next) => {
-	const user = {
-		src: "./img/route.avif",
-		name: "My Name",
-		description: "Some description about the user.",
-		route: {
-			from: "My Route - from",
-			to: "My Route - to",
-		},
-		schedule: {
-			days: ["Monday", "Tuesday", "Friday"],
-			time: {
-				from: new Date().getHours() + ":" + new Date().getMinutes(),
-				to: new Date().getHours() + ":" + new Date().getMinutes(),
-			},
-		},
-		dateJoined: new Date().getHours() + ":" + new Date().getMinutes(),
-	};
+	// const user = {
+	// 	src: "./img/route.avif",
+	// 	name: "My Name",
+	// 	description: "Some description about the user.",
+	// 	route: {
+	// 		from: "My Route - from",
+	// 		to: "My Route - to",
+	// 	},
+	// 	schedule: {
+	// 		days: ["Monday", "Tuesday", "Friday"],
+	// 		time: {
+	// 			from: new Date().getHours() + ":" + new Date().getMinutes(),
+	// 			to: new Date().getHours() + ":" + new Date().getMinutes(),
+	// 		},
+	// 	},
+	// 	dateJoined: new Date().getHours() + ":" + new Date().getMinutes(),
+	// };
+	const { requestUser } = req.params;
+	const user = await Request.findById(requestUser);
 	res.status(200).json({
-		message: "Being developed! Please stay tuned",
+		message: "OK",
 		data: user,
 		status: 200,
 	});
