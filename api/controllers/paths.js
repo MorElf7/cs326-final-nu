@@ -26,7 +26,7 @@ export const updatePath = async (req, res, next) => {
   res.status(200).json({
     message: "Successfully updated path",
     status: 200,
-    data: Path.findOne({user: userId});
+    data: Path.findOne({user: userId})
   });
 };
 
