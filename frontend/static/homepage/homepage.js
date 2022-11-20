@@ -143,7 +143,7 @@ matchesPage.addEventListener('click', () => {
     window.location.assign("/users/1234/match");
 })
 
-const profilePage = document.getElementById('profilePage');
+const profilePage = document.getElementById('routesPanel');
 profilePage.addEventListener('click', () => {
     window.location.assign("/routesPanel");
 })
