@@ -1,5 +1,6 @@
 import passport from "passport";
 import User from "../models/users.js";
+import { ExpressError } from "../utils/index.js";
 import { MiniCrypt } from "../utils/miniCrypt.js";
 
 const mc = new MiniCrypt();

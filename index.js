@@ -30,8 +30,8 @@ const app = express();
 
 const port = process.env.PORT || 3000;
 
-// const dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017";
-const dbUrl = "mongodb://127.0.0.1:27017";
+// const dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017/cardio-buddy";
+const dbUrl = "mongodb://127.0.0.1:27017/cardio-buddy";
 
 const secret = process.env.SECRET || "developmentsecret";
 mongoose.connect(dbUrl);
