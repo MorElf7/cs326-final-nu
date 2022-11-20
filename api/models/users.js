@@ -35,12 +35,6 @@ const userSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	_id: {
-		type: mongoose.Schema.Types.ObjectId,
-		index: true,
-		required: true,
-		auto: true,
-	  }
 });
 
 export default mongoose.model("User", userSchema);
