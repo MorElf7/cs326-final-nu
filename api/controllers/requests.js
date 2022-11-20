@@ -91,9 +91,13 @@ export const getSuggestions = async (req, res, next) => {
 		throw new ExpressError("User not found", 404);
 	}
 	const zipcodeList = user.path.pinpoints.map((e) => e.zipcode);
-	const suggestedPaths = await Path.find({ "pinpoints.zipcode": { $all: zipcodeList } });
+	const suggestedPaths = await Path.find({ "pinpoints.zipcode": { $all: zipcodeList } }).populate(
+		"user"
+	);
 
-	res.status(200).json({ status: 200, message: "", data: suggestedPaths });
+	const suggestMatches = [...new Set(suggestedPaths.map((e) => e.user))];
+
+	res.status(200).json({ status: 200, message: "", data: suggestMatches });
 
 	// const suggestions = [
 	// 	{
