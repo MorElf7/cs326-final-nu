@@ -31,32 +31,45 @@ export const getUser = async (req, res, next) => {
 
 export const updateUser = async (req, res, next) => {
 	const { userId } = req.params;
-	const {username, email, description} = req.body;
+	const { username, email, description } = req.body;
 	const user = await User.findById(userId);
-	if(!user) {
-		throw new ExpressError("Request Not Found", 404);
+	if (!user) {
+		throw new ExpressError("User Not Found", 404);
 	}
-	const dbusername = await User.findOne({username: username});
-	if(dbusername){
+	const dbusername = await User.findOne({ username: username });
+	if (dbusername) {
 		res.status(403).json({
 			message: "username already exists",
 			data: user,
 			status: 403,
 		});
 	}
-	await User.updateOne({_id : userId}, {
-		username : username,
-		email: email,
-		description: description
-	})
-	res.status(200).json({ 
-		message: "OK", 
+	await User.updateOne(
+		{ _id: userId },
+		{
+			username: username,
+			email: email,
+			description: description,
+		}
+	);
+	res.status(200).json({
+		message: "OK",
 		data: user,
-		status: 200 });
+		status: 200,
+	});
 };
 
 export const deleteUser = async (req, res, next) => {
-	res.status(200).json({ message: "Being developed! Please stay tuned" });
+	const { id } = req.body;
+	const user = await User.findById(id);
+	if (!user) {
+		throw new ExpressError("User not found", 404);
+	}
+	await User.findByIdAndDelete(id);
+	res.status(200).json({
+		status: 200,
+		message: "User deleted",
+	});
 };
 
 export const getMatches = async (req, res, next) => {
