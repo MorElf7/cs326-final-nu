@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const pathSchema = new Schema({
 	pinpoints: [
 		{
-			name: String,
+			address: String,
 			zipcode: String,
 		},
 	],

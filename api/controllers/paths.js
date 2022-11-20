@@ -1,51 +1,46 @@
 import Path from "../models/paths.js";
 
 export const createPath = async (req, res, next) => {
-  // const path = new Path(req.body.path);
-  // await path.save();
+  const { pinpoints, user, speed, date } = req.body;
+  const path = new Path(pinpoints, user, speed, date);
+  await path.save();
   // console.log(path);
   res.status(200).json({
-    message: "Being developed! Please stay tuned",
+    message: "Path created",
     status: 200,
   });
 };
 
 export const showPath = async (req, res, next) => {
+  const { userId } = req.params;
+  const path = await Path.findOne({user: userId})
+  return res.status(200).json({ message: "OK", status: 200, data: path})
+};
+
+export const updatePath = async (req, res, next) => {
+  const { userId } = req.params;
+  const { pinpoints, user, speed, date } = req.body;
+
+  Path.updateOne({user: userId}, {pinpoints: pinpoints, speed: speed, date: date})
+
   res.status(200).json({
-    message: "Being developed! Please stay tuned",
+    message: "Successfully updated path",
     status: 200,
+    data: Path.findOne({user: userId});
   });
 };
 
-const fakeData = [];
-export const showAllPaths = async (req, res) => {
-  for (let i = 0; i < 10; i++) {
-    fakeData.push({
-      _id: i,
-      pinpoints: ["1 East Pleasant", "UMass", "Puffers Pond"],
-      time: "10:00",
-      user: i,
-      speed: ["Slow", "Medium", "Fast"][i % 3],
-      date: ["mon", "tue", "wed", "thu"],
-    });
+export const deletePath = async (req, res, next) => {
+  const { id } = req.body;
+  const path = await Path.findById(id);
+
+  if (!path) {
+    throw new ExpressError("Path not found", 404);
   }
-  res.status(200).json({
-    data: fakeData,
-    message: "Being developed! Please stay tuned",
-    status: 200,
-  });
-};
 
-export const updatePath = async (req, res) => {
+  await Path.findByIdAndDelete(id);
   res.status(200).json({
-    message: "Being developed! Please stay tuned",
     status: 200,
-  });
-};
-
-export const deletePath = async (req, res) => {
-  res.status(200).json({
-    message: "Being developed! Please stay tuned",
-    status: 200,
+    message: "Path deleted",
   });
 };

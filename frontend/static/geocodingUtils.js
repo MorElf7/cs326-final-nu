@@ -5,7 +5,10 @@ export const validateAddress = async (pinpoint) => {
   const res = await fetch(url)
   const result = await res.json()
   if (result["features"].length > 0) {
-    return result["features"][0]["place_name"]
+    return {
+      "address": result["features"][0]["place_name"],
+      "zipcode": result["features"][0]["context"][0]["text"],
+    }
   } else {
     throw new Error("Please try a valid address")
   }
