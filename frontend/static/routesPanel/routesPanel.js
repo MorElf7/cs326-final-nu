@@ -1,5 +1,7 @@
 import { validateAddress } from "../geocodingUtils.js"
 
+mapboxgl.accessToken = "pk.eyJ1IjoibGFpdGhpZW5uaGFuMDkiLCJhIjoiY2xhbXVvdDQ3MGdlcDNycXRud3QydnlzaSJ9.2OA98XNN6-jP-H14l-b0rQ"
+
 const pinpointList = document.getElementById('pinpoint-list');
 
 const addPinpointBtn = document.getElementById('add-pinpoint')
@@ -103,6 +105,23 @@ const getDate = () => {
   }
   return res
 }
+
+const renderMap = () => {
+  const map = new mapboxgl.Map({
+    container: 'map',
+    // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+    style: 'mapbox://styles/mapbox/streets-v12',
+    center: [12.550343, 55.665957],
+    zoom: 8
+    });
+}
+const map = new mapboxgl.Map({
+  container: 'map',
+  // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+  style: 'mapbox://styles/mapbox/streets-v12',
+  center: [12.550343, 55.665957],
+  zoom: 8
+});
 
 addPinpointBtn.addEventListener("click", addPinpoint)
 createRouteBtn.addEventListener("click", createRoute)

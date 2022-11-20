@@ -50,3 +50,7 @@ export const logout = (req, res, next) => {
 	req.logout();
 	res.status(200).json({ status: 200, message: "Log Out" });
 };
+
+export const getCurrentUser = (req, res, next) => {
+	res.status(200).json({ status: 200, message: "", data: req.user });
+};
