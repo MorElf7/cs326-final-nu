@@ -1,25 +1,26 @@
 {
-  "name": "cs326-final-nu",
-  "version": "1.0.0",
-  "main": "index.js",
-  "repository": "git@github.com:MorElf7/cs326-final-nu.git",
-  "author": "<caothanhbang2002@gmail.com>",
-  "license": "MIT",
-  "type": "module",
-  "dependencies": {
-    "connect-mongo": "^4.6.0",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "express-session": "^1.17.3",
-    "mapbox-gl": "^2.10.0",
-    "mongoose": "^6.7.0",
-    "nodemon": "^2.0.20",
-    "passport": "^0.6.0",
-    "passport-local": "^1.0.0",
-    "path": "^0.12.7",
-    "url": "^0.11.0"
-  },
-  "scripts": {
-    "dev": "nodemon index.js"
-  }
+	"name": "cs326-final-nu",
+	"version": "1.0.0",
+	"main": "index.js",
+	"repository": "git@github.com:MorElf7/cs326-final-nu.git",
+	"author": "<caothanhbang2002@gmail.com>",
+	"license": "MIT",
+	"type": "module",
+	"dependencies": {
+		"connect-mongo": "^4.6.0",
+		"dotenv": "^16.0.3",
+		"express": "^4.18.2",
+		"express-session": "^1.17.3",
+		"mapbox-gl": "^2.10.0",
+		"mongoose": "^6.7.0",
+		"nodemon": "^2.0.20",
+		"passport": "^0.6.0",
+		"passport-local": "^1.0.0",
+		"path": "^0.12.7",
+		"url": "^0.11.0"
+	},
+	"scripts": {
+		"dev": "nodemon index.js",
+		"seeds": "node api/seeds"
+	}
 }
