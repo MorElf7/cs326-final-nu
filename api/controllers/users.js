@@ -52,7 +52,7 @@ export const getMatches = async (req, res, next) => {
 	const { userId } = req.params;
 	const user = await User.findById(userId).populate({
 		path: connections,
-		select: ["username", "_id", "bio"],
+		// select: ["username", "_id", "bio"],
 	});
 	if (!user) {
 		throw new ExpressError("User not found", 404);
