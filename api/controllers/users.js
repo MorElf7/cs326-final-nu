@@ -29,6 +29,7 @@ export const getUser = async (req, res, next) => {
 	});
 };
 export const updateUser = async (req, res, next) => {
+	const {username, email, description} = req.body;
 	res.status(200).json({ message: "Being developed! Please stay tuned", status: 200 });
 };
 export const deleteUser = async (req, res, next) => {
