@@ -14,4 +14,7 @@ export const validateAddress = async (pinpoint) => {
   }
 }
 
+export const renderMap = (htmlElem, pinpoints) => {
+  
+}
 
