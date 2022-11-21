@@ -21,7 +21,7 @@ onload = async () => {
 		const suggestion = data;
 
 		suggestion.forEach((value, index, array) => {
-			const { username, bio, id } = value;
+			const { username, description, id } = value;
 			const listItem = document.createElement("li");
 			listItem.classList.add("list-group-item");
 			suggestionList.appendChild(listItem);
@@ -61,9 +61,9 @@ onload = async () => {
 			col22.classList.add("col-auto");
 			innerRow2.appendChild(col22);
 
-			const bioNode = document.createElement("p");
-			bioNode.appendChild(document.createTextNode(bio));
-			col22.appendChild(bioNode);
+			const descriptionNode = document.createElement("p");
+			descriptionNode.appendChild(document.createTextNode(description));
+			col22.appendChild(descriptionNode);
 
 			const col3 = document.createElement("div");
 			col3.classList.add("col-md-auto", "align-self-center");
