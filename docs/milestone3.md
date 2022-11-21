@@ -21,7 +21,8 @@
 - pinpoints: [{address: String, zipcode: String,}]. Pinpoints on a user's route. Each pinpoint is an object that contains an address and its zipcode. The zipcode information is used to find suggestions for users (suggests users in the same zipcodes). Pinpoints will be validated before a route is created
 - user: ObjectId of the path's user. Ref: "User"
 - speed: String. Users' prefered speed (Slow/Medium/Fast)
-- date: [String]. Days in week that users run/walk on preferred route. ()
+- date: [String]. Days in week that users run/walk on preferred route. 
+- time: String. Time that a user usually starts their route.
 # Labour division
 
 -   Authentication services: login, signup, logout, hash, salt of users: Bang Cao
