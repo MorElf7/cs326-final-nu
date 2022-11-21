@@ -113,7 +113,7 @@ onload = async () => {
 		const matches = data;
 
 		matches.forEach((value, index, array) => {
-			const { username, bio } = value;
+			const { username, description } = value;
 			const listItem = document.createElement("li");
 			listItem.classList.add("list-group-item");
 			matchList.appendChild(listItem);
@@ -153,9 +153,9 @@ onload = async () => {
 			col22.classList.add("col-auto");
 			innerRow2.appendChild(col22);
 
-			const bioNode = document.createElement("p");
-			bioNode.appendChild(document.createTextNode(bio));
-			col22.appendChild(bioNode);
+			const descriptionNode = document.createElement("p");
+			descriptionNode.appendChild(document.createTextNode(description));
+			col22.appendChild(descriptionNode);
 		});
 	} else {
 	}

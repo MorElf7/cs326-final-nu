@@ -12,7 +12,6 @@ const userSchema = new Schema({
 		required: true,
 		unique: true,
 	},
-	bio: String,
 	hash: {
 		type: String,
 		required: true,
