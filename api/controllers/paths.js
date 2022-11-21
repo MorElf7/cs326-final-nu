@@ -19,10 +19,9 @@ export const showPath = async (req, res, next) => {
 };
 
 export const updatePath = async (req, res, next) => {
-	const { userId } = req.params;
-	const user = await User.findById(userId);
-	const { pinpoints, speed, date } = req.body;
-
+  const { userId } = req.params;
+  const { pinpoints, speed, date } = req.body;
+g
 	Path.updateOne({ user: userId }, { pinpoints: pinpoints, speed: speed, date: date });
 
 	res.status(200).json({
