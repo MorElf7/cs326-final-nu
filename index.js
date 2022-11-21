@@ -26,6 +26,9 @@ import HomeFrontendRouter from "./frontend/routes/home.js";
 import RoutesPanelFrontendRouter from "./frontend/routes/paths.js";
 import UserFrontendRouter from "./frontend/routes/users.js";
 
+// Middlewares
+import { isSignIn } from "./api/middleware.js";
+
 const app = express();
 
 const port = process.env.PORT || 3000;
@@ -78,7 +81,7 @@ passport.deserializeUser(deserializeUser);
 
 app.use("/static", express.static(path.resolve(__dirname, "./frontend/static")));
 
-app.get("/", (req, res) => {
+app.get("/", isSignIn, (req, res) => {
 	res.redirect("/home");
 });
 

@@ -1,4 +1,3 @@
-import { renderHtml } from "../../utils/index.js";
 import { validateAddress } from "../geocodingUtils.js"
 
 mapboxgl.accessToken = "pk.eyJ1IjoibGFpdGhpZW5uaGFuMDkiLCJhIjoiY2xhbXVvdDQ3MGdlcDNycXRud3QydnlzaSJ9.2OA98XNN6-jP-H14l-b0rQ"
@@ -7,16 +6,14 @@ const pinpointList = document.getElementById('pinpoint-list');
 
 const addPinpointBtn = document.getElementById('add-pinpoint')
 const createRouteBtn = document.getElementById('create-route-btn');
-const loadRouteBtn = document.getElementById('load-routes-btn');
-const routesList = document.getElementById('routes-list');
 const saveInfoBtn = document.getElementById('save-info-btn');
 
 const pinpoints = []
-let currentUser = "" 
+let currentUser = "123456" 
 
 onload = async () => {
   const res = await fetch('/api/users/currentUser')
-  const {status, message, data} = await res.json().data;
+  const {status, message, data} = await res.json();
   if (!status === 200) {
     location.href("/users/login")
   } else {
@@ -80,8 +77,8 @@ const createRoute = async (e) => {
     alert("Please select a time")
     return
   }
-  const dates = getDate();
-  if (dates.length === 0) {
+  const date = getDate();
+  if (date.length === 0) {
     alert("Please select a date")
     return
   }
@@ -90,13 +87,13 @@ const createRoute = async (e) => {
     return
   }
 
-  const response = await fetch('/api/paths', {
+  const response = await fetch(`/api/paths/${currentUser}`, {
     method: 'POST',
     credentials: 'same-origin',
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ pinpoints, dates, speed, time }),
+    body: JSON.stringify({ pinpoints, user: currentUser, date, speed, time }),
   })
 
   const { data, message, status } = await response.json();
@@ -116,33 +113,6 @@ const getDate = () => {
   }
   return res
 }
-
-const renderMap = () => {
-  const map = new mapboxgl.Map({
-    container: 'map',
-    // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
-    style: 'mapbox://styles/mapbox/streets-v12',
-    center: [12.550343, 55.665957],
-    zoom: 8
-    });
-}
-const map = new mapboxgl.Map({
-  container: 'map',
-  // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
-  style: 'mapbox://styles/mapbox/streets-v12',
-  center: [12.550343, 55.665957],
-  zoom: 8
-  });
-   
-  // Create a default Marker and add it to the map.
-  const marker1 = new mapboxgl.Marker()
-  .setLngLat([12.554729, 55.70651])
-  .addTo(map);
-   
-  // Create a default Marker, colored black, rotated 45 degrees.
-  const marker2 = new mapboxgl.Marker({ color: 'black', rotation: 45 })
-  .setLngLat([12.65147, 55.608166])
-  .addTo(map);
 
 addPinpointBtn.addEventListener("click", addPinpoint)
 createRouteBtn.addEventListener("click", createRoute)
