@@ -24,15 +24,46 @@ onload = async () => {
 const editButton = document.getElementById('editButton');
 editButton.addEventListener('click', async() => {
     const currentUser = localStorage.getItem("currentUser");
+    const username = document.getElementById('usernameInput');
+    const email = document.getElementById('emailInput');
+    const phone = document.getElementById('phoneInput');
+    const address = document.getElementById('addressInput');
+    const des = document.getElementById('desInput');
     if(editButton.innerText === 'Edit'){
-        window.location.assign(`/users/${currentUser}/edit`);
+        // window.location.assign(`/users/${currentUser}/edit`);
+        username.readOnly = false;
+        username.classList.remove('readOnly');
+
+        email.readOnly = false;
+        email.classList.remove('readOnly');
+
+        phone.readOnly = false;
+        phone.classList.remove('readOnly');
+
+        address.readOnly = false;
+        address.classList.remove('readOnly');
+
+        des.readOnly = false;
+        des.classList.remove('readOnly');
+
+        editButton.innerText = "Save";
     }
     else{
-        const username = document.getElementById('usernameInput');
-        const email = document.getElementById('emailInput');
-        const phone = document.getElementById('phoneInput');
-        const address = document.getElementById('addressInput');
-        const des = document.getElementById('desInput');
+        username.readOnly = true;
+        username.classList.add('readOnly');
+
+        email.readOnly = true;
+        email.classList.add('readOnly');
+
+        phone.readOnly = true;
+        phone.classList.add('readOnly');
+
+        address.readOnly = true;
+        address.classList.add('readOnly');
+
+        des.readOnly = true;
+        des.classList.add('readOnly');
+
         const accessToken = localStorage.getItem("accessToken");
 
         const response = await fetch(`/api/users/${currentUser}`, {
@@ -52,7 +83,8 @@ editButton.addEventListener('click', async() => {
         });
 
         const res = await response.json();
-
-        window.location.assign(`/users/${currentUser}`);
+        alert("Information saved");
+        editButton.innerText = "Edit";
+        // window.location.assign(`/users/${currentUser}`);
     }
 });
