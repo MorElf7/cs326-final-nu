@@ -155,7 +155,7 @@ chatPage.addEventListener('click', () => {
 
 const logout = document.getElementById('logoutPage');
 logout.addEventListener('click', () => {
-    window.location.assign("/login");
+    window.location.assign("/users/login");
 })
 
 const account = document.getElementById('account');
