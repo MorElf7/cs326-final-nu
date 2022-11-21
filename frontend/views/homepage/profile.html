@@ -16,7 +16,18 @@
 			integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 			crossorigin="anonymous"
 		/>
-		<!-- <link rel="stylesheet" href="/static/homepage/styles.css" /> -->
+    <style>
+      #backToHome{
+        cursor: pointer;
+      }
+      #backToHome:hover{
+        color: #17a2b8;
+      }
+      input{
+        padding: 0;
+        border: none;
+      }
+    </style>
 		<title>Home</title>
 	</head>
 	<body>
@@ -26,8 +37,7 @@
                   <!-- Breadcrumb -->
                   <nav aria-label="breadcrumb" class="main-breadcrumb">
                     <ol class="breadcrumb">
-                      <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                      <li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li>
+                      <li class="breadcrumb-item" id="backToHome"><div id="backToHome">Home</div></li>
                       <li class="breadcrumb-item active" aria-current="page">User Profile</li>
                     </ol>
                   </nav>
@@ -79,52 +89,43 @@
                         <div class="card-body">
                           <div class="row">
                             <div class="col-sm-3">
-                              <h6 class="mb-0">Full Name</h6>
+                              <h6 class="mb-0">Username</h6>
                             </div>
-                            <div class="col-sm-9 text-secondary">
-                              Kenneth Valdez
-                            </div>
+                            <input id="usernameInput" class="col-sm-9 text-secondary" value="SomeUsername" readonly="readonly">
+                            </input>
                           </div>
                           <hr>
                           <div class="row">
                             <div class="col-sm-3">
                               <h6 class="mb-0">Email</h6>
                             </div>
-                            <div class="col-sm-9 text-secondary">
-                              fip@jukmuh.al
-                            </div>
+                            <input id="emailInput" class="col-sm-9 text-secondary" value="someEmail@email.com" readonly="readonly">
                           </div>
                           <hr>
                           <div class="row">
                             <div class="col-sm-3">
                               <h6 class="mb-0">Phone</h6>
                             </div>
-                            <div class="col-sm-9 text-secondary">
-                              (239) 816-9029
-                            </div>
-                          </div>
-                          <hr>
-                          <div class="row">
-                            <div class="col-sm-3">
-                              <h6 class="mb-0">Mobile</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                              (320) 380-4539
-                            </div>
+                            <input id="phoneInput" class="col-sm-9 text-secondary" value="(239) 816-9029" readonly="readonly">
                           </div>
                           <hr>
                           <div class="row">
                             <div class="col-sm-3">
                               <h6 class="mb-0">Address</h6>
                             </div>
-                            <div class="col-sm-9 text-secondary">
-                              Bay Area, San Francisco, CA
+                            <input id="addressInput" class="col-sm-9 text-secondary" value="Bay Area, San Francisco, CA" readonly="readonly">
+                          </div>
+                          <hr>
+                          <div class="row">
+                            <div class="col-sm-3">
+                              <h6 class="mb-0">Description</h6>
                             </div>
+                            <input id="desInput" class="col-sm-9 text-secondary" value="Some Short Description" readonly="readonly">
                           </div>
                           <hr>
                           <div class="row">
                             <div class="col-sm-12">
-                              <a class="btn btn-info " target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
+                              <button class="btn btn-info " id="editButton">Edit</button>
                             </div>
                           </div>
                         </div>
@@ -186,12 +187,9 @@
                           </div>
                         </div>
                       </div>
-        
-        
-        
                     </div>
                   </div>
-        
                 </div>
             </div>
+            <script type="module" src="/static/homepage/profile.js" defer></script>
 </body>
