@@ -9,7 +9,7 @@ const createRouteBtn = document.getElementById('create-route-btn');
 const saveInfoBtn = document.getElementById('save-info-btn');
 
 const pinpoints = []
-let currentUser = "" 
+let currentUser = "123456" 
 
 onload = async () => {
   const res = await fetch('/api/users/currentUser')
