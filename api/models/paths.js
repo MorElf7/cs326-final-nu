@@ -21,6 +21,9 @@ const pathSchema = new Schema({
 			type: String,
 		},
 	],
+	time: {
+		type: String,
+	}
 });
 
 export default mongoose.model("Path", pathSchema);
