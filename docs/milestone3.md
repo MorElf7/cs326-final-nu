@@ -36,3 +36,7 @@
 - paths crud/routing: Nhan Lai
 - address validation: Nhan Lai
 - Heroku deployment frontend/backend: Nhan Lai
+
+- User models: Vi Doan
+- User crud/routing: Vi Doan
+- Frontend endpoint, bug fixing: Vi Doan
