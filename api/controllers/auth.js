@@ -38,7 +38,7 @@ export const signup = async (req, res, next) => {
 		throw new ExpressError("User already exist", 405);
 	}
 	const [salt, hash] = mc.hash(password);
-	const user = new User({ email, username, bio: "", hash, salt });
+	const user = new User({ email, username, description: "", hash, salt });
 	await user.save();
 	req.login(user, (err) => {
 		if (err) return next(err);
