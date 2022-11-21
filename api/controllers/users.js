@@ -21,7 +21,7 @@ export const getUser = async (req, res, next) => {
 	// 	dateJoined: new Date().getHours() + ":" + new Date().getMinutes(),
 	// };
 	const { userId } = req.params;
-	const user = await User.findById(userId);
+	const user = await User.findById(userId).populate("path");
 	res.status(200).json({
 		message: "OK",
 		data: user,
