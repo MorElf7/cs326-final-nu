@@ -127,7 +127,7 @@ const displayUserInfo = async () => {
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${accessToken}`,
 		},
-	})
+	});
     const res = await response.json();
     
     const userInfo = res.data;
@@ -143,9 +143,9 @@ matchesPage.addEventListener('click', () => {
     window.location.assign("/users/1234/match");
 })
 
-const profilePage = document.getElementById('profilePage');
+const profilePage = document.getElementById('routesPanel');
 profilePage.addEventListener('click', () => {
-    window.location.assign("/users/1234");
+    window.location.assign("/routesPanel");
 })
 
 const chatPage = document.getElementById('chatPage');
@@ -155,5 +155,11 @@ chatPage.addEventListener('click', () => {
 
 const logout = document.getElementById('logoutPage');
 logout.addEventListener('click', () => {
-    window.location.assign("/login");
+    window.location.assign("/users/login");
+})
+
+const account = document.getElementById('account');
+account.addEventListener('click', () => {
+	const currentUser = localStorage.getItem("currentUser");
+    window.location.assign(`/users/${currentUser}`);
 })

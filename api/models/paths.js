@@ -1,10 +1,13 @@
-import {mongoose, Schema} from "mongoose";
+import mongoose from "mongoose";
+const { Schema } = mongoose;
 
-const pathSchema = new mongoose.Schema({
-	pinponts: {
-		type: [[String]],
-		required: true,
-	},
+const pathSchema = new Schema({
+	pinpoints: [
+		{
+			address: String,
+			zipcode: String,
+		},
+	],
 	user: {
 		type: Schema.Types.ObjectId,
 		ref: "User",
@@ -13,10 +16,14 @@ const pathSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	date: {
-		type: [String],
-		required: true,
-	},
+	date: [
+		{
+			type: String,
+		},
+	],
+	time: {
+		type: String,
+	}
 });
 
-export default mongoose.model("Path", pathSchema)
+export default mongoose.model("Path", pathSchema);

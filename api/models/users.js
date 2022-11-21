@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const {Schema} = mongoose
+const { Schema } = mongoose;
 
 const userSchema = new Schema({
 	username: {
@@ -7,16 +7,33 @@ const userSchema = new Schema({
 		required: true,
 		unique: true,
 	},
-	password: {
-		type: String,
-		required: true,
-	},
 	email: {
 		type: String,
 		required: true,
 		unique: true,
 	},
-	bio: String,
+	hash: {
+		type: String,
+		required: true,
+	},
+	salt: {
+		type: String,
+		required: true,
+	},
+	connections: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: "User",
+		},
+	],
+	path: {
+		type: Schema.Types.ObjectId,
+		ref: "Path",
+	},
+	description: {
+		type: String,
+		required: true,
+	},
 });
 
 export default mongoose.model("User", userSchema);

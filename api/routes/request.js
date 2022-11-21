@@ -10,6 +10,7 @@ import {
 	getSuggestions,
 	updateRequest,
 } from "../controllers/requests.js";
+import { isSignIn } from "../middleware.js";
 import { wrapAsync } from "../utils/index.js";
 
 router.get("/", wrapAsync(getAllRequest));
