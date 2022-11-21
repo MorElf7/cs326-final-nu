@@ -40,3 +40,4 @@
 - User models: Vi Doan
 - User crud/routing: Vi Doan
 - Frontend endpoint, bug fixing: Vi Doan
+- Handle edit and save user information functionality: Vi Doan
