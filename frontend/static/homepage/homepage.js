@@ -127,7 +127,7 @@ const displayUserInfo = async () => {
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${accessToken}`,
 		},
-	})
+	});
     const res = await response.json();
     
     const userInfo = res.data;
@@ -156,4 +156,10 @@ chatPage.addEventListener('click', () => {
 const logout = document.getElementById('logoutPage');
 logout.addEventListener('click', () => {
     window.location.assign("/login");
+})
+
+const account = document.getElementById('account');
+account.addEventListener('click', () => {
+	const currentUser = localStorage.getItem("currentUser");
+    window.location.assign(`/users/${currentUser}`);
 })
