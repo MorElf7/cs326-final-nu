@@ -15,11 +15,11 @@ import { wrapAsync } from "../utils/index.js";
 
 router.get("/", wrapAsync(getAllRequest));
 
-router.post("/", wrapAsync(createRequest));
+router.post("/", isSignIn, wrapAsync(createRequest));
 
-router.put("/", wrapAsync(updateRequest));
+router.put("/", isSignIn, wrapAsync(updateRequest));
 
-router.delete("/", wrapAsync(deleteRequest));
+router.delete("/", isSignIn, wrapAsync(deleteRequest));
 
 router.post("/suggestion", wrapAsync(getSuggestions));
 
