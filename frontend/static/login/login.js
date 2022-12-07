@@ -15,7 +15,6 @@ const submitLogin = async (event) => {
 			[]
 		);
 		if (status === 200) {
-			// console.log(status);
 			location.href = data.redirectUrl;
 		} else {
 			const messageDiv = document.getElementById("message");

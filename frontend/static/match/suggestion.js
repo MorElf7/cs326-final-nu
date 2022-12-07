@@ -3,9 +3,6 @@ import { createAvatar, fillOutHref } from "./match.js";
 
 const suggestionList = document.getElementById("suggestionList");
 
-// let suggestion = [];
-// let index = 0;
-
 onload = async () => {
 	fillOutHref();
 	const currentUser = getUserId();

@@ -13,7 +13,7 @@ const submitSignup = async (event) => {
 			document.getElementById("not-match").hidden = false;
 		} else {
 			document.getElementById("not-match").hidden = true;
-			const { data, message, status } = await httpRequest(
+			const { message, status } = await httpRequest(
 				"/api/users/signup",
 				"POST",
 				{ email, username, password },
