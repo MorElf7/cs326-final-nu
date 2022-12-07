@@ -2,6 +2,7 @@ import express from "express";
 
 const router = express.Router({ mergeParams: true });
 
+import { isSignIn } from "../../middleware.js";
 import {
 	createRequest,
 	deleteRequest,
@@ -10,7 +11,6 @@ import {
 	getSuggestions,
 	updateRequest,
 } from "../controllers/requests.js";
-import { isSignIn } from "../middleware.js";
 import { wrapAsync } from "../utils/index.js";
 
 router.get("/", wrapAsync(getAllRequest));
