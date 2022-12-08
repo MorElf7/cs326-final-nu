@@ -93,7 +93,7 @@ like.addEventListener('click', async() => {
 		},
 		body: JSON.stringify({ 
             id : currentUser._id,
-            matchId: curSuggestion.id 
+            status : "PENDING"
         }),
 	})
     let suggestions = JSON.parse(localStorage.getItem('suggestions'));
@@ -103,7 +103,20 @@ like.addEventListener('click', async() => {
     localStorage.setItem('curSuggestion', JSON.stringify(newSuggestion));
 });
 
-reject.addEventListener('click', () => {
+reject.addEventListener('click', async() => {
+    const response = await fetch('/api/request', {
+		method: "PUT",
+		credentials: "same-origin",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${accessToken}`,
+		},
+		body: JSON.stringify({ 
+            id : currentUser._id,
+            status : "REJECTED"
+        }),
+	})
+
     let suggestions = JSON.parse(localStorage.getItem('suggestions'));
 
     if(suggestions.length > 0){
