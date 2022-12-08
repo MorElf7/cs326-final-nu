@@ -13,7 +13,7 @@ router.post("/login", login, postLogin);
 
 router.post("/signup", wrapAsync(signup));
 
-router.post("/logout", isSignIn, logout);
+router.get("/logout", isSignIn, logout);
 
 router.get("/:userId/match", wrapAsync(getMatches));
 
