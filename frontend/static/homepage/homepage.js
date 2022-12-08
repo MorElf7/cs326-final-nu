@@ -147,11 +147,6 @@ profilePage.addEventListener('click', () => {
     window.location.assign("/routesPanel");
 })
 
-const chatPage = document.getElementById('chatPage');
-chatPage.addEventListener('click', () => {
-    window.location.assign("/chatroom");
-})
-
 const logout = document.getElementById('logoutPage');
 logout.addEventListener('click', () => {
     window.location.assign("/users/login");
