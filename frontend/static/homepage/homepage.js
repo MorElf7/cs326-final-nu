@@ -5,9 +5,9 @@ let currentUser = {}
 
 
 const displayMatchDeck = ({src, name, description, route, schedule}) => {
-    // const imgElem = document.createElement('img');
-    // imgElem.setAttribute('src',src)
-    // document.getElementById('displayMap').append(imgElem);
+    const imgElem = document.createElement('img');
+    imgElem.setAttribute('src',src)
+    document.getElementById('displayMap').append(imgElem);
 
     const displayInfo = document.getElementById('displayInfo');
     removeAllChildNodes(displayInfo);
@@ -59,14 +59,17 @@ const getSuggestions = async () => {
 onload = async () => {
     const res = await fetch('/api/users/currentUser')
     const {status, message, data} = await res.json();
-    console.log(data.id)
     if (!status === 200) {
       location.href("/users/login")
     } else {
       currentUser = data 
     }
 	let suggestions = await getSuggestions();
-    if(suggestions.length > 0){
+    if(suggestions.length == 0){
+        const displayInfo = document.getElementById('displayInfo');
+        displayInfo.innerText = "Nothing to show"
+    }
+    else{
         const curSuggestion = suggestions.pop();
         localStorage.setItem('curSuggestion', JSON.stringify(curSuggestion));
         displayMatchDeck(curSuggestion);
