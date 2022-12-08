@@ -8,12 +8,7 @@ onload = async () => {
 
 	await fillOutHref(userId);
 
-	const { data, status } = await httpRequest(
-		`/api/request/suggestion`,
-		"POST",
-		{ id: userId },
-		[]
-	);
+	const { data, status } = await httpRequest(`/api/request/suggestion`, "POST", { userId }, []);
 
 	if (status === 200) {
 		const suggestion = data;
