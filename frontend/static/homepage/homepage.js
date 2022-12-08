@@ -64,14 +64,11 @@ onload = async () => {
     } else {
       currentUser = data 
     }
-    console.log(currentUser._id)
 	let suggestions = await getSuggestions();
-    console.log(suggestions)
     const curSuggestion = suggestions.pop();
     localStorage.setItem('curSuggestion', JSON.stringify(curSuggestion));
     displayMatchDeck(curSuggestion);
     localStorage.setItem('suggestions', JSON.stringify(suggestions));
-
     displayUserInfo();
 };
 
@@ -79,7 +76,7 @@ like.addEventListener('click', async() => {
     let curSuggestion = JSON.parse(localStorage.getItem('curSuggestion'));
 
     const accessToken = localStorage.getItem("accessToken");
-	const currentUser = localStorage.getItem("currentUser");
+	// const currentUser = localStorage.getItem("currentUser");
 
     const response = await fetch('/api/request', {
 		method: "PUT",
@@ -89,7 +86,7 @@ like.addEventListener('click', async() => {
 			Authorization: `Bearer ${accessToken}`,
 		},
 		body: JSON.stringify({ 
-            id : currentUser,
+            id : currentUser._id,
             matchId: curSuggestion.id 
         }),
 	})
@@ -122,7 +119,7 @@ const displayUserInfo = async () => {
     const accessToken = localStorage.getItem("accessToken");
 	const currentUser = localStorage.getItem("currentUser");
 
-    const response = await fetch(`/api/users/${currentUser}`, {
+    const response = await fetch(`/api/users/${currentUser._id}`, {
 		method: "GET",
 		credentials: "same-origin",
 		headers: {
@@ -163,5 +160,5 @@ logout.addEventListener('click', () => {
 const account = document.getElementById('account');
 account.addEventListener('click', () => {
 	const currentUser = localStorage.getItem("currentUser");
-    window.location.assign(`/users/${currentUser}`);
+    window.location.assign(`/users/${currentUser._id}`);
 })
