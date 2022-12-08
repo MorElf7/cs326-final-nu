@@ -49,7 +49,7 @@ const getSuggestions = async () => {
 		headers: {
 			"Content-Type": "application/json",
 		},
-		body: JSON.stringify({ id: currentUser._id }),
+		body: JSON.stringify({ userId: currentUser._id }),
 	});
     const res = await response.json();
 
