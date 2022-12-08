@@ -5,6 +5,7 @@ const mc = new MiniCrypt();
 
 export const strategy = new localStrategy(async (username, password, done) => {
 	const user = await User.findOne({ username });
+	console.log(user);
 	if (!user) {
 		// no such user
 		await new Promise((r) => setTimeout(r, 2000)); // two second delay
@@ -19,7 +20,7 @@ export const strategy = new localStrategy(async (username, password, done) => {
 	}
 	// success!
 	// should create a user object here, associated with a unique identifier
-	return done(null, username);
+	return done(null, user);
 });
 
 export const serializeUser = (user, cb) => {
@@ -28,12 +29,8 @@ export const serializeUser = (user, cb) => {
 
 export const deserializeUser = (id, cb) => {
 	User.findOne({ _id: id }, (err, user) => {
-		const userInformation = {
-			_id: user._id,
-			username: user.username,
-			email: user.email,
-			bio: user.bio,
-		};
+		console.log(user);
+		const userInformation = { ...user, hash: undefined, salt: undefined };
 		cb(err, userInformation);
 	});
 };
