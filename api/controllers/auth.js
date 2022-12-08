@@ -13,8 +13,8 @@ export const login = (req, res, next) => {
 		if (!user) {
 			return res.status(401).json(info);
 		}
-		if (req.user && !req.user._id.equals(user._id)) {
-			throw new ExpressError("Another user has already logged in", 401);
+		if (req.user && req.user._id !== user._id) {
+			return next(new ExpressError("Another user has already logged in", 401));
 		}
 		req.logIn(user, (err) => {
 			if (err) {
