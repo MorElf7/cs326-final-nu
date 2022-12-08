@@ -2,8 +2,10 @@ import Path from "../models/paths.js";
 import { ExpressError } from "../utils/index.js";
 
 export const createPath = async (req, res, next) => {
-	const { pinpoints, user, speed, date } = req.body;
-	const path = new Path(pinpoints, user, speed, date);
+	const { pinpoints, user, speed, date, time } = req.body;
+	console.log("body:")
+	console.log(req.body)
+	const path = new Path({pinpoints, user, speed, date, time});
 	await path.save();
 	// console.log(path);
 	res.status(200).json({
@@ -20,9 +22,9 @@ export const showPath = async (req, res, next) => {
 
 export const updatePath = async (req, res, next) => {
   const { userId } = req.params;
-  const { pinpoints, speed, date } = req.body;
+  const { pinpoints, speed, date, time } = req.body;
 g
-	Path.updateOne({ user: userId }, { pinpoints: pinpoints, speed: speed, date: date });
+	Path.updateOne({ user: userId }, { pinpoints: pinpoints, speed: speed, date: date, time: time });
 
 	res.status(200).json({
 		message: "Successfully updated path",
