@@ -2,6 +2,8 @@ const matchDeck = document.getElementById('matchDeck');
 const like = document.getElementById('like');
 const reject = document.getElementById('reject');
 const reload = document.getElementById('reload');
+let currentUser = {}
+
 
 const displayMatchDeck = ({src, name, description, route, schedule}) => {
     // const imgElem = document.createElement('img');
@@ -39,17 +41,16 @@ const displayMatchDeck = ({src, name, description, route, schedule}) => {
 }
 
 const getSuggestions = async () => {
-    const accessToken = localStorage.getItem("accessToken");
-	const currentUser = localStorage.getItem("currentUser");
+    // const accessToken = localStorage.getItem("accessToken");
+	// const currentUser = localStorage.getItem("currentUser");
 
     const response = await fetch('/api/request/suggestion', {
 		method: "POST",
 		credentials: "same-origin",
 		headers: {
 			"Content-Type": "application/json",
-			Authorization: `Bearer ${accessToken}`,
 		},
-		body: JSON.stringify({ id: currentUser }),
+		body: JSON.stringify({ id: currentUser._id }),
 	});
     const res = await response.json();
 
@@ -57,8 +58,16 @@ const getSuggestions = async () => {
 }
 
 onload = async () => {
+    const res = await fetch('/api/users/currentUser')
+    const {status, message, data} = await res.json();
+    if (!status === 200) {
+      location.href("/users/login")
+    } else {
+      currentUser = data 
+    }
+    console.log(currentUser._id)
 	let suggestions = await getSuggestions();
-
+    console.log(suggestions)
     const curSuggestion = suggestions.pop();
     localStorage.setItem('curSuggestion', JSON.stringify(curSuggestion));
     displayMatchDeck(curSuggestion);

@@ -6,10 +6,10 @@ const pinpointList = document.getElementById('pinpoint-list');
 
 const addPinpointBtn = document.getElementById('add-pinpoint')
 const createRouteBtn = document.getElementById('create-route-btn');
-const saveInfoBtn = document.getElementById('save-info-btn');
+// const saveInfoBtn = document.getElementById('save-info-btn');
 
 const pinpoints = []
-let currentUser = "123456" 
+let currentUser = {}
 
 onload = async () => {
   const res = await fetch('/api/users/currentUser')
@@ -19,28 +19,29 @@ onload = async () => {
   } else {
     currentUser = data
   }
+  console.log(currentUser._id)
 }
 
-const saveInfo = async (e) => {
-  e.preventDefault();
-  const newName = document.getElementById('user-name').value
-  const newDescription = document.getElementById('user-bio').value
+// const saveInfo = async (e) => {
+//   e.preventDefault();
+//   const newName = document.getElementById('user-name').value
+//   const newDescription = document.getElementById('user-bio').value
 
-  const response = await fetch(`/api/users/${currentUser}/`, {
-    method: 'PUT',
-    credentials: 'same-origin',
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({name: newName, description: newDescription})
-  })
-  const { message, status } = await response.json();
-  if (status === 200) {
-    alert("Successfully saved info")
-  } else {
-    console.log("Error: " + status)
-  }
-}
+//   const response = await fetch(`/api/users/${currentUser}/`, {
+//     method: 'PUT',
+//     credentials: 'same-origin',
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({name: newName, description: newDescription})
+//   })
+//   const { message, status } = await response.json();
+//   if (status === 200) {
+//     alert("Successfully saved info")
+//   } else {
+//     console.log("Error: " + status)
+//   }
+// }
 
 const addPinpoint = async (e) => {
   const location = document.getElementById("pinpoint-input").value
@@ -87,18 +88,19 @@ const createRoute = async (e) => {
     return
   }
 
-  const response = await fetch(`/api/paths/${currentUser}`, {
+  const response = await fetch('/api/paths/', {
     method: 'POST',
     credentials: 'same-origin',
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ pinpoints, user: currentUser, date, speed, time }),
+    body: JSON.stringify({ pinpoints: pinpoints, user: currentUser._id, date: date, speed: speed, time: time }),
   })
 
-  const { data, message, status } = await response.json();
+  const { message, status } = await response.json();
   if (status === 200) {
-    alert(`Successfully added new route:\nDate: ${dates}\nSpeed: ${speed}\nTime: ${time}\nRoute: ${pinpoints}`)
+    alert(`Successfully added new route:\nDate: ${date}\nSpeed: ${speed}\nTime: ${time}\nRoute: ${pinpoints.map(x => x.address + '\n')}`)
+    window.location.href= "/home/"
   } else {
     console.log("Error: " + status)
   }
@@ -116,6 +118,6 @@ const getDate = () => {
 
 addPinpointBtn.addEventListener("click", addPinpoint)
 createRouteBtn.addEventListener("click", createRoute)
-saveInfoBtn.addEventListener('click', saveInfo)
+// saveInfoBtn.addEventListener('click', saveInfo)
 
 
