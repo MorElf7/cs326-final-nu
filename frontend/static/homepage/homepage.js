@@ -65,11 +65,13 @@ onload = async () => {
       currentUser = data 
     }
 	let suggestions = await getSuggestions();
-    const curSuggestion = suggestions.pop();
-    localStorage.setItem('curSuggestion', JSON.stringify(curSuggestion));
-    displayMatchDeck(curSuggestion);
-    localStorage.setItem('suggestions', JSON.stringify(suggestions));
-    displayUserInfo();
+    if(suggestions.length > 0){
+        const curSuggestion = suggestions.pop();
+        localStorage.setItem('curSuggestion', JSON.stringify(curSuggestion));
+        displayMatchDeck(curSuggestion);
+        localStorage.setItem('suggestions', JSON.stringify(suggestions));
+        displayUserInfo();
+    }
 };
 
 like.addEventListener('click', async() => {
