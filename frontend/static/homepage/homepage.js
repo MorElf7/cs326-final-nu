@@ -109,7 +109,7 @@ reject.addEventListener('click', async() => {
 		credentials: "same-origin",
 		headers: {
 			"Content-Type": "application/json",
-			Authorization: `Bearer ${accessToken}`,
+			// Authorization: `Bearer ${accessToken}`,
 		},
 		body: JSON.stringify({ 
             id : currentUser._id,
@@ -136,7 +136,7 @@ const removeAllChildNodes = (parent) => {
 
 const displayUserInfo = async () => {
     const accessToken = localStorage.getItem("accessToken");
-	const currentUser = localStorage.getItem("currentUser");
+	// const currentUser = localStorage.getItem("currentUser");
 
     const response = await fetch(`/api/users/${currentUser._id}`, {
 		method: "GET",
@@ -172,7 +172,8 @@ logout.addEventListener('click', () => {
 })
 
 const account = document.getElementById('account');
-account.addEventListener('click', () => {
-	const currentUser = localStorage.getItem("currentUser");
-    window.location.href = `/users/${currentUser._id}`;
+account.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    window.location.href = '/users/profile';
 })
