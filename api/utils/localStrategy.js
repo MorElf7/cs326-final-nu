@@ -23,12 +23,11 @@ export const strategy = new localStrategy(async (username, password, done) => {
 });
 
 export const serializeUser = (user, cb) => {
-	cb(null, user.id);
+	cb(null, user._id);
 };
 
 export const deserializeUser = (id, cb) => {
 	User.findOne({ _id: id }, (err, user) => {
-		console.log(user);
 		const userInformation = { ...user, hash: undefined, salt: undefined };
 		cb(err, userInformation);
 	});
