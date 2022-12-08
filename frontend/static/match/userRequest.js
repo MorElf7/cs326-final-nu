@@ -3,11 +3,12 @@ import { createAvatar, fillOutHref } from "./match.js";
 
 const requestList = document.getElementById("requestList");
 
-fillOutHref();
-const currentUser = getUserId();
-
 onload = async () => {
-	const { data, status } = await httpRequest(`/api/request?sender=${currentUser}`, "GET", {}, []);
+	const userId = getUserId();
+
+	await fillOutHref(userId);
+
+	const { data, status } = await httpRequest(`/api/request?sender=${userId}`, "GET", {}, []);
 
 	if (status === 200) {
 		const requests = data;

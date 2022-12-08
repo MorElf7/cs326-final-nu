@@ -4,13 +4,14 @@ import { createAvatar, fillOutHref } from "./match.js";
 const suggestionList = document.getElementById("suggestionList");
 
 onload = async () => {
-	fillOutHref();
-	const currentUser = getUserId();
+	const userId = getUserId();
+
+	await fillOutHref(userId);
 
 	const { data, status } = await httpRequest(
 		`/api/request/suggestion`,
 		"POST",
-		{ id: currentUser },
+		{ id: userId },
 		[]
 	);
 

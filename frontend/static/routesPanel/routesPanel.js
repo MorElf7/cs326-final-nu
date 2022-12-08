@@ -97,9 +97,10 @@ const createRoute = async (e) => {
     body: JSON.stringify({ pinpoints: pinpoints, user: currentUser._id, date: date, speed: speed, time: time }),
   })
 
-  const { data, message, status } = await response.json();
+  const { message, status } = await response.json();
   if (status === 200) {
-    alert(`Successfully added new route:\nDate: ${dates}\nSpeed: ${speed}\nTime: ${time}\nRoute: ${pinpoints}`)
+    alert(`Successfully added new route:\nDate: ${date}\nSpeed: ${speed}\nTime: ${time}\nRoute: ${pinpoints.map(x => x.address + '\n')}`)
+    window.location.href= "/home/"
   } else {
     console.log("Error: " + status)
   }

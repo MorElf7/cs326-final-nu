@@ -7,7 +7,7 @@ export const getUser = async (req, res, next) => {
 	const user = await User.findById(userId).populate("path");
 	res.status(200).json({
 		message: "OK",
-		data: user,
+		data: { ...user, hash: undefined, salt: undefined },
 		status: 200,
 	});
 };
