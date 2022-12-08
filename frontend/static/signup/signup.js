@@ -1,5 +1,4 @@
 import { httpRequest } from "../utils.js";
-
 const form = document.getElementById("signupForm");
 
 const submitSignup = async (event) => {
