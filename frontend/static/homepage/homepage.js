@@ -5,9 +5,9 @@ let currentUser = {}
 
 
 const displayMatchDeck = ({src, name, description, route, schedule}) => {
-    // const imgElem = document.createElement('img');
-    // imgElem.setAttribute('src',src)
-    // document.getElementById('displayMap').append(imgElem);
+    const imgElem = document.createElement('img');
+    imgElem.setAttribute('src',src)
+    document.getElementById('displayMap').append(imgElem);
 
     const displayInfo = document.getElementById('displayInfo');
     removeAllChildNodes(displayInfo);
@@ -49,7 +49,7 @@ const getSuggestions = async () => {
 		headers: {
 			"Content-Type": "application/json",
 		},
-		body: JSON.stringify({ id: currentUser._id }),
+		body: JSON.stringify({ userId: currentUser._id }),
 	});
     const res = await response.json();
 
@@ -65,11 +65,17 @@ onload = async () => {
       currentUser = data 
     }
 	let suggestions = await getSuggestions();
-    const curSuggestion = suggestions.pop();
-    localStorage.setItem('curSuggestion', JSON.stringify(curSuggestion));
-    displayMatchDeck(curSuggestion);
-    localStorage.setItem('suggestions', JSON.stringify(suggestions));
-    displayUserInfo();
+    if(suggestions.length == 0){
+        const displayInfo = document.getElementById('displayInfo');
+        displayInfo.innerText = "Nothing to show"
+    }
+    else{
+        const curSuggestion = suggestions.pop();
+        localStorage.setItem('curSuggestion', JSON.stringify(curSuggestion));
+        displayMatchDeck(curSuggestion);
+        localStorage.setItem('suggestions', JSON.stringify(suggestions));
+        displayUserInfo();
+    }
 };
 
 like.addEventListener('click', async() => {
@@ -145,11 +151,6 @@ matchesPage.addEventListener('click', () => {
 const profilePage = document.getElementById('routesPanel');
 profilePage.addEventListener('click', () => {
     window.location.assign("/routesPanel");
-})
-
-const chatPage = document.getElementById('chatPage');
-chatPage.addEventListener('click', () => {
-    window.location.assign("/chatroom");
 })
 
 const logout = document.getElementById('logoutPage');
