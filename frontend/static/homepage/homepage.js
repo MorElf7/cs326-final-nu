@@ -95,7 +95,7 @@ like.addEventListener('click', async() => {
             id : currentUser._id,
             status : "PENDING"
         }),
-	})
+	});
     let suggestions = JSON.parse(localStorage.getItem('suggestions'));
     const newSuggestion = suggestions.pop();
     alert('Added into matched list!')
@@ -174,5 +174,5 @@ logout.addEventListener('click', () => {
 const account = document.getElementById('account');
 account.addEventListener('click', () => {
 	const currentUser = localStorage.getItem("currentUser");
-    window.location.assign(`/users/${currentUser._id}`);
+    window.location.href = `/users/${currentUser._id}`;
 })
