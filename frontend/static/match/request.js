@@ -3,14 +3,15 @@ import { createAvatar, fillOutHref } from "./match.js";
 
 const requestList = document.getElementById("requestList");
 
-fillOutHref();
-const myRequestLink = document.getElementById("myRequest");
-let path = location.pathname.split("/");
-path.pop();
-myRequestLink.href = path.join("/") + "/userRequest";
-const currentUser = getUserId();
-
 onload = async () => {
+	const myRequestLink = document.getElementById("myRequest");
+	let path = location.pathname.split("/");
+	path.pop();
+	myRequestLink.href = path.join("/") + "/userRequest";
+	const currentUser = getUserId();
+
+	await fillOutHref(currentUser);
+
 	const { data, status } = await httpRequest(
 		`/api/request?receiver=${currentUser}`,
 		"GET",

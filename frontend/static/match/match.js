@@ -14,10 +14,11 @@ export const createAvatar = (username) => {
 	return roundImg;
 };
 
-export const fillOutHref = () => {
+export const fillOutHref = async (userId) => {
 	const matchLink = document.getElementById("matchLink"),
 		suggestionLink = document.getElementById("suggestionLink"),
-		requestLink = document.getElementById("requestLink");
+		requestLink = document.getElementById("requestLink"),
+		profileLink = document.getElementById("profileLink");
 
 	let path = location.pathname.split("/");
 	path.pop();
@@ -25,15 +26,23 @@ export const fillOutHref = () => {
 	matchLink.href = path.join("/") + "/match";
 	suggestionLink.href = path.join("/") + "/suggestion";
 	requestLink.href = path.join("/") + "/request";
+	profileLink.href = path.join("/");
+
+	const user = (await httpRequest("/api/users/currentUser", "GET", {}, [])).data;
+	if (!user) {
+		alert("The user you are looking for does not exist");
+		location.href = "/";
+	}
+	profileLink.appendChild(document.createTextNode(user.username));
 };
 
 onload = async () => {
-	fillOutHref();
+	const userId = getUserId();
 
-	const currentUser = getUserId();
+	await fillOutHref(userId);
 
 	const { data, status, message } = await httpRequest(
-		`/api/users/${currentUser}/match`,
+		`/api/users/${userId}/match`,
 		"GET",
 		{},
 		[]
