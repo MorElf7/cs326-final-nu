@@ -28,12 +28,6 @@ export const serializeUser = (user, cb) => {
 
 export const deserializeUser = (id, cb) => {
 	User.findOne({ _id: id }, (err, user) => {
-		const userInformation = {
-			_id: user._id,
-			username: user.username,
-			email: user.email,
-			bio: user.bio,
-		};
-		cb(err, userInformation);
+		cb(err, { ...user, hash: undefined, salt: undefined });
 	});
 };
