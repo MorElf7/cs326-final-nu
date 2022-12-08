@@ -26,8 +26,11 @@ export const serializeUser = (user, cb) => {
 	cb(null, user.id);
 };
 
-export const deserializeUser = (id, cb) => {
-	User.findOne({ _id: id }, (err, user) => {
-		cb(err, { ...user, hash: undefined, salt: undefined });
-	});
+export const deserializeUser = async (id, cb) => {
+	try {
+		const user = await User.findOne({ _id: id }).populate("path");
+		cb(null, user);
+	} catch (err) {
+		cb(err);
+	}
 };
