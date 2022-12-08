@@ -29,6 +29,18 @@ export const createRequest = async (req, res, next) => {
 	if (foundRequest) {
 		throw new ExpressError("Request already exists", 409);
 	}
+	const oppositeRequest = await Request.findOne({ sender: receiver, receiver: sender });
+	if (oppositeRequest) {
+		oppositeRequest.status = "ACCEPTED";
+		await oppositeRequest.save();
+		const user1 = await User.findOne({ _id: sender }),
+			user2 = await User.findOne({ _id: receiver });
+		user1.connections.push(receiver);
+		user2.connections.push(sender);
+		await user1.save();
+		await user2.save();
+		res.status(200).json({ status: 200, message: "Request accepted", data: oppositeRequest });
+	}
 	const request = new Request({ sender, receiver, message });
 	await request.save();
 	res.status(200).json({ status: 200, message: "Request created", data: request });
@@ -82,7 +94,18 @@ export const getSuggestions = async (req, res, next) => {
 		"user"
 	);
 
-	const suggestMatches = [...new Set(suggestedPaths.map((e) => e.user))];
+	let suggestMatches = [...new Set(suggestedPaths.map((e) => e.user))];
+	suggestMatches = suggestMatches.filter(async (e) => {
+		const request = await Request.findOne({ sender: userId, receiver: e._id });
+		const altRequest = await Request.findOne({ receiver: userId, sender: e._id });
+		if (request || altRequest) {
+			return false;
+		} else return !e.connections.includes(userId);
+	});
 
-	res.status(200).json({ status: 200, message: "", data: suggestMatches });
+	res.status(200).json({
+		status: 200,
+		message: "",
+		data: suggestMatches,
+	});
 };
