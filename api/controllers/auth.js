@@ -52,5 +52,9 @@ export const logout = (req, res, next) => {
 };
 
 export const getCurrentUser = (req, res, next) => {
-	res.status(200).json({ status: 200, message: "", data: req.user });
+	res.status(200).json({
+		status: 200,
+		message: "",
+		data: { ...req.user._doc, hash: undefined, salt: undefined },
+	});
 };
