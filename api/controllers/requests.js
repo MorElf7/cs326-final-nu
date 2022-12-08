@@ -94,8 +94,7 @@ export const getSuggestions = async (req, res, next) => {
 		"user"
 	);
 
-	let suggestMatches = [...new Set(suggestedPaths.map((e) => e.user))];
-	suggestMatches = suggestMatches.filter(async (e) => {
+	let suggestMatches = [...new Set(suggestedPaths.map((e) => e.user))].filter(async (e) => {
 		const request = await Request.findOne({ sender: userId, receiver: e._id });
 		const altRequest = await Request.findOne({ receiver: userId, sender: e._id });
 		if (request || altRequest) {
