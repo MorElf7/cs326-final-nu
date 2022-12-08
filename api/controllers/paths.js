@@ -1,4 +1,5 @@
 import Path from "../models/paths.js";
+import requests from "../models/requests.js";
 import { ExpressError } from "../utils/index.js";
 
 export const createPath = async (req, res, next) => {
@@ -17,13 +18,16 @@ export const createPath = async (req, res, next) => {
 export const showPath = async (req, res, next) => {
 	const { userId } = req.params;
 	const path = await Path.findOne({ user: userId });
+	if (!path) {
+		return requests.status(404).json({ message: "User has not created path", status: 404, data: path });
+	}
 	return res.status(200).json({ message: "OK", status: 200, data: path });
 };
 
 export const updatePath = async (req, res, next) => {
   const { userId } = req.params;
   const { pinpoints, speed, date, time } = req.body;
-g
+
 	Path.updateOne({ user: userId }, { pinpoints: pinpoints, speed: speed, date: date, time: time });
 
 	res.status(200).json({
