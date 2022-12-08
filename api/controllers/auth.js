@@ -47,8 +47,10 @@ export const signup = async (req, res, next) => {
 };
 
 export const logout = (req, res, next) => {
-	req.logout();
-	res.status(200).json({ status: 200, message: "Log Out" });
+	req.logout((err) => {
+		if (err) return next(err);
+		res.redirect("/");
+	});
 };
 
 export const getCurrentUser = (req, res, next) => {
