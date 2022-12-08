@@ -16,6 +16,7 @@
 			integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 			crossorigin="anonymous"
 		/>
+		<base href="/" />
 		<link rel="stylesheet" href="/static/homepage/styles.css" />
 		<title>Home</title>
 	</head>
@@ -41,7 +42,7 @@
 			<hr />
 			<div class="leftNavItem" id="chat">
 				<img src="/static/homepage/img/logout.png" alt="" />
-				<p id='logoutPage'>Logout</p>
+				<p id="logoutPage">Logout</p>
 			</div>
 		</div>
 		<div id="board">
@@ -95,7 +96,9 @@
 							</div>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" id = 'account' href="#">Account</a>
+							<a class="nav-link" id="account" href="#"
+								>Account</a
+							>
 						</li>
 					</ul>
 				</div>
@@ -103,61 +106,47 @@
 			<div id="content">
 				<div class="container px-4" id="content">
 					<div class="row">
-						<div class="col card" id="matchDeck">
-							
-              <div id="displayMap">
+						<div class="card" id="matchDeck">
+							<div id="displayMap">
 								<img
 									src="/static/homepage/img/route.avif"
 									alt=""
 								/>
-                <div id="routeInfo">
-                </div>
+								<div id="routeInfo"></div>
 							</div>
-
-							<div>
-								<div class="container">
-									<div class="row align-self-start description">
-                    <div id="displayInfo"></div>
-									</div>
-									<div class="row align-self-end matchDeckButtons">
-										<button
-											type="button"
-											class="btn btn-outline-primary"
-                      id="reload"
-										>
-											Reload
-										</button>
-										<button
-											type="button"
-											class="btn btn-outline-success"
-                      id="like"
-										>
-											♥
-										</button>
-										<button
-											type="button"
-											class="btn btn-outline-danger"
-                      id="reject"
-										>
-											X
-										</button>
-									</div>
+							<div class="container">
+								<div
+									class="row align-self-start description"
+								>
+									<div id="displayInfo">description</div>
+								</div>
+								<div
+									class="row align-self-end matchDeckButtons"
+								>
+									<button
+										type="button"
+										class="btn btn-outline-success"
+										id="like"
+									>
+										♥
+									</button>
+									<button
+										type="button"
+										class="btn btn-outline-danger"
+										id="reject"
+									>
+										X
+									</button>
 								</div>
 							</div>
 						</div>
-						<div class="col-4 card">
+					</div>
+					<div class="row">
+						<div class="card">
 							<h5>My Route</h5>
 							<img src="/static/homepage/img/route.avif" alt="" />
 							<h6>Route</h6>
-              <div id="userRoute"></div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col card">
-							<img src="/static/homepage/img/chart.png" alt="" />
-						</div>
-						<div class="col-4 card">
-							<h5>Analysis</h5>
+							<div id="userRoute"></div>
 						</div>
 					</div>
 				</div>

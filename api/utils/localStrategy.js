@@ -19,21 +19,16 @@ export const strategy = new localStrategy(async (username, password, done) => {
 	}
 	// success!
 	// should create a user object here, associated with a unique identifier
-	return done(null, username);
+	return done(null, user);
 });
 
 export const serializeUser = (user, cb) => {
-	cb(null, user.id);
+	cb(null, user._id);
 };
 
 export const deserializeUser = (id, cb) => {
 	User.findOne({ _id: id }, (err, user) => {
-		const userInformation = {
-			_id: user._id,
-			username: user.username,
-			email: user.email,
-			bio: user.bio,
-		};
+		const userInformation = { ...user, hash: undefined, salt: undefined };
 		cb(err, userInformation);
 	});
 };

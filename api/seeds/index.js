@@ -22,7 +22,7 @@ const seedDB = async () => {
 	await Request.deleteMany({});
 	await Path.deleteMany({});
 	await User.deleteMany({});
-	for (let i = 0; i < requests.length; ++i) {
+	for (let i = 0; i < users.length; ++i) {
 		const { email, username, password, description } = users[i];
 		const [salt, hash] = mc.hash(password);
 		const user = new User({ email, username, description, hash, salt });
