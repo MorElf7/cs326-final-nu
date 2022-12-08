@@ -72,12 +72,12 @@ export const deleteRequest = async (req, res, next) => {
 	res.status(200).json({ status: 200, message: "Request deleted" });
 };
 export const getSuggestions = async (req, res, next) => {
-	const { userId } = req.params;
+	const { userId } = req.body;
 	const user = await User.findById(userId).populate("path");
 	if (!user) {
 		throw new ExpressError("User not found", 404);
 	}
-	const zipcodeList = user.path.pinpoints.map((e) => e.zipcode);
+	const zipcodeList = user.path?.pinpoints.map((e) => e.zipcode);
 	const suggestedPaths = await Path.find({ "pinpoints.zipcode": { $all: zipcodeList } }).populate(
 		"user"
 	);
