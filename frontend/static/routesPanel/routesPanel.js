@@ -19,7 +19,6 @@ onload = async () => {
   } else {
     currentUser = data
   }
-  console.log(currentUser._id)
 }
 
 // const saveInfo = async (e) => {
@@ -102,7 +101,7 @@ const createRoute = async (e) => {
     alert(`Successfully added new route:\nDate: ${date}\nSpeed: ${speed}\nTime: ${time}\nRoute: ${pinpoints.map(x => x.address + '\n')}`)
     window.location.href= "/home/"
   } else {
-    console.log("Error: " + status)
+    alert("Error: " + status)
   }
 }
 
