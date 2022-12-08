@@ -59,6 +59,7 @@ const getSuggestions = async () => {
 onload = async () => {
     const res = await fetch('/api/users/currentUser')
     const {status, message, data} = await res.json();
+    console.log(data.id)
     if (!status === 200) {
       location.href("/users/login")
     } else {
