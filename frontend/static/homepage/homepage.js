@@ -1,7 +1,6 @@
 const matchDeck = document.getElementById('matchDeck');
 const like = document.getElementById('like');
 const reject = document.getElementById('reject');
-const reload = document.getElementById('reload');
 let currentUser = {}
 
 
@@ -112,12 +111,6 @@ reject.addEventListener('click', () => {
     }
     localStorage.setItem('suggestions', JSON.stringify(suggestions));
 });
-
-reload.addEventListener('click', async () => {
-    let suggestions = await getSuggestions();
-    displayMatchDeck(suggestions.pop());
-    localStorage.setItem('suggestions', JSON.stringify(suggestions));
-})
 
 const removeAllChildNodes = (parent) => {
     while(parent.firstChild){
