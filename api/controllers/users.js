@@ -57,9 +57,7 @@ export const deleteUser = async (req, res, next) => {
 
 export const getMatches = async (req, res, next) => {
 	const { userId } = req.params;
-	const user = await User.findById(userId).populate({
-		path: connections,
-	});
+	const user = await User.findById(userId).populate("connections");
 	if (!user) {
 		throw new ExpressError("User not found", 404);
 	}
