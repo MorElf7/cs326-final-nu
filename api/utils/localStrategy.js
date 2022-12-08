@@ -5,7 +5,6 @@ const mc = new MiniCrypt();
 
 export const strategy = new localStrategy(async (username, password, done) => {
 	const user = await User.findOne({ username });
-	console.log(user);
 	if (!user) {
 		// no such user
 		await new Promise((r) => setTimeout(r, 2000)); // two second delay
