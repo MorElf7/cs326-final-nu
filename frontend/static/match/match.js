@@ -26,7 +26,7 @@ export const fillOutHref = async (userId) => {
 	matchLink.href = path.join("/") + "/match";
 	suggestionLink.href = path.join("/") + "/suggestion";
 	requestLink.href = path.join("/") + "/request";
-	profileLink.href = path.join("/");
+	profileLink.href = "/users/profile";
 
 	const user = (await httpRequest("/api/users/currentUser", "GET", {}, [])).data;
 	if (!user) {

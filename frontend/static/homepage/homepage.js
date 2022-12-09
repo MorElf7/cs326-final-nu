@@ -158,7 +158,7 @@ const displayUserInfo = async () => {
 
 const matchesPage = document.getElementById('matchesPage');
 matchesPage.addEventListener('click', () => {
-    window.location.assign("/users/1234/match");
+    window.location.assign(`/users/${currentUser._id}/match`);
 })
 
 const profilePage = document.getElementById('routesPanel');
