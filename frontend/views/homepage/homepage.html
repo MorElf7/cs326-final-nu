@@ -105,59 +105,58 @@
 			</nav>
 			<div id="content">
 				<div id="content">
-						<div class="card" id="matchDeck">
-							<div id="displayMap">
-								<!-- <img
-									src="/static/homepage/img/route.avif"
-									alt=""
-								/> -->
-								<div id="routeInfo"></div>
+					<div class="card" id="matchDeck">
+						<div id="displayMap">
+							<!-- <img
+								src="/static/homepage/img/route.avif"
+								alt=""
+							/> -->
+							<div id="routeInfo"></div>
+						</div>
+						<div class="container">
+							<div
+								class="row align-self-start description"
+							>
+								<div id="displayInfo">description</div>
 							</div>
-							<div class="container">
-								<div
-									class="row align-self-start description"
+							<div
+								class="row align-self-end matchDeckButtons"
+							>
+								<button
+									type="button"
+									class="btn btn-success"
+									id="like"
 								>
-									<div id="displayInfo">description</div>
-								</div>
-								<div
-									class="row align-self-end matchDeckButtons"
+									Like
+								</button>
+								<button
+									type="button"
+									class="btn btn-danger"
+									id="reject"
 								>
-									<button
-										type="button"
-										class="btn btn-outline-success"
-										id="like"
-									>
-										♥
-									</button>
-									<button
-										type="button"
-										class="btn btn-outline-danger"
-										id="reject"
-									>
-										X
-									</button>
-								</div>
+									Reject
+								</button>
 							</div>
 						</div>
-						<div class="card container">
-							<h5 class="text-center">My Route</h5>
-							<div class="row">
-								<div class="col-6">
-									<ul id="userRoute" class="list-group">
-									</ul>
-								</div>
-								<div class="col-6">
-									<ul id="routeDetails" class="list-group">
-
-									</ul>
-								</div>
+					</div>
+					<div class="card" id="myroute">
+						<h5 class="text-center">My Route</h5>
+						<div class="row">
+							<div class="col-6">
+								<ul id="userRoute" class="list-group">
+								</ul>
 							</div>
+							<div class="col-6">
+								<ul id="routeDetails" class="list-group">
 
-			
+								</ul>
+							</div>
 						</div>
+		
+					</div>
+					</div>
 				</div>
 			</div>
-		</div>
 		<script
 			src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 			integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

@@ -37,6 +37,8 @@ const displayMatchDeck = ({src, name, description, route, schedule}) => {
     removeAllChildNodes(routeInfo);
     routeHeader.innerText = 'Route: ';
     routeInfo.append(routeHeader, routeElem);
+
+    
 }
 
 const getSuggestions = async () => {
