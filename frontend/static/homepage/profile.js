@@ -72,7 +72,9 @@ editButton.addEventListener('click', async() => {
                 Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
-                description: des
+                username: username.value,
+                email: email.value,
+                description: des.value
 			}),
         });
 
