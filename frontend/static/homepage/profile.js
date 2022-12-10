@@ -79,8 +79,11 @@ editButton.addEventListener('click', async() => {
         });
 
         const res = await response.json();
-        alert("Information saved");
-        editButton.innerText = "Edit";
+        if (res.status === 200) {
+            alert("Information saved");
+            editButton.innerText = "Edit";
+        }
+
         // window.location.assign(`/users/${currentUser}`);
     }
 });
