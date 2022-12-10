@@ -17,7 +17,7 @@ router.get("/:userId/userRequest", isSignIn, renderHtml("match/userRequest.html"
 
 router.get("/:userId/suggestion", isSignIn, renderHtml("match/suggestion.html"));
 
-router.get("/:userId", renderHtml("homepage/profile.html"));
+router.get("/profile/", isSignIn,renderHtml("homepage/profile.html"));
 
 router.get("/:userId/edit", renderHtml("homepage/edit.html"));
 

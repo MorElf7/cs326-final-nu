@@ -119,4 +119,14 @@ addPinpointBtn.addEventListener("click", addPinpoint)
 createRouteBtn.addEventListener("click", createRoute)
 // saveInfoBtn.addEventListener('click', saveInfo)
 
+// Routing for link buttons
 
+const home = document.getElementById('home-btn')
+home.addEventListener("click", () => {
+  location.href = "/home"
+})
+
+const userProfile = document.getElementById('user-profile-btn');
+userProfile.addEventListener("click", () => {
+  location.href = "/users/profile"
+})

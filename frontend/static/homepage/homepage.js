@@ -64,6 +64,7 @@ onload = async () => {
     } else {
       currentUser = data 
     }
+    await renderRoute()
 	let suggestions = await getSuggestions();
     if(suggestions.length == 0){
         const displayInfo = document.getElementById('displayInfo');
@@ -77,6 +78,50 @@ onload = async () => {
         displayUserInfo();
     }
 };
+
+const renderRoute = async () => {
+    const res = await fetch(`api/paths/${currentUser._id}`);
+    const {status, message, data } = await res.json();
+    if (status !== 200) {
+        location.href = "/routesPanel"
+    }
+    const route = data
+
+    const pinpoints = data.pinpoints.map(x => x.address);
+    const speed = data.speed;
+    const date = data.date;
+    const time = data.time;
+
+    const userRoute = document.getElementById('userRoute');
+    removeAllChildNodes(userRoute);
+    for (const pinpoint of pinpoints) {
+        const temp = document.createElement('li');
+        temp.classList.add('list-group-item');
+        temp.appendChild(document.createTextNode(pinpoint));
+        userRoute.appendChild(temp);
+    }
+
+    const routeDetails = document.getElementById('routeDetails');
+
+    removeAllChildNodes(routeDetails);
+
+    const routeSpeed = document.createElement('li');
+    routeSpeed.classList.add('list-group-item');
+    routeSpeed.appendChild(document.createTextNode(`Your Speed: ${speed}`))
+    const routeDate = document.createElement('li');
+    routeDate.classList.add('list-group-item');
+    routeDate.appendChild(document.createTextNode(`Your dates: ${date}`))
+    const routeTime = document.createElement('li');
+    routeTime.classList.add('list-group-item');
+    routeTime.appendChild(document.createTextNode(`Your time: ${time}`))
+    
+    routeDetails.appendChild(routeSpeed);
+    routeDetails.appendChild(routeDate);
+    routeDetails.appendChild(routeTime);
+
+    console.log(pinpoints)
+
+}
 
 like.addEventListener('click', async() => {
     let curSuggestion = JSON.parse(localStorage.getItem('curSuggestion'));
@@ -109,7 +154,7 @@ reject.addEventListener('click', async() => {
 		credentials: "same-origin",
 		headers: {
 			"Content-Type": "application/json",
-			Authorization: `Bearer ${accessToken}`,
+			// Authorization: `Bearer ${accessToken}`,
 		},
 		body: JSON.stringify({ 
             id : currentUser._id,
@@ -136,7 +181,7 @@ const removeAllChildNodes = (parent) => {
 
 const displayUserInfo = async () => {
     const accessToken = localStorage.getItem("accessToken");
-	const currentUser = localStorage.getItem("currentUser");
+	// const currentUser = localStorage.getItem("currentUser");
 
     const response = await fetch(`/api/users/${currentUser._id}`, {
 		method: "GET",
@@ -158,7 +203,7 @@ const displayUserInfo = async () => {
 
 const matchesPage = document.getElementById('matchesPage');
 matchesPage.addEventListener('click', () => {
-    window.location.assign("/users/1234/match");
+    window.location.assign(`/users/${currentUser._id}/match`);
 })
 
 const profilePage = document.getElementById('routesPanel');
@@ -172,7 +217,8 @@ logout.addEventListener('click', () => {
 })
 
 const account = document.getElementById('account');
-account.addEventListener('click', () => {
-	// const currentUser = localStorage.getItem("currentUser");
-    window.location.href = `/users/profile`;
+account.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    window.location.href = '/users/profile';
 })
