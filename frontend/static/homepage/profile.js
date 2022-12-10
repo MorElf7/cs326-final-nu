@@ -11,7 +11,7 @@ onload = async () => {
     } else {
       currentUser = data
     }
-    const {username, email, phone, address, description} = currentUser;
+    const {username, email, description} = currentUser;
     document.getElementById('usernameInput').value = username;
     document.getElementById('emailInput').value = email;
     // document.getElementById('phoneInput').value = phone;
@@ -72,8 +72,6 @@ editButton.addEventListener('click', async() => {
                 Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
-				username: username,
-                address: address,
                 description: des
 			}),
         });
