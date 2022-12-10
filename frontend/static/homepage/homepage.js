@@ -173,6 +173,6 @@ logout.addEventListener('click', () => {
 
 const account = document.getElementById('account');
 account.addEventListener('click', () => {
-	const currentUser = localStorage.getItem("currentUser");
-    window.location.href = `/users/${currentUser._id}`;
+	// const currentUser = localStorage.getItem("currentUser");
+    window.location.href = `/users/profile`;
 })
