@@ -82,8 +82,10 @@ editButton.addEventListener('click', async() => {
         if (res.status === 200) {
             alert("Information saved");
             editButton.innerText = "Edit";
+        } else {
+            alert(`Error: ${res.message}`)
         }
-
+    
         // window.location.assign(`/users/${currentUser}`);
     }
 });

@@ -9,12 +9,24 @@ onload = async () => {
   } else {
     currentUser = data
   }
-  console.log(currentUser)
+  await renderRoute()
 }
 
-// const renderRoute = async () => {
+const renderRoute = async () => {
+  const res = await fetch(`/api/paths/${currentUser._id}`);
+  const {status, message, data } = await res.json();
+    // if (status !== 200) {
+    //     location.href = "/routesPanel"
+    // }
 
-// }
+  const pinpoints = data.pinpoints.map(x => x.address);
+  const speed = data.speed;
+  const date = data.date;
+  const time = data.time;
+
+  
+
+}
 
 // Routing for link buttons
 
