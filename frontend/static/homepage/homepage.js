@@ -7,7 +7,7 @@ let currentUser = {}
 const displayMatchDeck = ({src, name, description, route, schedule}) => {
     // const imgElem = document.createElement('img');
     // imgElem.setAttribute('src',src)
-    document.getElementById('displayMap').append(imgElem);
+    // document.getElementById('displayMap').append(imgElem);
 
     const displayInfo = document.getElementById('displayInfo');
     removeAllChildNodes(displayInfo);
