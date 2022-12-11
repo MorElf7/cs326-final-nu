@@ -25,15 +25,15 @@ export const showPath = async (req, res, next) => {
 };
 
 export const updatePath = async (req, res, next) => {
-  const { userId } = req.params;
+  const { pathId } = req.params;
   const { pinpoints, speed, date, time } = req.body;
 
-	Path.updateOne({ user: userId }, { pinpoints: pinpoints, speed: speed, date: date, time: time });
+	await Path.findByIdAndUpdate(pathId, { pinpoints: pinpoints, speed: speed, date: date, time: time });
 
 	res.status(200).json({
 		message: "Successfully updated path",
 		status: 200,
-		data: Path.findOne({ user: userId }),
+		// data: Path.findOne({ user: userId }),
 	});
 };
 

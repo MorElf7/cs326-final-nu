@@ -15,9 +15,13 @@ onload = async () => {
   const res = await fetch('/api/users/currentUser')
   const {status, message, data} = await res.json();
   if (!status === 200) {
-    location.href("/users/login")
+    location.href= "/users/login"
   } else {
     currentUser = data
+  }
+
+  if (currentUser.path) {
+    location.href = "/routesPanel/edit/"
   }
 }
 

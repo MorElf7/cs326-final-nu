@@ -17,8 +17,8 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
-    <script src="../../static/routesPanel/routesPanel.js" type="module" defer></script>
-    <title>Routes Panel</title>
+    <script src="../../static/routesPanel/editRoute.js" type="module" defer></script>
+    <title>Edit Route</title>
   </head>
   <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
@@ -56,7 +56,7 @@
         <div class="col-6">
           <div class="form-group">
             <div class="col offset-4">
-              <h2>Create A Route</h2>
+              <h2>Update Route</h2>
             </div>
             <div class="container col-9"></div>
 
@@ -99,11 +99,42 @@
               <option value="fast">Fast</option>
             </select>
           </div>
-          <button class="btn btn-primary" id="create-route-btn">CREATE ROUTE!</button>
+          <button class="btn btn-primary" id="create-route-btn">UPDATE ROUTE!</button>
         </div>
-        <div class="col-6 container d-flex justify-content-center">
-          <h2>Your Route</h2>
-          <div id="map"></div>
+        <div class="col-6 card">
+          <h2>Current Route</h2>
+          <div class="form-group">
+            <ul id="pinpoint-list-current" class="list-group">
+            
+            </ul>
+            <!-- <ul class="container d-flex flex-row row justify-content-between">
+              <input type="checkbox" name="" id="mon-current">
+              <div>Mon</div>
+              <input type="checkbox" name="" id="tue-current">
+              <div>Tue</div>
+              <input type="checkbox" name="" id="wed-current">
+              <div>Wed</div>
+              <input type="checkbox" name="" id="thu-current">
+              <div>Thur</div>
+              <input type="checkbox" name="" id="fri-current">
+              <div>Fri</div>
+              <input type="checkbox" name="" id="sat-current">
+              <div>Sat</div>
+              <input type="checkbox" name="" id="sun-current">
+              <div>Sun</div>
+            </ul>
+            <label for="">Start time: </label>
+            <input type="time" class="form-control  w-25 col-6" id="time-current"/>
+            <label for="">Pick your speed:</label>
+            <select name="" class="form-control w-25 col-6" id="speed-current">
+              <option value="slow">Slow</option>
+              <option value="medium">Medium</option>
+              <option value="fast">Fast</option>
+            </select> -->
+            <div class="card-body" id="current-time"></div>
+            <div class="card-body" id="current-date"></div>
+            <div class="card-body" id="current-speed"></div>
+          </div>
         </div>
       </div>
     </div>

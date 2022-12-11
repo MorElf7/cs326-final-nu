@@ -7,7 +7,7 @@ import { wrapAsync } from "../utils/index.js";
 
 router.post('/', wrapAsync(createPath))
 router.get('/:userId', wrapAsync(showPath))
-router.put('/:userId', wrapAsync(updatePath))
+router.put('/:pathId', wrapAsync(updatePath))
 router.delete('/:pathId', wrapAsync(deletePath))
 
 export default router;
