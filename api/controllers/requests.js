@@ -114,6 +114,19 @@ export const deleteRequest = async (req, res, next) => {
 	await Request.findByIdAndDelete(id);
 	res.status(200).json({ status: 200, message: "Request deleted" });
 };
+export const removeMatch = async (req, res, next) => {
+	const user1 = await User.findById(req.body.user1);
+	const user2 = await User.findById(req.body.user2);
+	console.log(user1, user2)
+	user1.connections = user1.connections.filter(connection => !connection.equals(req.body.user2));
+	user2.connections = user2.connections.filter(connection => !connection.equals(req.body.user1));
+	
+	await user1.save();
+	await user2.save();
+	
+	console.log(user1, user2)
+	res.status(200).json({ status: 200, message: "Match removed!"})
+}
 export const getSuggestions = async (req, res, next) => {
 	const { userId } = req.body;
 	const user = await User.findById(userId).populate("path");

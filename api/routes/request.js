@@ -5,12 +5,13 @@ const router = express.Router({ mergeParams: true });
 import { isSignIn } from "../../middleware.js";
 import {
 	createRequest,
-	rejectRequest,
 	deleteRequest,
 	getAllRequest,
 	getRequest,
 	getSuggestions,
+	rejectRequest,
 	updateRequest,
+	removeMatch,
 } from "../controllers/requests.js";
 import { wrapAsync } from "../utils/index.js";
 
@@ -28,4 +29,5 @@ router.post("/suggestion", wrapAsync(getSuggestions));
 
 router.get("/:requestId", wrapAsync(getRequest));
 
+router.put("/removeMatch", wrapAsync(removeMatch))
 export default router;
