@@ -132,7 +132,7 @@ onload = async () => {
 			row2.appendChild(col232);
 
 			const speed = document.createElement("div");
-			speed.appendChild(document.createTextNode("Spped: " + route.speed));
+			speed.appendChild(document.createTextNode("Speed: " + route.speed));
 			col232.appendChild(speed);
 
 			const time = document.createElement("div");
