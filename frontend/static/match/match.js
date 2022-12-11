@@ -37,7 +37,8 @@ export const fillOutHref = async (userId) => {
 };
 
 const addressList = (list, pinpoints) => {
-	for (let pinpoint in pinpoints) {
+	for (let pinpoint of pinpoints) {
+		console.log(pinpoint)
 		const li = document.createElement("li");
 		li.classList.add("list-group-item");
 		list.appendChild(li);
@@ -47,7 +48,7 @@ const addressList = (list, pinpoints) => {
 };
 
 const dateList = (list, dates) => {
-	for (let date in dates) {
+	for (let date of dates) {
 		const li = document.createElement("li");
 		li.classList.add("list-group-item");
 		list.appendChild(li);
@@ -73,7 +74,7 @@ onload = async () => {
 
 			const { username, description } = value;
 			const listItem = document.createElement("li");
-			listItem.classList.add("list-group-item");
+			listItem.classList.add("list-group-item", "border");
 			matchList.appendChild(listItem);
 
 			const row = document.createElement("div");
@@ -131,13 +132,18 @@ onload = async () => {
 			row2.appendChild(col232);
 
 			const speed = document.createElement("div");
-			speed.appendChild(document.createTextNode(route.speed));
+			speed.appendChild(document.createTextNode("Spped: " + route.speed));
 			col232.appendChild(speed);
 
 			const time = document.createElement("div");
 			time.classList.add("pt-1");
-			time.appendChild(document.createTextNode(route.time));
+			time.appendChild(document.createTextNode("Time: " +route.time));
 			col232.appendChild(time);
+
+			const dateLabel = document.createElement("div");
+			dateLabel.classList.add("pt-1");
+			dateLabel.appendChild(document.createTextNode("Date: "));
+			col232.appendChild(dateLabel);
 
 			const date = document.createElement("ul");
 			date.classList.add("pt-1");
