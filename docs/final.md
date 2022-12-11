@@ -40,7 +40,13 @@ Fall 2022
 ## e. Profile page:
 
 # 7. API:
+## a. auth:
 
+## b. paths:
+
+## c. requests:
+
+## d. users:
 # 8. Database:
 ## a. Users:
 - Stores information related to any user using the app.
