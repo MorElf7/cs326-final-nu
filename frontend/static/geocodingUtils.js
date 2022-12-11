@@ -16,6 +16,7 @@ export const validateAddress = async (pinpoint) => {
     return {
       "address": result["features"][0]["place_name"],
       "zipcode": zipcode,
+      "coord": result["features"][0]["geometry"]["coordinates"],
     }
   } else {
     throw new Error("Please try a valid address")

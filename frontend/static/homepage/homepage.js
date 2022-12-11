@@ -3,13 +3,14 @@ const matchDeck = document.getElementById('matchDeck');
 // const reject = document.getElementById('reject');
 let currentUser = {}
 const all_decks = document.getElementById('all_decks');
-
+//coord = [-72.519482, 42.379098]
 
 const displayMatchDeck = (sug,i) => {
-    let {src, description, pinpoints, date, _id, speed, time} = sug
-    // const imgElem = document.createElement('img');
-    // imgElem.setAttribute('src',src)
-    // document.getElementById('displayMap').append(imgElem);
+    let {description, pinpoints, date, _id, speed, time} = sug
+    let src = 'https://maps.googleapis.com/maps/api/staticmap?size=500x350&maptype=roadmap\&markers=size:large%7Ccolor:red|42.379098,-72.519482&&key=AIzaSyB0jyJR3M9-q6Tn5uGvEsbYVS7MAU5b7VI'
+    const imgElem = document.createElement('img');
+    imgElem.style.width = '50%';
+    imgElem.setAttribute('src',src);
 
     // const displayInfo = document.getElementById('displayInfo');
     // const nameElem = document.createElement('h5');
@@ -59,13 +60,12 @@ const displayMatchDeck = (sug,i) => {
     matchButtons.append(like,reject)
     const cur_deck = document.createElement('div')
     cur_deck.classList.add('cur_deck')
-    cur_deck.append(scheduleElem, displayInfo, routeInfo, matchButtons)
+    cur_deck.append(scheduleElem, displayInfo, routeInfo,imgElem, matchButtons)
     
     all_decks.append(cur_deck)
 
-    like.addEventListener('click', async() => {
-        let curSuggestion = JSON.parse(localStorage.getItem('curSuggestion'));
-    
+    like.addEventListener('click', async(event) => {
+        const curId = event.target.id;
         const accessToken = localStorage.getItem("accessToken");
         // const currentUser = localStorage.getItem("currentUser");
         
@@ -79,7 +79,7 @@ const displayMatchDeck = (sug,i) => {
                 Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({ 
-                id : currentUser._id,
+                id : curId, //id of user who was liked (not current user)
                 status : "PENDING"
             }),
         });
@@ -90,7 +90,8 @@ const displayMatchDeck = (sug,i) => {
         // localStorage.setItem('curSuggestion', JSON.stringify(newSuggestion));
     });
     
-    reject.addEventListener('click', async() => {
+    reject.addEventListener('click', async(event) => {
+        const curId = event.target.id;
         const response = await fetch('/api/request', {
             method: "PUT",
             credentials: "same-origin",
@@ -99,7 +100,7 @@ const displayMatchDeck = (sug,i) => {
                 // Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({ 
-                id : currentUser._id,
+                id : curId, //id of user who was rejected (not current user)
                 status : "REJECTED"
             }),
         })
