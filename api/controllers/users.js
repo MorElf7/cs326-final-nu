@@ -14,24 +14,24 @@ export const getUser = async (req, res, next) => {
 
 export const updateUser = async (req, res, next) => {
 	const { userId } = req.params;
-	const { username, email, description } = req.body;
+	const { description } = req.body;
 	const user = await User.findById(userId);
 	if (!user) {
 		throw new ExpressError("User Not Found", 404);
 	}
-	const dbusername = await User.findOne({ username: username });
-	if (dbusername) {
-		res.status(403).json({
-			message: "username already exists",
-			data: user,
-			status: 403,
-		});
-	}
+	// const dbusername = await User.findOne({ username: username });
+	// if (dbusername) {
+	// 	res.status(403).json({
+	// 		message: "username already exists",
+	// 		data: user,
+	// 		status: 403,
+	// 	});
+	// }
 	await User.updateOne(
 		{ _id: userId },
 		{
-			username: username,
-			email: email,
+			// username: username,
+			// email: email,
 			description: description,
 		}
 	);
