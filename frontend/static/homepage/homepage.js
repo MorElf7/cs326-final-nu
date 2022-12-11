@@ -4,7 +4,7 @@ const reject = document.getElementById('reject');
 let currentUser = {}
 
 
-const displayMatchDeck = ({src, name, description, route, schedule}) => {
+const displayMatchDeck = ({src, name, description, pinpoints, date, _id, speed, time}) => {
     // const imgElem = document.createElement('img');
     // imgElem.setAttribute('src',src)
     // document.getElementById('displayMap').append(imgElem);
@@ -21,15 +21,15 @@ const displayMatchDeck = ({src, name, description, route, schedule}) => {
     const scheduleHeader = document.createElement('h6');
     scheduleHeader.innerText = '\nSchedule:';
     const daysElem = document.createElement('div');
-    for(const day of schedule.days){
+    for(const day of date){
         daysElem.innerText += day + ' ';
     }
-    const time = document.createElement('div');
-    time.innerText = 'From: ' + schedule.time.from + '\n' + 'To: ' + schedule.time.to;
+    const timeElem = document.createElement('div');
+    timeElem.innerText = 'Time: ' + time;
     scheduleElem.append(scheduleHeader, daysElem, time);
 
     const routeElem = document.createElement('div');
-    routeElem.innerText = 'From: ' + route.from + '\n' + 'To: ' + route.to;
+    routeElem.innerText = pinpoints;
 
     displayInfo.append(nameElem, descripElem, scheduleElem);
     const routeInfo = document.getElementById('routeInfo');
@@ -74,11 +74,13 @@ onload = async () => {
         displayInfo.innerText = "Nothing to show"
     }
     else{
-        const curSuggestion = suggestions.pop();
-        localStorage.setItem('curSuggestion', JSON.stringify(curSuggestion));
-        displayMatchDeck(curSuggestion);
-        localStorage.setItem('suggestions', JSON.stringify(suggestions));
+        // const curSuggestion = suggestions.pop();
+        // localStorage.setItem('curSuggestion', JSON.stringify(curSuggestion));
+        // displayMatchDeck(curSuggestion);
+        // localStorage.setItem('suggestions', JSON.stringify(suggestions));
         // displayUserInfo();
+        suggestions.forEach(sug => displayMatchDeck(sug))
+        console.log(suggestions)
     }
 };
 
