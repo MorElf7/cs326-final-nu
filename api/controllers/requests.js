@@ -100,7 +100,7 @@ export const rejectRequest = async (req, res, next) => {
 
 	if (foundRequest) {
 		foundRequest.status = "REJECTED";
-		return res.status(200).json({ status: 200, message: "Request rejected", data: request });	
+		return res.status(200).json({ status: 200, message: "Request rejected" });	
 	}
 
 	const request = new Request({ sender, receiver, status: "REJECTED" });
@@ -141,18 +141,19 @@ export const getSuggestions = async (req, res, next) => {
 	const suggestedPaths = await Path.find({ "pinpoints.zipcode": { $in: zipcodeList } }).populate(
 		"user"
 	);
-	const suggestMatches = suggestedPaths.filter(e => e.user._id.toString() !== userId).filter(async (e) => {
-		const request = await Request.findOne({ sender: userId, receiver: e.user._id, status: {$in: ["ACCEPTED"]}});
-		const altRequest = await Request.findOne({ receiver: userId, sender: e.user._id, status: {$in: ["ACCEPTED"]} });
+	const suggestMatches = suggestedPaths.filter(e => e.user._id.toString() !== userId).filter(e => !e.user.connections.includes(userId))
+	const result = []
 
-		if (request || altRequest) {
-			return false;
-		} else true;
-	}).filter(!e.user.connections.includes(userId))
-
+	for (const suggestion of suggestMatches) {
+		const request = await Request.findOne({ sender: userId, receiver: suggestion.user._id, status: {$in: ["ACCEPTED", "REJECTED"]}});
+		const altRequest = await Request.findOne({ sender: suggestion.user._id, receiver: userId, status: {$in: ["ACCEPTED", "REJECTED"]} });
+		if (!request && !altRequest) {
+			result.append(suggestion)
+		}
+	}
 	res.status(200).json({
 		status: 200,
 		message: "",
-		data: suggestMatches
+		data: result
 	});
 };

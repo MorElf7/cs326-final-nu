@@ -186,7 +186,8 @@ onload = async () => {
 
 				const {status, message} = await response.json();
 				if (status === 200) {
-					alert(message)
+					alert(message);
+					location.reload();
 				}
       });
     });
