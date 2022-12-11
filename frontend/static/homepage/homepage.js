@@ -38,7 +38,6 @@ const displayMatchDeck = ({src, name, description, pinpoints, date, _id, speed, 
     routeHeader.innerText = 'Route: ';
     routeInfo.append(routeHeader, routeElem);
 
-
 }
 
 const getSuggestions = async () => {
@@ -80,6 +79,7 @@ onload = async () => {
         // localStorage.setItem('suggestions', JSON.stringify(suggestions));
         // displayUserInfo();
         suggestions.forEach(sug => displayMatchDeck(sug))
+        console.log("Suggestions: ")
         console.log(suggestions)
     }
 };
