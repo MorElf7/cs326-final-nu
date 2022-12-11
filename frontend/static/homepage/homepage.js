@@ -58,7 +58,7 @@ const displayMatchDeck = (sug, i) => {
   like.setAttribute("id", user._id);
 
   const reject = document.createElement("button");
-  reject.innerText = "Reject";
+  reject.innerText = "Nope";
   reject.classList.add("btn");
   reject.classList.add("btn-secondary");
   reject.setAttribute("id", user._id);
