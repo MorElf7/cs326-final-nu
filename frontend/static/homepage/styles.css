@@ -92,3 +92,8 @@ hr{
     margin-top: 0;
     background-color: #f7f7f7;
 }
+.divide{
+    display: flex;
+    column-gap: 10px;
+    padding-bottom: 20px;
+}

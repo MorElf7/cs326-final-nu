@@ -18,13 +18,6 @@ const displayMatchDeck = (sug, i) => {
   imgElem.style.width = "50%";
   imgElem.setAttribute("src", src);
 
-  // const displayInfo = document.getElementById('displayInfo');
-  // const nameElem = document.createElement('h5');
-  // nameElem.innerText = name;
-
-  // const descripElem = document.createElement('div');
-  // descripElem.innerText = description;
-
   const scheduleElem = document.createElement("div");
   const scheduleHeader = document.createElement("h6");
   scheduleHeader.innerText = "\nSchedule:";
@@ -34,7 +27,11 @@ const displayMatchDeck = (sug, i) => {
   }
   const timeElem = document.createElement("div");
   timeElem.innerText = "Time: " + time;
-  scheduleElem.append(scheduleHeader, daysElem, timeElem);
+
+  const speedElem = document.createElement("div");
+  speedElem.innerText = "Speed: " + speed;
+
+  scheduleElem.append(scheduleHeader, daysElem, timeElem, speedElem);
 
   const routeElem = document.createElement("div");
   let allRoutes = "";
@@ -66,7 +63,15 @@ const displayMatchDeck = (sug, i) => {
   matchButtons.append(like, reject);
   const cur_deck = document.createElement("div");
   cur_deck.classList.add("cur_deck");
-  cur_deck.append(scheduleElem, displayInfo, routeInfo, imgElem, matchButtons);
+
+  const descrip = document.createElement("div");
+  descrip.append(scheduleElem, displayInfo, routeInfo);
+
+  const divide = document.createElement('div');
+  divide.classList.add('divide');
+  divide.append(descrip, imgElem);
+
+  cur_deck.append(divide, matchButtons);
 
   all_decks.append(cur_deck);
 
@@ -74,8 +79,6 @@ const displayMatchDeck = (sug, i) => {
     const curId = event.target.id;
     const accessToken = localStorage.getItem("accessToken");
     // const currentUser = localStorage.getItem("currentUser");
-
-    // const res = await fetch()
 
     const response = await fetch("/api/request", {
       method: "POST",
@@ -95,11 +98,6 @@ const displayMatchDeck = (sug, i) => {
     if (status === 200) {
       location.reload();
     }
-    // let suggestions = JSON.parse(localStorage.getItem('suggestions'));
-    // const newSuggestion = suggestions.pop();
-    // alert('Added into matched list!');
-    // displayMatchDeck(newSuggestion);
-    // localStorage.setItem('curSuggestion', JSON.stringify(newSuggestion));
   });
 
   reject.addEventListener("click", async (event) => {
@@ -134,7 +132,6 @@ const getSuggestions = async () => {
     body: JSON.stringify({ userId: currentUser._id }),
   });
   const res = await response.json();
-  // console.log("suggestions");
   console.log(res.data);
   return res.data;
 };
