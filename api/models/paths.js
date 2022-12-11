@@ -6,6 +6,9 @@ const pathSchema = new Schema({
 		{
 			address: String,
 			zipcode: String,
+			coord: [{
+				type: Number,
+			}]
 		},
 	],
 	user: {
