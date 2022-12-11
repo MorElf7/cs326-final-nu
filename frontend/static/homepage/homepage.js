@@ -85,9 +85,9 @@ onload = async () => {
 const renderRoute = async () => {
     const res = await fetch(`/api/paths/${currentUser._id}`);
     const {message, status, data } = await res.json();
-    // if (status !== 200) {
-    //     location.href = "/routesPanel"
-    // }
+    if (status !== 200) {
+        location.href = "/routesPanel"
+    }
     const route = data
 
     const pinpoints = data.pinpoints.map(x => x.address);
