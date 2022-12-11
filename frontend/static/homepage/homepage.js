@@ -54,7 +54,8 @@ const getSuggestions = async () => {
 		body: JSON.stringify({ userId: currentUser._id }),
 	});
     const res = await response.json();
-
+    console.log("suggestions");
+    console.log(res.data)
 	return res.data;
 }
 
@@ -77,13 +78,13 @@ onload = async () => {
         localStorage.setItem('curSuggestion', JSON.stringify(curSuggestion));
         displayMatchDeck(curSuggestion);
         localStorage.setItem('suggestions', JSON.stringify(suggestions));
-        displayUserInfo();
+        // displayUserInfo();
     }
 };
 
 const renderRoute = async () => {
-    const res = await fetch(`api/paths/${currentUser._id}`);
-    const {status, message, data } = await res.json();
+    const res = await fetch(`/api/paths/${currentUser._id}`);
+    const {message, status, data } = await res.json();
     if (status !== 200) {
         location.href = "/routesPanel"
     }
@@ -131,6 +132,8 @@ like.addEventListener('click', async() => {
     const accessToken = localStorage.getItem("accessToken");
 	// const currentUser = localStorage.getItem("currentUser");
 
+    // const res = await fetch()
+    
     const response = await fetch('/api/request', {
 		method: "PUT",
 		credentials: "same-origin",
@@ -145,7 +148,7 @@ like.addEventListener('click', async() => {
 	});
     let suggestions = JSON.parse(localStorage.getItem('suggestions'));
     const newSuggestion = suggestions.pop();
-    alert('Added into matched list!')
+    alert('Added into matched list!');
     displayMatchDeck(newSuggestion);
     localStorage.setItem('curSuggestion', JSON.stringify(newSuggestion));
 });
@@ -181,27 +184,27 @@ const removeAllChildNodes = (parent) => {
     }
 }
 
-const displayUserInfo = async () => {
-    const accessToken = localStorage.getItem("accessToken");
-	// const currentUser = localStorage.getItem("currentUser");
+// const displayUserInfo = async () => {
+//     const accessToken = localStorage.getItem("accessToken");
+// 	// const currentUser = localStorage.getItem("currentUser");
 
-    const response = await fetch(`/api/users/${currentUser._id}`, {
-		method: "GET",
-		credentials: "same-origin",
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${accessToken}`,
-		},
-	});
-    const res = await response.json();
+//     const response = await fetch(`/api/users/${currentUser._id}`, {
+// 		method: "GET",
+// 		credentials: "same-origin",
+// 		headers: {
+// 			"Content-Type": "application/json",
+// 			Authorization: `Bearer ${accessToken}`,
+// 		},
+// 	});
+//     const res = await response.json();
     
-    const userInfo = res.data;
+//     const userInfo = res.data;
 
-    const userRoute = document.getElementById('userRoute');
-    const route = document.createElement('div');
-    route.innerText = 'From: ' + userInfo.route.from + '\n' + 'To: ' + userInfo.route.to;
-    userRoute.append(route);
-}
+//     const userRoute = document.getElementById('userRoute');
+//     const route = document.createElement('div');
+//     route.innerText = 'From: ' + userInfo.route.from + '\n' + 'To: ' + userInfo.route.to;
+//     userRoute.append(route);
+// }
 
 const matchesPage = document.getElementById('matchesPage');
 matchesPage.addEventListener('click', () => {
@@ -214,7 +217,8 @@ profilePage.addEventListener('click', () => {
 })
 
 const logout = document.getElementById('logoutPage');
-logout.addEventListener('click', () => {
+logout.addEventListener('click', async () => {
+    await fetch('api/users/logout');
     window.location.assign("/users/login");
 })
 
