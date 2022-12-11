@@ -93,15 +93,14 @@ export const getSuggestions = async (req, res, next) => {
 	const suggestedPaths = await Path.find({ "pinpoints.zipcode": { $all: zipcodeList } }).populate(
 		"user"
 	);
-	let suggestMatches = suggestedPaths.filter(e => e.user._id.toString() !== userId);
-	
-	// .filter(async (e) => {
-	// 	const request = await Request.findOne({ sender: userId, receiver: e.user._id });
-	// 	const altRequest = await Request.findOne({ receiver: userId, sender: e.user._id });
-	// 	if (request || altRequest) {
-	// 		return false;
-	// 	} else return !e.user.connections.includes(userId);
-	// })
+	const suggestMatches = suggestedPaths.filter(e => e.user._id.toString() !== userId)
+	.filter(async (e) => {
+		const request = await Request.findOne({ sender: userId, receiver: e.user._id });
+		const altRequest = await Request.findOne({ receiver: userId, sender: e.user._id });
+		if (request || altRequest) {
+			return false;
+		} else return !e.user.connections.includes(userId);
+	})
 
 	res.status(200).json({
 		status: 200,
