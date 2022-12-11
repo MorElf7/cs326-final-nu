@@ -172,8 +172,6 @@ onload = async () => {
       removeMatchBtn.addEventListener("click", async (e) => {
         e.preventDefault();
         e.stopPropagation();
-				console.log("Data")
-				console.log(data)
         const response = await fetch("/api/request/removeMatch", {
           method: "PUT",
           credentials: "same-origin",

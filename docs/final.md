@@ -45,7 +45,7 @@ This consist of 2 separate pages, signin and signup. Both employ html form eleme
 
 ## d. Matches page:
 
-This is a page to display all the users that have matched with the logged in user and their information, including their routes info, their name and description, as well as a link to their profile page. There would be a nav bar at the top to redirect the user to their home page.
+This is a page to display all the users that have matched with the logged in user and their information, including their routes info, their name and description. There would be a nav bar at the top to redirect the user to their home page.
 
 ## e. Profile page:
 
