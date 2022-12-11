@@ -7,7 +7,17 @@ const all_decks = document.getElementById('all_decks');
 
 const displayMatchDeck = (sug,i) => {
     let {description, pinpoints, date, user, speed, time} = sug
-    let src = 'https://maps.googleapis.com/maps/api/staticmap?size=500x350&maptype=roadmap\&markers=size:large%7Ccolor:red|42.379098,-72.519482&&key=AIzaSyB0jyJR3M9-q6Tn5uGvEsbYVS7MAU5b7VI'
+    //long : coord[1]; lat:coord[0]
+    const coords = pinpoints.map(p => p.coord)
+    let coord_str = ''
+    if(coords.length > 0 && coords[0].length > 0){
+        coords.forEach(c => coord_str+='|'+c[1]+','+c[0]);
+    }
+    else{
+        coord_str = '|42.379098,-72.519482'
+    }
+
+    let src = `https://maps.googleapis.com/maps/api/staticmap?size=500x350&maptype=roadmap\&markers=size:large%7Ccolor:red${coord_str}&&key=AIzaSyB0jyJR3M9-q6Tn5uGvEsbYVS7MAU5b7VI`
     const imgElem = document.createElement('img');
     imgElem.style.width = '50%';
     imgElem.setAttribute('src',src);
@@ -134,7 +144,7 @@ const getSuggestions = async () => {
 	});
     const res = await response.json();
     // console.log("suggestions");
-    // console.log(res.data)
+    console.log(res.data)
 	return res.data;
 }
 

@@ -36,25 +36,40 @@ export const fillOutHref = async (userId) => {
 	profileLink.appendChild(document.createTextNode(user.username));
 };
 
+const addressList = (list, pinpoints) => {
+	for (let pinpoint in pinpoints) {
+		const li = document.createElement("li");
+		li.classList.add("list-group-item");
+		list.appendChild(li);
+
+		li.appendChild(document.createTextNode(pinpoint.address));
+	}
+};
+
+const dateList = (list, dates) => {
+	for (let date in dates) {
+		const li = document.createElement("li");
+		li.classList.add("list-group-item");
+		list.appendChild(li);
+
+		li.appendChild(document.createTextNode(date));
+	}
+};
+
 onload = async () => {
 	const userId = getUserId();
 
 	await fillOutHref(userId);
 
-	const { data, status, message } = await httpRequest(
-		`/api/users/${userId}/match`,
-		"GET",
-		{},
-		[]
-	);
+	const response = await httpRequest(`/api/users/${userId}/match`, "GET", {}, []);
 
-	if (status === 200) {
-		const matches = data;
+	if (response.status === 200) {
+		const matches = response.data;
 
 		matches.forEach(async (value, index, array) => {
 			const res = await fetch(`/api/paths/${value._id}`);
-			const {message, status, data } = await res.json();
-			const route = data
+			const { message, status, data } = await res.json();
+			const route = data;
 
 			const { username, description } = value;
 			const listItem = document.createElement("li");
@@ -99,7 +114,35 @@ onload = async () => {
 			descriptionNode.appendChild(document.createTextNode(`Description: ${description}`));
 			col22.appendChild(descriptionNode);
 
+			const row2 = document.createElement("div");
+			row2.classList.add("row", "pt-3");
+			listItem.appendChild(row2);
 
+			const col231 = document.createElement("div");
+			col231.classList.add("col-4");
+			row2.appendChild(col231);
+
+			const addresses = document.createElement("ul");
+			col231.appendChild(addresses);
+			addressList(addresses, route.pinpoints);
+
+			const col232 = document.createElement("div");
+			col232.classList.add("col-4", "offset-1");
+			row2.appendChild(col232);
+
+			const speed = document.createElement("div");
+			speed.appendChild(document.createTextNode(route.speed));
+			col232.appendChild(speed);
+
+			const time = document.createElement("div");
+			time.classList.add("pt-1");
+			time.appendChild(document.createTextNode(route.time));
+			col232.appendChild(time);
+
+			const date = document.createElement("ul");
+			date.classList.add("pt-1");
+			dateList(date, route.date);
+			col232.appendChild(date);
 		});
 	} else {
 	}

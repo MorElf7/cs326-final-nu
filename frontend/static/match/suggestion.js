@@ -88,6 +88,36 @@ onload = async () => {
 				col3.removeChild(acceptBtn);
 				col3.removeChild(declineBtn);
 			});
+
+			const row2 = document.createElement("div");
+			row2.classList.add("row", "pt-3");
+			listItem.appendChild(row2);
+
+			const col231 = document.createElement("div");
+			col231.classList.add("col-4");
+			row2.appendChild(col231);
+
+			const addresses = document.createElement("ul");
+			col231.appendChild(addresses);
+			addressList(addresses, route.pinpoints);
+
+			const col232 = document.createElement("div");
+			col232.classList.add("col-4", "offset-1");
+			row2.appendChild(col232);
+
+			const speed = document.createElement("div");
+			speed.appendChild(document.createTextNode(route.speed));
+			col232.appendChild(speed);
+
+			const time = document.createElement("div");
+			time.classList.add("pt-1");
+			time.appendChild(document.createTextNode(route.time));
+			col232.appendChild(time);
+
+			const date = document.createElement("ul");
+			date.classList.add("pt-1");
+			dateList(date, route.date);
+			col232.appendChild(date);
 		});
 	}
 };
