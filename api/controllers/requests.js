@@ -30,7 +30,6 @@ export const createRequest = async (req, res, next) => {
 		throw new ExpressError("Request already exists", 409);
 	}
 	const oppositeRequest = await Request.findOne({ sender: receiver, receiver: sender });
-	console.log(oppositeRequest)
 	if (oppositeRequest) {
 		oppositeRequest.status = "ACCEPTED";
 		await oppositeRequest.save();
@@ -119,7 +118,6 @@ export const getSuggestions = async (req, res, next) => {
 	const suggestedPaths = await Path.find({ "pinpoints.zipcode": { $in: zipcodeList } }).populate(
 		"user"
 	);
-	console.log(suggestedPaths)
 	const suggestMatches = suggestedPaths.filter(e => e.user._id.toString() !== userId).filter(async (e) => {
 		const request = await Request.findOne({ sender: userId, receiver: e.user._id, status: {$in: ["REJECTED", "ACCEPTED"]}});
 		const altRequest = await Request.findOne({ receiver: userId, sender: e.user._id, status: {$in: ["REJECTED", "ACCEPTED"]} });

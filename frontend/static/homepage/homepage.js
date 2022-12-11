@@ -133,8 +133,8 @@ const getSuggestions = async () => {
 		body: JSON.stringify({ userId: currentUser._id }),
 	});
     const res = await response.json();
-    console.log("suggestions");
-    console.log(res.data)
+    // console.log("suggestions");
+    // console.log(res.data)
 	return res.data;
 }
 
@@ -160,8 +160,8 @@ onload = async () => {
         // localStorage.setItem('suggestions', JSON.stringify(suggestions));
         // displayUserInfo();
         suggestions.forEach((sug,i) => displayMatchDeck(sug,i))
-        console.log("Suggestions: ")
-        console.log(suggestions)
+        // console.log("Suggestions: ")
+        // console.log(suggestions)
     }
 };
 
@@ -205,7 +205,7 @@ const renderRoute = async () => {
     routeDetails.appendChild(routeDate);
     routeDetails.appendChild(routeTime);
 
-    console.log(pinpoints)
+    // console.log(pinpoints)
 
 }
 

@@ -34,7 +34,7 @@ const renderRoute = async () => {
     // if (status !== 200) {
     //     location.href = "/routesPanel"
     // }
-  console.log(data)
+  // console.log(data)
   const curPinpoints = data.pinpoints.map(x => x.address);
   const speed = data.speed;
   const date = data.date;
