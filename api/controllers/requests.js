@@ -95,8 +95,8 @@ export const getSuggestions = async (req, res, next) => {
 	);
 	console.log(suggestedPaths)
 	const suggestMatches = suggestedPaths.filter(e => e.user._id.toString() !== userId).filter(async (e) => {
-		const request = await Request.findOne({ sender: userId, receiver: e.user._id, status: "REJECTED"});
-		const altRequest = await Request.findOne({ receiver: userId, sender: e.user._id, status: "REJECTED" });
+		const request = await Request.findOne({ sender: userId, receiver: e.user._id, status: {$in: ["REJECTED", "ACCEPTED"]}});
+		const altRequest = await Request.findOne({ receiver: userId, sender: e.user._id, status: {$in: ["REJECTED", "ACCEPTED"]} });
 
 		if (request || altRequest) {
 			return false;
