@@ -70,6 +70,9 @@ hr{
 }
 #matchDeck{
     display: grid;
+    padding: 15px;
+    height: 50vh;
+    overflow: scroll;
 }
 .matchDeckButtons{
     display: flex;
