@@ -119,7 +119,10 @@ const displayMatchDeck = (sug, i) => {
         receiver: curId,
       }),
     });
-
+    const {status, message} = await response.json();
+    if (status === 200) {
+      location.reload();
+    }
     // let suggestions = JSON.parse(localStorage.getItem('suggestions'));
 
     // if(suggestions.length > 0){
