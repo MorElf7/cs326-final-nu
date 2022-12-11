@@ -93,18 +93,17 @@ export const getSuggestions = async (req, res, next) => {
 	const suggestedPaths = await Path.find({ "pinpoints.zipcode": { $all: zipcodeList } }).populate(
 		"user"
 	);
-
-	let suggestMatches = [...new Set(suggestedPaths.map((e) => e.user))].filter(async (e) => {
-		const request = await Request.findOne({ sender: userId, receiver: e._id });
-		const altRequest = await Request.findOne({ receiver: userId, sender: e._id });
+	let suggestMatches = suggestedPaths.filter(async (e) => {
+		const request = await Request.findOne({ sender: userId, receiver: e.user._id });
+		const altRequest = await Request.findOne({ receiver: userId, sender: e.user._id });
 		if (request || altRequest) {
 			return false;
-		} else return !e.connections.includes(userId);
-	});
+		} else return !e.user.connections.includes(userId);
+	}).filter(e => e.user._id !== userId);
 
 	res.status(200).json({
 		status: 200,
 		message: "",
-		data: suggestMatches,
+		data: suggestMatches
 	});
 };
