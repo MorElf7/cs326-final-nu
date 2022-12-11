@@ -212,103 +212,18 @@ const renderRoute = async () => {
   routeDetails.appendChild(routeDate);
   routeDetails.appendChild(routeTime);
 
-  // console.log(pinpoints)
 };
 
-<<<<<<< HEAD
-=======
-// like.addEventListener('click', async() => {
-//     let curSuggestion = JSON.parse(localStorage.getItem('curSuggestion'));
-
-//     const accessToken = localStorage.getItem("accessToken");
-// 	// const currentUser = localStorage.getItem("currentUser");
-
-//     // const res = await fetch()
-
-//     const response = await fetch('/api/request', {
-// 		method: "PUT",
-// 		credentials: "same-origin",
-// 		headers: {
-// 			"Content-Type": "application/json",
-// 			Authorization: `Bearer ${accessToken}`,
-// 		},
-// 		body: JSON.stringify({
-//             id : currentUser._id,
-//             status : "PENDING"
-//         }),
-// 	});
-//     let suggestions = JSON.parse(localStorage.getItem('suggestions'));
-//     const newSuggestion = suggestions.pop();
-//     alert('Added into matched list!');
-//     displayMatchDeck(newSuggestion);
-//     localStorage.setItem('curSuggestion', JSON.stringify(newSuggestion));
-// });
-
-// reject.addEventListener('click', async() => {
-//     const response = await fetch('/api/request', {
-// 		method: "PUT",
-// 		credentials: "same-origin",
-// 		headers: {
-// 			"Content-Type": "application/json",
-// 			// Authorization: `Bearer ${accessToken}`,
-// 		},
-// 		body: JSON.stringify({
-//             id : currentUser._id,
-//             status : "REJECTED"
-//         }),
-// 	})
-
-//     let suggestions = JSON.parse(localStorage.getItem('suggestions'));
-
-//     if(suggestions.length > 0){
-//         displayMatchDeck(suggestions.pop());
-//     }
-//     else{
-//         alert('No more users to show');
-//     }
-//     localStorage.setItem('suggestions', JSON.stringify(suggestions));
-// });
-
->>>>>>> 88cf83a93482826e47f0e5bf6556bb515a104406
 const removeAllChildNodes = (parent) => {
   while (parent.firstChild) {
     parent.removeChild(parent.firstChild);
   }
 };
 
-<<<<<<< HEAD
 const matchesPage = document.getElementById('matchesPage');
 matchesPage.addEventListener('click', () => {
     window.location.assign(`/users/${currentUser._id}/match`);
 })
-=======
-// const displayUserInfo = async () => {
-//     const accessToken = localStorage.getItem("accessToken");
-// 	// const currentUser = localStorage.getItem("currentUser");
-
-//     const response = await fetch(`/api/users/${currentUser._id}`, {
-// 		method: "GET",
-// 		credentials: "same-origin",
-// 		headers: {
-// 			"Content-Type": "application/json",
-// 			Authorization: `Bearer ${accessToken}`,
-// 		},
-// 	});
-//     const res = await response.json();
-
-//     const userInfo = res.data;
-
-//     const userRoute = document.getElementById('userRoute');
-//     const route = document.createElement('div');
-//     route.innerText = 'From: ' + userInfo.route.from + '\n' + 'To: ' + userInfo.route.to;
-//     userRoute.append(route);
-// }
-
-const matchesPage = document.getElementById("matchesPage");
-matchesPage.addEventListener("click", () => {
-  window.location.assign(`/users/${currentUser._id}/match`);
-});
->>>>>>> 88cf83a93482826e47f0e5bf6556bb515a104406
 
 const profilePage = document.getElementById("routesPanel");
 profilePage.addEventListener("click", () => {
