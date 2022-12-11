@@ -90,13 +90,14 @@ export const getSuggestions = async (req, res, next) => {
 		throw new ExpressError("User not found", 404);
 	}
 	const zipcodeList = user.path?.pinpoints.map((e) => e.zipcode);
-	const suggestedPaths = await Path.find({ "pinpoints.zipcode": { $all: zipcodeList } }).populate(
+	const suggestedPaths = await Path.find({ "pinpoints.zipcode": { $in: zipcodeList } }).populate(
 		"user"
 	);
-	const suggestMatches = suggestedPaths.filter(e => e.user._id.toString() !== userId)
-	.filter(async (e) => {
+	console.log(suggestedPaths)
+	const suggestMatches = suggestedPaths.filter(e => e.user._id.toString() !== userId).filter(async (e) => {
 		const request = await Request.findOne({ sender: userId, receiver: e.user._id });
 		const altRequest = await Request.findOne({ receiver: userId, sender: e.user._id });
+
 		if (request || altRequest) {
 			return false;
 		} else return !e.user.connections.includes(userId);
