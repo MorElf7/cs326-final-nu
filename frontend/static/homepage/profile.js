@@ -29,11 +29,11 @@ editButton.addEventListener('click', async() => {
     const des = document.getElementById('desInput');
     if(editButton.innerText === 'Edit'){
         // window.location.assign(`/users/${currentUser}/edit`);
-        username.readOnly = false;
-        username.classList.remove('readOnly');
+        // username.readOnly = false;
+        // username.classList.remove('readOnly');
 
-        email.readOnly = false;
-        email.classList.remove('readOnly');
+        // email.readOnly = false;
+        // email.classList.remove('readOnly');
 
         // phone.readOnly = false;
         // phone.classList.remove('readOnly');

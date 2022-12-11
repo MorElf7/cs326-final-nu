@@ -23,9 +23,9 @@ export const fillOutHref = async (userId) => {
 	let path = location.pathname.split("/");
 	path.pop();
 
-	matchLink.href = path.join("/") + "/match";
-	suggestionLink.href = path.join("/") + "/suggestion";
-	requestLink.href = path.join("/") + "/request";
+	// matchLink.href = path.join("/") + "/match";
+	// suggestionLink.href = path.join("/") + "/suggestion";
+	// requestLink.href = path.join("/") + "/request";
 	profileLink.href = "/users/profile";
 
 	const user = (await httpRequest("/api/users/currentUser", "GET", {}, [])).data;
@@ -51,7 +51,11 @@ onload = async () => {
 	if (status === 200) {
 		const matches = data;
 
-		matches.forEach((value, index, array) => {
+		matches.forEach(async (value, index, array) => {
+			const res = await fetch(`/api/paths/${value._id}`);
+			const {message, status, data } = await res.json();
+			const route = data
+
 			const { username, description } = value;
 			const listItem = document.createElement("li");
 			listItem.classList.add("list-group-item");
@@ -80,8 +84,7 @@ onload = async () => {
 			innerRow1.appendChild(col21);
 
 			const usernameNode = document.createElement("a");
-			usernameNode.href = "#";
-			usernameNode.appendChild(document.createTextNode(username));
+			usernameNode.appendChild(document.createTextNode(`Username: ${username}`));
 			col21.appendChild(usernameNode);
 
 			const innerRow2 = document.createElement("div");
@@ -93,8 +96,10 @@ onload = async () => {
 			innerRow2.appendChild(col22);
 
 			const descriptionNode = document.createElement("p");
-			descriptionNode.appendChild(document.createTextNode(description));
+			descriptionNode.appendChild(document.createTextNode(`Description: ${description}`));
 			col22.appendChild(descriptionNode);
+
+
 		});
 	} else {
 	}
