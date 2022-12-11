@@ -1,7 +1,8 @@
 const matchDeck = document.getElementById('matchDeck');
-const like = document.getElementById('like');
-const reject = document.getElementById('reject');
+// const like = document.getElementById('like');
+// const reject = document.getElementById('reject');
 let currentUser = {}
+const all_decks = document.getElementById('all_decks');
 
 
 const displayMatchDeck = ({src, name, description, pinpoints, date, _id, speed, time}) => {
@@ -9,10 +10,9 @@ const displayMatchDeck = ({src, name, description, pinpoints, date, _id, speed, 
     // imgElem.setAttribute('src',src)
     // document.getElementById('displayMap').append(imgElem);
 
-    const displayInfo = document.getElementById('displayInfo');
-    removeAllChildNodes(displayInfo);
-    const nameElem = document.createElement('h5');
-    nameElem.innerText = name;
+    // const displayInfo = document.getElementById('displayInfo');
+    // const nameElem = document.createElement('h5');
+    // nameElem.innerText = name;
 
     // const descripElem = document.createElement('div');
     // descripElem.innerText = description;
@@ -33,13 +33,81 @@ const displayMatchDeck = ({src, name, description, pinpoints, date, _id, speed, 
     pinpoints.forEach(x => allRoutes+=x.address+'\n')
     routeElem.innerText = allRoutes;
 
+    const displayInfo = document.createElement('div');
     displayInfo.append(scheduleElem);
+
     const routeInfo = document.getElementById('routeInfo');
     const routeHeader = document.createElement('h6');
-    removeAllChildNodes(routeInfo);
     routeHeader.innerText = 'Route: ';
     routeInfo.append(routeHeader, routeElem);
 
+    const matchButtons = document.createElement('div')
+    matchButtons.classList.add('matchDeckButtons')
+    const like = document.createElement('button')
+    like.innerText = 'Like'
+    like.classList.add('btn')
+    like.classList.add('btn-info')
+    const reject = document.createElement('button')
+    reject.innerText = 'Reject'
+    reject.classList.add('btn')
+    reject.classList.add('btn-secondary')
+
+    like.addEventListener('click', async() => {
+        let curSuggestion = JSON.parse(localStorage.getItem('curSuggestion'));
+    
+        const accessToken = localStorage.getItem("accessToken");
+        // const currentUser = localStorage.getItem("currentUser");
+    
+        // const res = await fetch()
+        
+        const response = await fetch('/api/request', {
+            method: "PUT",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+            },
+            body: JSON.stringify({ 
+                id : currentUser._id,
+                status : "PENDING"
+            }),
+        });
+        let suggestions = JSON.parse(localStorage.getItem('suggestions'));
+        const newSuggestion = suggestions.pop();
+        alert('Added into matched list!');
+        displayMatchDeck(newSuggestion);
+        localStorage.setItem('curSuggestion', JSON.stringify(newSuggestion));
+    });
+    
+    reject.addEventListener('click', async() => {
+        const response = await fetch('/api/request', {
+            method: "PUT",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+                // Authorization: `Bearer ${accessToken}`,
+            },
+            body: JSON.stringify({ 
+                id : currentUser._id,
+                status : "REJECTED"
+            }),
+        })
+    
+        let suggestions = JSON.parse(localStorage.getItem('suggestions'));
+    
+        if(suggestions.length > 0){
+            displayMatchDeck(suggestions.pop());
+        }
+        else{
+            alert('No more users to show');
+        }
+        localStorage.setItem('suggestions', JSON.stringify(suggestions));
+    });
+
+    matchButtons.append(like,reject)
+    const cur_deck = document.createElement('div')
+    cur_deck.append(scheduleElem, displayInfo, routeInfo, matchButtons)
+    all_decks.append(cur_deck)
 }
 
 const getSuggestions = async () => {
@@ -130,57 +198,57 @@ const renderRoute = async () => {
 
 }
 
-like.addEventListener('click', async() => {
-    let curSuggestion = JSON.parse(localStorage.getItem('curSuggestion'));
+// like.addEventListener('click', async() => {
+//     let curSuggestion = JSON.parse(localStorage.getItem('curSuggestion'));
 
-    const accessToken = localStorage.getItem("accessToken");
-	// const currentUser = localStorage.getItem("currentUser");
+//     const accessToken = localStorage.getItem("accessToken");
+// 	// const currentUser = localStorage.getItem("currentUser");
 
-    // const res = await fetch()
+//     // const res = await fetch()
     
-    const response = await fetch('/api/request', {
-		method: "PUT",
-		credentials: "same-origin",
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${accessToken}`,
-		},
-		body: JSON.stringify({ 
-            id : currentUser._id,
-            status : "PENDING"
-        }),
-	});
-    let suggestions = JSON.parse(localStorage.getItem('suggestions'));
-    const newSuggestion = suggestions.pop();
-    alert('Added into matched list!');
-    displayMatchDeck(newSuggestion);
-    localStorage.setItem('curSuggestion', JSON.stringify(newSuggestion));
-});
+//     const response = await fetch('/api/request', {
+// 		method: "PUT",
+// 		credentials: "same-origin",
+// 		headers: {
+// 			"Content-Type": "application/json",
+// 			Authorization: `Bearer ${accessToken}`,
+// 		},
+// 		body: JSON.stringify({ 
+//             id : currentUser._id,
+//             status : "PENDING"
+//         }),
+// 	});
+//     let suggestions = JSON.parse(localStorage.getItem('suggestions'));
+//     const newSuggestion = suggestions.pop();
+//     alert('Added into matched list!');
+//     displayMatchDeck(newSuggestion);
+//     localStorage.setItem('curSuggestion', JSON.stringify(newSuggestion));
+// });
 
-reject.addEventListener('click', async() => {
-    const response = await fetch('/api/request', {
-		method: "PUT",
-		credentials: "same-origin",
-		headers: {
-			"Content-Type": "application/json",
-			// Authorization: `Bearer ${accessToken}`,
-		},
-		body: JSON.stringify({ 
-            id : currentUser._id,
-            status : "REJECTED"
-        }),
-	})
+// reject.addEventListener('click', async() => {
+//     const response = await fetch('/api/request', {
+// 		method: "PUT",
+// 		credentials: "same-origin",
+// 		headers: {
+// 			"Content-Type": "application/json",
+// 			// Authorization: `Bearer ${accessToken}`,
+// 		},
+// 		body: JSON.stringify({ 
+//             id : currentUser._id,
+//             status : "REJECTED"
+//         }),
+// 	})
 
-    let suggestions = JSON.parse(localStorage.getItem('suggestions'));
+//     let suggestions = JSON.parse(localStorage.getItem('suggestions'));
 
-    if(suggestions.length > 0){
-        displayMatchDeck(suggestions.pop());
-    }
-    else{
-        alert('No more users to show');
-    }
-    localStorage.setItem('suggestions', JSON.stringify(suggestions));
-});
+//     if(suggestions.length > 0){
+//         displayMatchDeck(suggestions.pop());
+//     }
+//     else{
+//         alert('No more users to show');
+//     }
+//     localStorage.setItem('suggestions', JSON.stringify(suggestions));
+// });
 
 const removeAllChildNodes = (parent) => {
     while(parent.firstChild){
