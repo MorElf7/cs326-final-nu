@@ -42,12 +42,14 @@ This consist of 2 separate pages, signin and signup. Both employ html form eleme
 ## b. Route Panel:
 
 ## c. Home Page:
+Our Home Page allows user to go through all suggestions where they can decide to Like or Reject. Each suggestion card display other user's basic information, their time and route, along with a map with pinpoints where their routes are. From the home page, user can navigate to Matches, Routes Panel, and Profile page.
 
 ## d. Matches page:
 
 This is a page to display all the users that have matched with the logged in user and their information, including their routes info, their name and description. There would be a nav bar at the top to redirect the user to their home page.
 
 ## e. Profile page:
+The Profile page shows user's account information and allows user to change/update their information if needed. 
 
 # 7. API:
 
