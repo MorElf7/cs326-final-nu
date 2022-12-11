@@ -8,7 +8,7 @@ export const createPath = async (req, res, next) => {
 	const path = new Path({pinpoints, user, speed, date, time});
 	await path.save();
 	// console.log(path);
-	await User.findOneAndUpdate({ user: user}, {path: path})
+	await User.findByIdAndUpdate(user, {path: path})
 	res.status(200).json({
 		message: "Path created",
 		status: 200,

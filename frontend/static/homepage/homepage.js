@@ -217,7 +217,8 @@ profilePage.addEventListener('click', () => {
 })
 
 const logout = document.getElementById('logoutPage');
-logout.addEventListener('click', () => {
+logout.addEventListener('click', async () => {
+    await fetch('api/users/logout');
     window.location.assign("/users/login");
 })
 
