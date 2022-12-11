@@ -5,7 +5,8 @@ let currentUser = {}
 const all_decks = document.getElementById('all_decks');
 
 
-const displayMatchDeck = ({src, name, description, pinpoints, date, _id, speed, time}) => {
+const displayMatchDeck = (sug,i) => {
+    let {src, description, pinpoints, date, _id, speed, time} = sug
     // const imgElem = document.createElement('img');
     // imgElem.setAttribute('src',src)
     // document.getElementById('displayMap').append(imgElem);
@@ -51,6 +52,13 @@ const displayMatchDeck = ({src, name, description, pinpoints, date, _id, speed, 
     reject.innerText = 'Reject'
     reject.classList.add('btn')
     reject.classList.add('btn-secondary')
+
+    matchButtons.append(like,reject)
+    const cur_deck = document.createElement('div')
+    
+    cur_deck.append(scheduleElem, displayInfo, routeInfo, matchButtons)
+    
+    all_decks.append(cur_deck)
 
     like.addEventListener('click', async() => {
         let curSuggestion = JSON.parse(localStorage.getItem('curSuggestion'));
@@ -104,10 +112,6 @@ const displayMatchDeck = ({src, name, description, pinpoints, date, _id, speed, 
         localStorage.setItem('suggestions', JSON.stringify(suggestions));
     });
 
-    matchButtons.append(like,reject)
-    const cur_deck = document.createElement('div')
-    cur_deck.append(scheduleElem, displayInfo, routeInfo, matchButtons)
-    all_decks.append(cur_deck)
 }
 
 const getSuggestions = async () => {
@@ -148,7 +152,7 @@ onload = async () => {
         // displayMatchDeck(curSuggestion);
         // localStorage.setItem('suggestions', JSON.stringify(suggestions));
         // displayUserInfo();
-        suggestions.forEach(sug => displayMatchDeck(sug))
+        suggestions.forEach((sug,i) => displayMatchDeck(sug,i))
         console.log("Suggestions: ")
         console.log(suggestions)
     }
