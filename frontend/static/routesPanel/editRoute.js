@@ -23,7 +23,6 @@ const renderRoute = async () => {
   const speed = data.speed;
   const date = data.date;
   const time = data.time;
-
   
 
 }

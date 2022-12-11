@@ -55,6 +55,58 @@
         >
       </div>
     </nav>
+    <div class="container">
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <div class="col offset-4">
+              <h2>Create A Route</h2>
+            </div>
+            <div class="container col-9"></div>
+
+            <div class="col offset-4">
+              <h3>Add Pinpoints</h3>
+            </div>
+            <ul id="pinpoint-list" class="list-group">
+
+            </ul>
+            <input
+              type="text"
+              class="form-control"
+              name=""
+              placeholder="Enter an address"
+              id="pinpoint-input"
+            />
+            <button id="add-pinpoint" class="btn btn-primary">Add point</button>
+            <ul class="container d-flex flex-row row justify-content-between">
+              <input type="checkbox" name="" id="mon">
+              <div>Mon</div>
+              <input type="checkbox" name="" id="tue">
+              <div>Tue</div>
+              <input type="checkbox" name="" id="wed">
+              <div>Wed</div>
+              <input type="checkbox" name="" id="thu">
+              <div>Thur</div>
+              <input type="checkbox" name="" id="fri">
+              <div>Fri</div>
+              <input type="checkbox" name="" id="sat">
+              <div>Sat</div>
+              <input type="checkbox" name="" id="sun">
+              <div>Sun</div>
+            </ul>
+            <label for="">Pick a start time: </label>
+            <input type="time" class="form-control  w-25 col-6" id="time-input"/>
+            <label for="">Pick your speed:</label>
+            <select name="" class="form-control w-25 col-6" id="speed-input">
+              <option value="slow">Slow</option>
+              <option value="medium">Medium</option>
+              <option value="fast">Fast</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" id="create-route-btn">CREATE ROUTE!</button>
+        </div>
+      </div>
+    </div>
     <div class="p-2" id="map"></div>
   </body>
   <script
