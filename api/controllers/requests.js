@@ -49,10 +49,6 @@ export const createRequest = async (req, res, next) => {
 	res.status(200).json({ status: 200, message: "Request created", data: request });
 };
 
-export const likeRequest = async (req, res, next) => {
-
-}
-
 export const updateRequest = async (req, res, next) => {
 	const { status, id } = req.body;
 	const request = await Request.findById(id);
@@ -97,6 +93,9 @@ export const rejectRequest = async (req, res, next) => {
 		// await user2.save();
 		res.status(200).json({ status: 200, message: "REJECTED", data: oppositeRequest });
 	}
+	const request = new Request({ sender, receiver, status: "REJECTED" });
+	await request.save();
+	res.status(200).json({ status: 200, message: "Request rejected", data: request });
 }
 export const deleteRequest = async (req, res, next) => {
 	const { id } = req.body;
