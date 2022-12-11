@@ -22,7 +22,7 @@ const submitSignup = async (event) => {
 			);
 			if (status === 200) {
 				const user = (await httpRequest("/api/users/currentUser", "GET", {}, [])).data;
-				location.href = `/users/${user._id}`;
+				location.href = "/home";
 			} else {
 				const messageDiv = document.getElementById("message");
 				messageDiv.innerText = "";
