@@ -6,7 +6,7 @@ const all_decks = document.getElementById('all_decks');
 //coord = [-72.519482, 42.379098]
 
 const displayMatchDeck = (sug,i) => {
-    let {description, pinpoints, date, _id, speed, time} = sug
+    let {description, pinpoints, date, user, speed, time} = sug
     let src = 'https://maps.googleapis.com/maps/api/staticmap?size=500x350&maptype=roadmap\&markers=size:large%7Ccolor:red|42.379098,-72.519482&&key=AIzaSyB0jyJR3M9-q6Tn5uGvEsbYVS7MAU5b7VI'
     const imgElem = document.createElement('img');
     imgElem.style.width = '50%';
@@ -49,13 +49,13 @@ const displayMatchDeck = (sug,i) => {
     like.innerText = 'Like'
     like.classList.add('btn')
     like.classList.add('btn-info')
-    like.setAttribute('id', _id);
+    like.setAttribute('id', user._id);
 
     const reject = document.createElement('button')
     reject.innerText = 'Reject'
     reject.classList.add('btn')
     reject.classList.add('btn-secondary')
-    reject.setAttribute('id', _id);
+    reject.setAttribute('id', user._id);
 
     matchButtons.append(like,reject)
     const cur_deck = document.createElement('div')

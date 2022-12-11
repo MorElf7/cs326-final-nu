@@ -40,7 +40,9 @@ export const createRequest = async (req, res, next) => {
 		user2.connections.push(sender);
 		await user1.save();
 		await user2.save();
-		res.status(200).json({ status: 200, message: "Matched", data: oppositeRequest });
+		const request = new Request({ sender, receiver, status: "ACCEPTED" });
+		await request.save();
+		return res.status(200).json({ status: 200, message: "Matched", data: oppositeRequest });
 	}
 	const request = new Request({ sender, receiver });
 	await request.save();
