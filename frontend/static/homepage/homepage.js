@@ -22,6 +22,7 @@ const displayMatchDeck = (sug, i) => {
   const scheduleHeader = document.createElement("h6");
   scheduleHeader.innerText = "\nSchedule:";
   const daysElem = document.createElement("div");
+  daysElem.innerText = "- "
   for (const day of date) {
     daysElem.innerText += day + " ";
   }
@@ -35,7 +36,7 @@ const displayMatchDeck = (sug, i) => {
 
   const routeElem = document.createElement("div");
   let allRoutes = "";
-  pinpoints.forEach((x) => (allRoutes += x.address + "\n"));
+  pinpoints.forEach((x) => (allRoutes += "- " + x.address + "\n"));
   routeElem.innerText = allRoutes;
 
   const displayInfo = document.createElement("div");
