@@ -48,10 +48,13 @@ const displayMatchDeck = (sug,i) => {
     like.innerText = 'Like'
     like.classList.add('btn')
     like.classList.add('btn-info')
+    like.setAttribute('id', _id);
+
     const reject = document.createElement('button')
     reject.innerText = 'Reject'
     reject.classList.add('btn')
     reject.classList.add('btn-secondary')
+    reject.setAttribute('id', _id);
 
     matchButtons.append(like,reject)
     const cur_deck = document.createElement('div')
@@ -65,7 +68,7 @@ const displayMatchDeck = (sug,i) => {
     
         const accessToken = localStorage.getItem("accessToken");
         // const currentUser = localStorage.getItem("currentUser");
-    
+        
         // const res = await fetch()
         
         const response = await fetch('/api/request', {
@@ -80,11 +83,11 @@ const displayMatchDeck = (sug,i) => {
                 status : "PENDING"
             }),
         });
-        let suggestions = JSON.parse(localStorage.getItem('suggestions'));
-        const newSuggestion = suggestions.pop();
-        alert('Added into matched list!');
-        displayMatchDeck(newSuggestion);
-        localStorage.setItem('curSuggestion', JSON.stringify(newSuggestion));
+        // let suggestions = JSON.parse(localStorage.getItem('suggestions'));
+        // const newSuggestion = suggestions.pop();
+        // alert('Added into matched list!');
+        // displayMatchDeck(newSuggestion);
+        // localStorage.setItem('curSuggestion', JSON.stringify(newSuggestion));
     });
     
     reject.addEventListener('click', async() => {
@@ -101,15 +104,15 @@ const displayMatchDeck = (sug,i) => {
             }),
         })
     
-        let suggestions = JSON.parse(localStorage.getItem('suggestions'));
+        // let suggestions = JSON.parse(localStorage.getItem('suggestions'));
     
-        if(suggestions.length > 0){
-            displayMatchDeck(suggestions.pop());
-        }
-        else{
-            alert('No more users to show');
-        }
-        localStorage.setItem('suggestions', JSON.stringify(suggestions));
+        // if(suggestions.length > 0){
+        //     displayMatchDeck(suggestions.pop());
+        // }
+        // else{
+        //     alert('No more users to show');
+        // }
+        // localStorage.setItem('suggestions', JSON.stringify(suggestions));
     });
 
 }
@@ -143,8 +146,9 @@ onload = async () => {
     await renderRoute()
 	let suggestions = await getSuggestions();
     if(suggestions.length == 0){
-        const displayInfo = document.getElementById('displayInfo');
-        displayInfo.innerText = "Nothing to show"
+        const displayInfo = document.getElementById('matchDeck');
+        displayInfo.innerText = "Nothing to show";
+        displayInfo.style.margin = 'auto'
     }
     else{
         // const curSuggestion = suggestions.pop();
