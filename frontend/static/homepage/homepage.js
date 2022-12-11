@@ -13,6 +13,10 @@ const displayMatchDeck = (sug, i) => {
     coord_str = "|42.379098,-72.519482";
   }
 
+  console.log(user)
+  const userName = document.createElement("h5");
+  userName.innerText = user.username + ' ~ ' + user.email;
+
   let src = `https://maps.googleapis.com/maps/api/staticmap?size=500x350&maptype=roadmap\&markers=size:large%7Ccolor:red${coord_str}&&key=AIzaSyB0jyJR3M9-q6Tn5uGvEsbYVS7MAU5b7VI`;
   const imgElem = document.createElement("img");
   imgElem.style.width = "50%";
@@ -32,7 +36,7 @@ const displayMatchDeck = (sug, i) => {
   const speedElem = document.createElement("div");
   speedElem.innerText = "Speed: " + speed;
 
-  scheduleElem.append(scheduleHeader, daysElem, timeElem, speedElem);
+  scheduleElem.append(userName, scheduleHeader, daysElem, timeElem, speedElem);
 
   const routeElem = document.createElement("div");
   let allRoutes = "";
