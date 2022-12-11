@@ -62,7 +62,13 @@ export const updateRequest = async (req, res, next) => {
 	if (status.toUpperCase() === "ACCEPTED") {
 		const sender = await User.findById(request.sender);
 		const receiver = await User.findById(request.receiver);
-		sender.connections.push(receiver);
+		if (!sender.connections.includes(receiver)){
+			sender.connections.push(receiver);
+
+		}
+		if (!receiver.connections.includes(sender)){
+			receiver.connections.push(sender);
+		}
 		receiver.connections.push(sender);
 		await sender.save();
 		await receiver.save();
