@@ -168,14 +168,7 @@ onload = async () => {
     displayInfo.innerText = "Nothing to show";
     displayInfo.style.margin = "auto";
   } else {
-    // const curSuggestion = suggestions.pop();
-    // localStorage.setItem('curSuggestion', JSON.stringify(curSuggestion));
-    // displayMatchDeck(curSuggestion);
-    // localStorage.setItem('suggestions', JSON.stringify(suggestions));
-    // displayUserInfo();
     suggestions.forEach((sug, i) => displayMatchDeck(sug, i));
-    // console.log("Suggestions: ")
-    // console.log(suggestions)
   }
 };
 
@@ -222,6 +215,8 @@ const renderRoute = async () => {
   // console.log(pinpoints)
 };
 
+<<<<<<< HEAD
+=======
 // like.addEventListener('click', async() => {
 //     let curSuggestion = JSON.parse(localStorage.getItem('curSuggestion'));
 
@@ -274,12 +269,19 @@ const renderRoute = async () => {
 //     localStorage.setItem('suggestions', JSON.stringify(suggestions));
 // });
 
+>>>>>>> 88cf83a93482826e47f0e5bf6556bb515a104406
 const removeAllChildNodes = (parent) => {
   while (parent.firstChild) {
     parent.removeChild(parent.firstChild);
   }
 };
 
+<<<<<<< HEAD
+const matchesPage = document.getElementById('matchesPage');
+matchesPage.addEventListener('click', () => {
+    window.location.assign(`/users/${currentUser._id}/match`);
+})
+=======
 // const displayUserInfo = async () => {
 //     const accessToken = localStorage.getItem("accessToken");
 // 	// const currentUser = localStorage.getItem("currentUser");
@@ -306,6 +308,7 @@ const matchesPage = document.getElementById("matchesPage");
 matchesPage.addEventListener("click", () => {
   window.location.assign(`/users/${currentUser._id}/match`);
 });
+>>>>>>> 88cf83a93482826e47f0e5bf6556bb515a104406
 
 const profilePage = document.getElementById("routesPanel");
 profilePage.addEventListener("click", () => {
