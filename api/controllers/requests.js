@@ -148,7 +148,7 @@ export const getSuggestions = async (req, res, next) => {
 		const request = await Request.findOne({ sender: userId, receiver: suggestion.user._id, status: {$in: ["ACCEPTED", "REJECTED"]}});
 		const altRequest = await Request.findOne({ sender: suggestion.user._id, receiver: userId, status: {$in: ["ACCEPTED", "REJECTED"]} });
 		if (!request && !altRequest) {
-			result.append(suggestion)
+			result.push(suggestion)
 		}
 	}
 	res.status(200).json({
