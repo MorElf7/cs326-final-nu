@@ -164,14 +164,7 @@ onload = async () => {
         displayInfo.style.margin = 'auto'
     }
     else{
-        // const curSuggestion = suggestions.pop();
-        // localStorage.setItem('curSuggestion', JSON.stringify(curSuggestion));
-        // displayMatchDeck(curSuggestion);
-        // localStorage.setItem('suggestions', JSON.stringify(suggestions));
-        // displayUserInfo();
         suggestions.forEach((sug,i) => displayMatchDeck(sug,i))
-        // console.log("Suggestions: ")
-        // console.log(suggestions)
     }
 };
 
@@ -219,85 +212,11 @@ const renderRoute = async () => {
 
 }
 
-// like.addEventListener('click', async() => {
-//     let curSuggestion = JSON.parse(localStorage.getItem('curSuggestion'));
-
-//     const accessToken = localStorage.getItem("accessToken");
-// 	// const currentUser = localStorage.getItem("currentUser");
-
-//     // const res = await fetch()
-    
-//     const response = await fetch('/api/request', {
-// 		method: "PUT",
-// 		credentials: "same-origin",
-// 		headers: {
-// 			"Content-Type": "application/json",
-// 			Authorization: `Bearer ${accessToken}`,
-// 		},
-// 		body: JSON.stringify({ 
-//             id : currentUser._id,
-//             status : "PENDING"
-//         }),
-// 	});
-//     let suggestions = JSON.parse(localStorage.getItem('suggestions'));
-//     const newSuggestion = suggestions.pop();
-//     alert('Added into matched list!');
-//     displayMatchDeck(newSuggestion);
-//     localStorage.setItem('curSuggestion', JSON.stringify(newSuggestion));
-// });
-
-// reject.addEventListener('click', async() => {
-//     const response = await fetch('/api/request', {
-// 		method: "PUT",
-// 		credentials: "same-origin",
-// 		headers: {
-// 			"Content-Type": "application/json",
-// 			// Authorization: `Bearer ${accessToken}`,
-// 		},
-// 		body: JSON.stringify({ 
-//             id : currentUser._id,
-//             status : "REJECTED"
-//         }),
-// 	})
-
-//     let suggestions = JSON.parse(localStorage.getItem('suggestions'));
-
-//     if(suggestions.length > 0){
-//         displayMatchDeck(suggestions.pop());
-//     }
-//     else{
-//         alert('No more users to show');
-//     }
-//     localStorage.setItem('suggestions', JSON.stringify(suggestions));
-// });
-
 const removeAllChildNodes = (parent) => {
     while(parent.firstChild){
         parent.removeChild(parent.firstChild)
     }
 }
-
-// const displayUserInfo = async () => {
-//     const accessToken = localStorage.getItem("accessToken");
-// 	// const currentUser = localStorage.getItem("currentUser");
-
-//     const response = await fetch(`/api/users/${currentUser._id}`, {
-// 		method: "GET",
-// 		credentials: "same-origin",
-// 		headers: {
-// 			"Content-Type": "application/json",
-// 			Authorization: `Bearer ${accessToken}`,
-// 		},
-// 	});
-//     const res = await response.json();
-    
-//     const userInfo = res.data;
-
-//     const userRoute = document.getElementById('userRoute');
-//     const route = document.createElement('div');
-//     route.innerText = 'From: ' + userInfo.route.from + '\n' + 'To: ' + userInfo.route.to;
-//     userRoute.append(route);
-// }
 
 const matchesPage = document.getElementById('matchesPage');
 matchesPage.addEventListener('click', () => {
