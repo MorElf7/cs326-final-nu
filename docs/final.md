@@ -40,7 +40,9 @@ Fall 2022
 This consist of 2 separate pages, signin and signup. Both employ html form elements to get the user username and password, email to register a new user or logging in to an existing account. The log in page would be the first page that the users got to when accessing the page.
 
 ## b. Route Panel:
+This is the page for user to create and edit their route. Users can add pinpoints on their routes, and those addresses would be checked to ensure they are valid. They can also input their preferred dates and time, as well as their speed.
 
+If the user has already created a route, then they would be redirected to a page where they can view their current route and edit it.
 ## c. Home Page:
 Our Home Page allows user to go through all suggestions where they can decide to Like or Reject. Each suggestion card display other user's basic information, their time and route, along with a map with pinpoints where their routes are. From the home page, user can navigate to Matches, Routes Panel, and Profile page.
 
