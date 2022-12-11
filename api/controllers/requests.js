@@ -1,3 +1,4 @@
+import e from "express";
 import Path from "../models/paths.js";
 import Request from "../models/requests.js";
 import User from "../models/users.js";
@@ -83,9 +84,7 @@ export const updateRequest = async (req, res, next) => {
 export const rejectRequest = async (req, res, next) => {
 	const { sender, receiver } = req.body;
 	const foundRequest = await Request.findOne({ sender, receiver });
-	if (foundRequest) {
-		throw new ExpressError("Request already exists", 409);
-	}
+
 	const oppositeRequest = await Request.findOne({ sender: receiver, receiver: sender });
 	if (oppositeRequest) {
 		oppositeRequest.status = "REJECTED";
@@ -98,6 +97,12 @@ export const rejectRequest = async (req, res, next) => {
 		// await user2.save();
 		res.status(200).json({ status: 200, message: "REJECTED", data: oppositeRequest });
 	}
+
+	if (foundRequest) {
+		foundRequest.status = "REJECTED";
+		return res.status(200).json({ status: 200, message: "Request rejected", data: request });	
+	}
+
 	const request = new Request({ sender, receiver, status: "REJECTED" });
 	await request.save();
 	res.status(200).json({ status: 200, message: "Request rejected", data: request });
@@ -114,6 +119,18 @@ export const deleteRequest = async (req, res, next) => {
 	await Request.findByIdAndDelete(id);
 	res.status(200).json({ status: 200, message: "Request deleted" });
 };
+export const removeMatch = async (req, res, next) => {
+	const user1 = await User.findById(req.body.user1);
+	const user2 = await User.findById(req.body.user2);
+
+	user1.connections = user1.connections.filter(connection => !connection.equals(req.body.user2));
+	user2.connections = user2.connections.filter(connection => !connection.equals(req.body.user1));
+	
+	await user1.save();
+	await user2.save();
+	
+	res.status(200).json({ status: 200, message: "Match removed!"})
+}
 export const getSuggestions = async (req, res, next) => {
 	const { userId } = req.body;
 	const user = await User.findById(userId).populate("path");
@@ -125,13 +142,13 @@ export const getSuggestions = async (req, res, next) => {
 		"user"
 	);
 	const suggestMatches = suggestedPaths.filter(e => e.user._id.toString() !== userId).filter(async (e) => {
-		const request = await Request.findOne({ sender: userId, receiver: e.user._id, status: {$in: ["REJECTED", "ACCEPTED"]}});
-		const altRequest = await Request.findOne({ receiver: userId, sender: e.user._id, status: {$in: ["REJECTED", "ACCEPTED"]} });
+		const request = await Request.findOne({ sender: userId, receiver: e.user._id, status: {$in: ["ACCEPTED"]}});
+		const altRequest = await Request.findOne({ receiver: userId, sender: e.user._id, status: {$in: ["ACCEPTED"]} });
 
 		if (request || altRequest) {
 			return false;
-		} else return !e.user.connections.includes(userId);
-	})
+		} else true;
+	}).filter(!e.user.connections.includes(userId))
 
 	res.status(200).json({
 		status: 200,

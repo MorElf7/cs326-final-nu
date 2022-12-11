@@ -19,19 +19,10 @@ export const updateUser = async (req, res, next) => {
 	if (!user) {
 		throw new ExpressError("User Not Found", 404);
 	}
-	// const dbusername = await User.findOne({ username: username });
-	// if (dbusername) {
-	// 	res.status(403).json({
-	// 		message: "username already exists",
-	// 		data: user,
-	// 		status: 403,
-	// 	});
-	// }
+
 	await User.updateOne(
 		{ _id: userId },
 		{
-			// username: username,
-			// email: email,
 			description: description,
 		}
 	);

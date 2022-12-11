@@ -13,11 +13,6 @@ const requestSchema = new Schema(
 			ref: "User",
 			required: true,
 		},
-		// message: {
-		// 	type: String,
-		// 	required: true,
-		// 	default: "Hey there, I would like to connect with you!",
-		// },
 		// Status: PENDING, ACCEPTED, REJECTED
 		status: {
 			type: String,
