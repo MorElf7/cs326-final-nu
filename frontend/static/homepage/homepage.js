@@ -37,7 +37,7 @@ const displayMatchDeck = (sug,i) => {
     const displayInfo = document.createElement('div');
     displayInfo.append(scheduleElem);
 
-    const routeInfo = document.getElementById('routeInfo');
+    const routeInfo = document.createElement('div')
     const routeHeader = document.createElement('h6');
     routeHeader.innerText = 'Route: ';
     routeInfo.append(routeHeader, routeElem);
@@ -55,7 +55,7 @@ const displayMatchDeck = (sug,i) => {
 
     matchButtons.append(like,reject)
     const cur_deck = document.createElement('div')
-    
+    cur_deck.classList.add('cur_deck')
     cur_deck.append(scheduleElem, displayInfo, routeInfo, matchButtons)
     
     all_decks.append(cur_deck)
