@@ -6,7 +6,6 @@ const pinpointList = document.getElementById('pinpoint-list');
 
 const addPinpointBtn = document.getElementById('add-pinpoint')
 const createRouteBtn = document.getElementById('create-route-btn');
-// const saveInfoBtn = document.getElementById('save-info-btn');
 
 const pinpoints = []
 let currentUser = {}
@@ -31,10 +30,7 @@ const removeAllChildNodes = (parent) => {
 const renderRoute = async () => {
   const res = await fetch(`/api/paths/${currentUser._id}`);
   const {status, message, data } = await res.json();
-    // if (status !== 200) {
-    //     location.href = "/routesPanel"
-    // }
-  // console.log(data)
+
   const curPinpoints = data.pinpoints.map(x => x.address);
   const speed = data.speed;
   const date = data.date;
@@ -135,7 +131,6 @@ const getDate = () => {
 
 addPinpointBtn.addEventListener("click", addPinpoint)
 createRouteBtn.addEventListener("click", updateRoute)
-// saveInfoBtn.addEventListener('click', saveInfo)
 
 // Routing for link buttons
 

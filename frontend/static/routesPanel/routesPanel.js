@@ -6,7 +6,6 @@ const pinpointList = document.getElementById('pinpoint-list');
 
 const addPinpointBtn = document.getElementById('add-pinpoint')
 const createRouteBtn = document.getElementById('create-route-btn');
-// const saveInfoBtn = document.getElementById('save-info-btn');
 
 const pinpoints = []
 let currentUser = {}
@@ -24,27 +23,6 @@ onload = async () => {
     location.href = "/routesPanel/edit/"
   }
 }
-
-// const saveInfo = async (e) => {
-//   e.preventDefault();
-//   const newName = document.getElementById('user-name').value
-//   const newDescription = document.getElementById('user-bio').value
-
-//   const response = await fetch(`/api/users/${currentUser}/`, {
-//     method: 'PUT',
-//     credentials: 'same-origin',
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({name: newName, description: newDescription})
-//   })
-//   const { message, status } = await response.json();
-//   if (status === 200) {
-//     alert("Successfully saved info")
-//   } else {
-//     console.log("Error: " + status)
-//   }
-// }
 
 const addPinpoint = async (e) => {
   const location = document.getElementById("pinpoint-input").value
@@ -121,7 +99,6 @@ const getDate = () => {
 
 addPinpointBtn.addEventListener("click", addPinpoint)
 createRouteBtn.addEventListener("click", createRoute)
-// saveInfoBtn.addEventListener('click', saveInfo)
 
 // Routing for link buttons
 

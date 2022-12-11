@@ -145,8 +145,8 @@ export const getSuggestions = async (req, res, next) => {
 	const result = []
 
 	for (const suggestion of suggestMatches) {
-		const request = await Request.findOne({ sender: userId, receiver: suggestion.user._id, status: {$in: ["ACCEPTED", "REJECTED"]}});
-		const altRequest = await Request.findOne({ sender: suggestion.user._id, receiver: userId,});
+		const request = await Request.findOne({ sender: userId, receiver: suggestion.user._id});
+		const altRequest = await Request.findOne({ sender: suggestion.user._id, receiver: userId,status: {$in: ["ACCEPTED", "REJECTED"]}});
 		if (!request && !altRequest) {
 			result.push(suggestion)
 		}
