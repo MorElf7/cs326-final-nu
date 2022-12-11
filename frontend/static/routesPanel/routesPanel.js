@@ -86,7 +86,7 @@ const createRoute = async (e) => {
     alert("Please select a date")
     return
   }
-  if (pinpointList.length === 0){
+  if (pinpoints.length === 0){
     alert("add locations")
     return
   }
