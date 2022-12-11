@@ -5,6 +5,7 @@ const router = express.Router({ mergeParams: true });
 import { isSignIn } from "../../middleware.js";
 import {
 	createRequest,
+	rejectRequest,
 	deleteRequest,
 	getAllRequest,
 	getRequest,
@@ -16,6 +17,8 @@ import { wrapAsync } from "../utils/index.js";
 router.get("/", wrapAsync(getAllRequest));
 
 router.post("/", isSignIn, wrapAsync(createRequest));
+
+router.post("/reject", isSignIn, wrapAsync(rejectRequest));
 
 router.put("/", isSignIn, wrapAsync(updateRequest));
 

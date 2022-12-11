@@ -24,27 +24,33 @@ export const getRequest = async (req, res, next) => {
 	return res.status(200).json({ message: "OK", status: 200, data: request });
 };
 export const createRequest = async (req, res, next) => {
-	const { sender, receiver, message } = req.body;
+	const { sender, receiver } = req.body;
 	const foundRequest = await Request.findOne({ sender, receiver });
 	if (foundRequest) {
 		throw new ExpressError("Request already exists", 409);
 	}
 	const oppositeRequest = await Request.findOne({ sender: receiver, receiver: sender });
+	console.log(oppositeRequest)
 	if (oppositeRequest) {
 		oppositeRequest.status = "ACCEPTED";
 		await oppositeRequest.save();
 		const user1 = await User.findOne({ _id: sender }),
-			user2 = await User.findOne({ _id: receiver });
+		user2 = await User.findOne({ _id: receiver });
 		user1.connections.push(receiver);
 		user2.connections.push(sender);
 		await user1.save();
 		await user2.save();
-		res.status(200).json({ status: 200, message: "Request accepted", data: oppositeRequest });
+		res.status(200).json({ status: 200, message: "Matched", data: oppositeRequest });
 	}
-	const request = new Request({ sender, receiver, message });
+	const request = new Request({ sender, receiver });
 	await request.save();
 	res.status(200).json({ status: 200, message: "Request created", data: request });
 };
+
+export const likeRequest = async (req, res, next) => {
+
+}
+
 export const updateRequest = async (req, res, next) => {
 	const { status, id } = req.body;
 	const request = await Request.findById(id);
@@ -71,6 +77,25 @@ export const updateRequest = async (req, res, next) => {
 	await request.save();
 	res.status(200).json({ status: 200, message: "Request updated" });
 };
+export const rejectRequest = async (req, res, next) => {
+	const { sender, receiver } = req.body;
+	const foundRequest = await Request.findOne({ sender, receiver });
+	if (foundRequest) {
+		throw new ExpressError("Request already exists", 409);
+	}
+	const oppositeRequest = await Request.findOne({ sender: receiver, receiver: sender });
+	if (oppositeRequest) {
+		oppositeRequest.status = "REJECTED";
+		await oppositeRequest.save();
+		// const user1 = await User.findOne({ _id: sender }),
+		// user2 = await User.findOne({ _id: receiver });
+		// user1.connections.push(receiver);
+		// // user2.connections.push(sender);
+		// await user1.save();
+		// await user2.save();
+		res.status(200).json({ status: 200, message: "REJECTED", data: oppositeRequest });
+	}
+}
 export const deleteRequest = async (req, res, next) => {
 	const { id } = req.body;
 	const request = await Request.findById(id);

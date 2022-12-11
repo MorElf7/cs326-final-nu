@@ -72,17 +72,19 @@ const displayMatchDeck = (sug,i) => {
         // const res = await fetch()
         
         const response = await fetch('/api/request', {
-            method: "PUT",
+            method: "POST",
             credentials: "same-origin",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({ 
-                id : curId, //id of user who was liked (not current user)
-                status : "PENDING"
+                sender: currentUser._id,
+                receiver: curId,
             }),
         });
+
+
         // let suggestions = JSON.parse(localStorage.getItem('suggestions'));
         // const newSuggestion = suggestions.pop();
         // alert('Added into matched list!');
@@ -92,16 +94,16 @@ const displayMatchDeck = (sug,i) => {
     
     reject.addEventListener('click', async(event) => {
         const curId = event.target.id;
-        const response = await fetch('/api/request', {
-            method: "PUT",
+        const response = await fetch('/api/request/reject', {
+            method: "POST",
             credentials: "same-origin",
             headers: {
                 "Content-Type": "application/json",
                 // Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({ 
-                id : curId, //id of user who was rejected (not current user)
-                status : "REJECTED"
+                sender: currentUser._id,
+                receiver: curId,
             }),
         })
     
