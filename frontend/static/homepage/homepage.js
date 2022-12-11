@@ -14,8 +14,8 @@ const displayMatchDeck = ({src, name, description, pinpoints, date, _id, speed, 
     const nameElem = document.createElement('h5');
     nameElem.innerText = name;
 
-    const descripElem = document.createElement('div');
-    descripElem.innerText = description;
+    // const descripElem = document.createElement('div');
+    // descripElem.innerText = description;
 
     const scheduleElem = document.createElement('div');
     const scheduleHeader = document.createElement('h6');
@@ -26,12 +26,14 @@ const displayMatchDeck = ({src, name, description, pinpoints, date, _id, speed, 
     }
     const timeElem = document.createElement('div');
     timeElem.innerText = 'Time: ' + time;
-    scheduleElem.append(scheduleHeader, daysElem, time);
+    scheduleElem.append(scheduleHeader, daysElem, timeElem);
 
     const routeElem = document.createElement('div');
-    routeElem.innerText = pinpoints;
+    let allRoutes = ''
+    pinpoints.forEach(x => allRoutes+=x.address+'\n')
+    routeElem.innerText = allRoutes;
 
-    displayInfo.append(nameElem, descripElem, scheduleElem);
+    displayInfo.append(scheduleElem);
     const routeInfo = document.getElementById('routeInfo');
     const routeHeader = document.createElement('h6');
     removeAllChildNodes(routeInfo);
