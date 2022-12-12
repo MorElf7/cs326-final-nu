@@ -128,6 +128,12 @@ Vi Doan
 - Home Page and Edit User Front End
 - Render Suggestions
 - UI Touch Ups
+
+Bang Cao:
+- Authorization
+- Match models and APIs functionality
+- Match page
+- User Model and APIs functionality
 # 12 Conclusion:
 
 Throughout the design and implementation of the project, our team has learned a lot of things:
