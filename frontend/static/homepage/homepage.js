@@ -13,7 +13,6 @@ const displayMatchDeck = (sug, i) => {
     coord_str = "|42.379098,-72.519482";
   }
 
-  console.log(user)
   const userName = document.createElement("h5");
   userName.innerText = user.username + ' ~ ' + user.email;
 
@@ -24,17 +23,17 @@ const displayMatchDeck = (sug, i) => {
 
   const scheduleElem = document.createElement("div");
   const scheduleHeader = document.createElement("h6");
-  scheduleHeader.innerText = "\nSchedule:";
+  scheduleHeader.innerText = "Schedule:";
   const daysElem = document.createElement("div");
-  daysElem.innerText = "- "
+  daysElem.innerText = "- Days: "
   for (const day of date) {
     daysElem.innerText += day + " ";
   }
   const timeElem = document.createElement("div");
-  timeElem.innerText = "Time: " + time;
+  timeElem.innerText = "- Time: " + time;
 
   const speedElem = document.createElement("div");
-  speedElem.innerText = "Speed: " + speed;
+  speedElem.innerText = "- Speed: " + speed;
 
   scheduleElem.append(userName, scheduleHeader, daysElem, timeElem, speedElem);
 
@@ -137,7 +136,6 @@ const getSuggestions = async () => {
     body: JSON.stringify({ userId: currentUser._id }),
   });
   const res = await response.json();
-  console.log(res.data);
   return res.data;
 };
 
@@ -172,6 +170,7 @@ const renderRoute = async () => {
   const speed = data.speed;
   const date = data.date;
   const time = data.time;
+  console.log(data);
 
   const userRoute = document.getElementById("userRoute");
   removeAllChildNodes(userRoute);
@@ -199,6 +198,21 @@ const renderRoute = async () => {
   routeDetails.appendChild(routeSpeed);
   routeDetails.appendChild(routeDate);
   routeDetails.appendChild(routeTime);
+
+  const routeMap = document.getElementById('routeMap');
+  for (const pinpoint of data.pinpoints) {
+    const coords = pinpoint.coord;
+    let coord_str = "";
+    if (coords.length > 0 && coords[0].length > 0) {
+        coords.forEach((c) => (coord_str += "|" + c[1] + "," + c[0]));
+    } else {
+        coord_str = "|42.379098,-72.519482";
+    }
+    let src = `https://maps.googleapis.com/maps/api/staticmap?size=800x400&maptype=roadmap\&markers=size:large%7Ccolor:red${coord_str}&&key=AIzaSyB0jyJR3M9-q6Tn5uGvEsbYVS7MAU5b7VI`;
+    const imgElem = document.createElement("img");
+    imgElem.setAttribute("src", src);
+    routeMap.appendChild(imgElem)
+  }
 
 };
 

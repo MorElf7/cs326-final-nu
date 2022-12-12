@@ -71,7 +71,7 @@ hr{
 #matchDeck{
     display: grid;
     padding: 15px;
-    height: 40vh;
+    height: 55vh;
     overflow: scroll;
     border-bottom: solid #ececec7f;
 }
