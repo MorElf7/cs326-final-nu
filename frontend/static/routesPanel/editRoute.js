@@ -14,14 +14,40 @@ onload = async () => {
   const res = await fetch('/api/users/currentUser')
   const {status, message, data} = await res.json();
   if (!status === 200) {
-    location.href= "/users/login"
+    location.href("/users/login")
   } else {
     currentUser = data
   }
+  await renderRoute()
+}
 
-  if (currentUser.path) {
-    location.href = "/routesPanel/edit/"
+const removeAllChildNodes = (parent) => {
+  while(parent.firstChild){
+      parent.removeChild(parent.firstChild)
   }
+}
+
+const renderRoute = async () => {
+  const res = await fetch(`/api/paths/${currentUser._id}`);
+  const {status, message, data } = await res.json();
+
+  const curPinpoints = data.pinpoints.map(x => x.address);
+  const speed = data.speed;
+  const date = data.date;
+  const time = data.time;
+  removeAllChildNodes(document.getElementById('pinpoint-list-current'));
+  for (const pinpoint of curPinpoints) {
+    const li = document.createElement('li');
+    const temp = document.createTextNode(pinpoint)
+    li.appendChild(temp);
+    li.classList.add('list-group-item');
+    document.getElementById('pinpoint-list-current').appendChild(li);
+  }
+  document.getElementById('current-time').appendChild(document.createTextNode(`Time: ${time}`))
+  document.getElementById('current-date').appendChild(document.createTextNode(`Dates: ${date}`))
+  document.getElementById('current-speed').appendChild(document.createTextNode(`speed: ${speed}`))
+
+
 }
 
 const addPinpoint = async (e) => {
@@ -47,7 +73,7 @@ const addPinpoint = async (e) => {
 const timeInput = document.getElementById("time-input")
 const speedInput = document.getElementById("speed-input")
 
-const createRoute = async (e) => {
+const updateRoute = async (e) => {
   e.preventDefault()
   const speed = speedInput.value
   const time = timeInput.value
@@ -69,21 +95,27 @@ const createRoute = async (e) => {
     return
   }
 
-  const response = await fetch('/api/paths/', {
-    method: 'POST',
+  const response = await fetch(`/api/paths/${currentUser.path}`, {
+    method: 'PUT',
     credentials: 'same-origin',
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ pinpoints: pinpoints, user: currentUser._id, date: date, speed: speed, time: time }),
+    body: JSON.stringify(
+      { 
+        pinpoints: pinpoints, 
+        date: date, 
+        speed: speed, 
+        time: time,
+      }),
   })
 
   const { message, status } = await response.json();
   if (status === 200) {
-    alert(`Successfully added new route:\nDate: ${date}\nSpeed: ${speed}\nTime: ${time}\nRoute: ${pinpoints.map(x => x.address + '\n')}`)
+    alert(`Successfully updated new route:\nDate: ${date}\nSpeed: ${speed}\nTime: ${time}\nRoute: ${pinpoints.map(x => x.address + '\n')}`)
     window.location.href= "/home/"
   } else {
-    alert("Error: " + status)
+    alert("Error: " + status + " " + message)
   }
 }
 
@@ -98,7 +130,7 @@ const getDate = () => {
 }
 
 addPinpointBtn.addEventListener("click", addPinpoint)
-createRouteBtn.addEventListener("click", createRoute)
+createRouteBtn.addEventListener("click", updateRoute)
 
 // Routing for link buttons
 

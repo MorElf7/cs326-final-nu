@@ -16,6 +16,7 @@
 			integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 			crossorigin="anonymous"
 		/>
+		<base href="/" />
 		<link rel="stylesheet" href="/static/homepage/styles.css" />
 		<title>Home</title>
 	</head>
@@ -34,14 +35,10 @@
 				<img src="/static/homepage/img/user.png" alt="" />
 				<p id="routesPanel">Routes Panel</p>
 			</div>
-			<div class="leftNavItem" id="chat">
-				<img src="/static/homepage/img/chat.png" alt="" />
-				<p id="chatPage">Chat Room</p>
-			</div>
 			<hr />
 			<div class="leftNavItem" id="chat">
 				<img src="/static/homepage/img/logout.png" alt="" />
-				<p id='logoutPage'>Logout</p>
+				<p id="logoutPage">Logout</p>
 			</div>
 		</div>
 		<div id="board">
@@ -50,119 +47,45 @@
 					class="collapse navbar-collapse"
 					id="navbarSupportedContent"
 				>
-					<form class="form-inline my-2 my-lg-0">
-						<input
-							class="form-control mr-sm-2"
-							type="search"
-							placeholder="Search"
-							aria-label="Search"
-						/>
-						<button
-							class="btn btn-outline-secondary my-2 my-sm-0"
-							type="submit"
-						>
-							Search
-						</button>
 					</form>
 					<ul class="navbar-nav ml-auto">
 						<li class="nav-item">
-							<a class="nav-link" href="#">Blog</a>
-						</li>
-						<li class="nav-item dropdown">
-							<a
-								class="nav-link dropdown-toggle"
-								href="#"
-								id="navbarDropdown"
-								role="button"
-								data-toggle="dropdown"
-								aria-haspopup="true"
-								aria-expanded="false"
+							<a class="nav-link" id="account" href="#"
+								>Your Profile</a
 							>
-								Settings
-							</a>
-							<div
-								class="dropdown-menu"
-								aria-labelledby="navbarDropdown"
-							>
-								<a class="dropdown-item" href="#">Action</a>
-								<a class="dropdown-item" href="#"
-									>Another action</a
-								>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#"
-									>Something else here</a
-								>
-							</div>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" id = 'account' href="#">Account</a>
 						</li>
 					</ul>
 				</div>
 			</nav>
 			<div id="content">
-				<div class="container px-4" id="content">
-					<div class="row">
-						<div class="col card" id="matchDeck">
-							
-              <div id="displayMap">
-								<img
-									src="/static/homepage/img/route.avif"
-									alt=""
-								/>
-                <div id="routeInfo">
-                </div>
-							</div>
-
-							<div>
-								<div class="container">
-									<div class="row align-self-start description">
-                    <div id="displayInfo"></div>
-									</div>
-									<div class="row align-self-end matchDeckButtons">
-										<button
-											type="button"
-											class="btn btn-outline-primary"
-                      id="reload"
-										>
-											Reload
-										</button>
-										<button
-											type="button"
-											class="btn btn-outline-success"
-                      id="like"
-										>
-											♥
-										</button>
-										<button
-											type="button"
-											class="btn btn-outline-danger"
-                      id="reject"
-										>
-											X
-										</button>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-4 card">
-							<h5>My Route</h5>
-							<img src="/static/homepage/img/route.avif" alt="" />
-							<h6>Route</h6>
-              <div id="userRoute"></div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col card">
-							<img src="/static/homepage/img/chart.png" alt="" />
-						</div>
-						<div class="col-4 card">
-							<h5>Analysis</h5>
+				<div id="deck" class="card">
+					<h2 class="text-center">Suggestions</h2>
+							<hr style="margin-top: 0;">
+					<div id="matchDeck">
+						<div class="container" id="all_decks">
 						</div>
 					</div>
 				</div>
+				
+				<div class="card" id="myroute">
+					<h5 class="text-center">My Route</h5>
+					<div class="row">
+						<div class="col-6">
+							<ul id="userRoute" class="list-group">
+							</ul>
+						</div>
+						<div class="col-6">
+							<ul id="routeDetails" class="list-group">
+
+							</ul>
+						</div>
+					</div>
+					<div style="padding-top: 20px; display: flex; justify-content: center;">
+						<div id="routeMap"></div>
+					</div>
+				</div>
+				</div>
 			</div>
-		</div>
 		<script
 			src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 			integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

@@ -1,3 +1,4 @@
+import e from "express";
 import Path from "../models/paths.js";
 import Request from "../models/requests.js";
 import User from "../models/users.js";
@@ -16,19 +17,6 @@ export const getAllRequest = async (req, res) => {
 		const requests = await Request.find({ status: "PENDING" });
 		return res.status(200).json({ ...response, data: requests });
 	}
-	// const fakeData = [];
-	// for (let i = 1; i <= 10; i++) {
-	// 	fakeData.push({
-	// 		_id: i,
-	// 		username: `Username ${i}`,
-	// 		message: "Hey, just some fake message here",
-	// 	});
-	// }
-	// res.status(200).json({
-	// 	message: "Being developed! Please stay tuned",
-	// 	data: fakeData,
-	// 	status: 200,
-	// });
 };
 
 export const getRequest = async (req, res, next) => {
@@ -37,15 +25,30 @@ export const getRequest = async (req, res, next) => {
 	return res.status(200).json({ message: "OK", status: 200, data: request });
 };
 export const createRequest = async (req, res, next) => {
-	const { sender, receiver, message } = req.body;
+	const { sender, receiver } = req.body;
 	const foundRequest = await Request.findOne({ sender, receiver });
 	if (foundRequest) {
 		throw new ExpressError("Request already exists", 409);
 	}
-	const request = new Request({ sender, receiver, message });
+	const oppositeRequest = await Request.findOne({ sender: receiver, receiver: sender });
+	if (oppositeRequest) {
+		oppositeRequest.status = "ACCEPTED";
+		await oppositeRequest.save();
+		const user1 = await User.findOne({ _id: sender }),
+		user2 = await User.findOne({ _id: receiver });
+		user1.connections.push(receiver);
+		user2.connections.push(sender);
+		await user1.save();
+		await user2.save();
+		const request = new Request({ sender, receiver, status: "ACCEPTED" });
+		await request.save();
+		return res.status(200).json({ status: 200, message: "Matched", data: oppositeRequest });
+	}
+	const request = new Request({ sender, receiver });
 	await request.save();
 	res.status(200).json({ status: 200, message: "Request created", data: request });
 };
+
 export const updateRequest = async (req, res, next) => {
 	const { status, id } = req.body;
 	const request = await Request.findById(id);
@@ -60,7 +63,13 @@ export const updateRequest = async (req, res, next) => {
 	if (status.toUpperCase() === "ACCEPTED") {
 		const sender = await User.findById(request.sender);
 		const receiver = await User.findById(request.receiver);
-		sender.connections.push(receiver);
+		if (!sender.connections.includes(receiver)){
+			sender.connections.push(receiver);
+
+		}
+		if (!receiver.connections.includes(sender)){
+			receiver.connections.push(sender);
+		}
 		receiver.connections.push(sender);
 		await sender.save();
 		await receiver.save();
@@ -72,6 +81,26 @@ export const updateRequest = async (req, res, next) => {
 	await request.save();
 	res.status(200).json({ status: 200, message: "Request updated" });
 };
+export const rejectRequest = async (req, res, next) => {
+	const { sender, receiver } = req.body;
+	const foundRequest = await Request.findOne({ sender, receiver });
+
+	const oppositeRequest = await Request.findOne({ sender: receiver, receiver: sender });
+	if (oppositeRequest) {
+		oppositeRequest.status = "REJECTED";
+		await oppositeRequest.save();
+		res.status(200).json({ status: 200, message: "REJECTED", data: oppositeRequest });
+	}
+
+	if (foundRequest) {
+		foundRequest.status = "REJECTED";
+		return res.status(200).json({ status: 200, message: "Request rejected" });	
+	}
+
+	const request = new Request({ sender, receiver, status: "REJECTED" });
+	await request.save();
+	res.status(200).json({ status: 200, message: "Request rejected", data: request });
+}
 export const deleteRequest = async (req, res, next) => {
 	const { id } = req.body;
 	const request = await Request.findById(id);
@@ -84,65 +113,41 @@ export const deleteRequest = async (req, res, next) => {
 	await Request.findByIdAndDelete(id);
 	res.status(200).json({ status: 200, message: "Request deleted" });
 };
+export const removeMatch = async (req, res, next) => {
+	const user1 = await User.findById(req.body.user1);
+	const user2 = await User.findById(req.body.user2);
+
+	user1.connections = user1.connections.filter(connection => !connection.equals(req.body.user2));
+	user2.connections = user2.connections.filter(connection => !connection.equals(req.body.user1));
+	
+	await user1.save();
+	await user2.save();
+	
+	res.status(200).json({ status: 200, message: "Match removed!"})
+}
 export const getSuggestions = async (req, res, next) => {
-	const { userId } = req.params;
+	const { userId } = req.body;
 	const user = await User.findById(userId).populate("path");
 	if (!user) {
 		throw new ExpressError("User not found", 404);
 	}
-	const zipcodeList = user.path.pinpoints.map((e) => e.zipcode);
-	const suggestedPaths = await Path.find({ "pinpoints.zipcode": { $all: zipcodeList } }).populate(
+	const zipcodeList = user.path?.pinpoints.map((e) => e.zipcode);
+	const suggestedPaths = await Path.find({ "pinpoints.zipcode": { $in: zipcodeList } }).populate(
 		"user"
 	);
+	const suggestMatches = suggestedPaths.filter(e => e.user._id.toString() !== userId).filter(e => !e.user.connections.includes(userId))
+	const result = []
 
-	const suggestMatches = [...new Set(suggestedPaths.map((e) => e.user))];
-
-	res.status(200).json({ status: 200, message: "", data: suggestMatches });
-
-	// const suggestions = [
-	// 	{
-	// 		src: "./img/route.avif",
-	// 		name: "User2 Name",
-	// 		description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Some thing...",
-	// 		route: {
-	// 			from: "Some place",
-	// 			to: "Some destination",
-	// 		},
-	// 		schedule: {
-	// 			days: ["Monday", "Tuesday", "Friday"],
-	// 			time: {
-	// 				from: new Date().getHours() + ":" + new Date().getMinutes(),
-	// 				to: new Date().getHours() + ":" + new Date().getMinutes(),
-	// 			},
-	// 		},
-	// 		_id: 1,
-	// 		bio: "Hey, just some fake request message here",
-	// 		username: `Username 1`,
-	// 	},
-	// 	{
-	// 		src: "./img/route.avif",
-	// 		name: "User1 Name",
-	// 		description: "User1 Description/interest. Lorem ipsum dolor sit amet",
-	// 		route: {
-	// 			from: "User1 route - from",
-	// 			to: "User1 route - to",
-	// 		},
-	// 		schedule: {
-	// 			days: ["Monday", "Wednesday", "Friday"],
-	// 			time: {
-	// 				from: new Date().getHours() + ":" + new Date().getMinutes(),
-	// 				to: new Date().getHours() + ":" + new Date().getMinutes(),
-	// 			},
-	// 		},
-	// 		_id: 2,
-	// 		bio: "Hey, just some fake request message here",
-	// 		username: `Username 2`,
-	// 	},
-	// ];
-
-	// res.status(200).json({
-	// 	message: "Being developed! Please stay tuned",
-	// 	data: suggestions,
-	// 	status: 200,
-	// });
+	for (const suggestion of suggestMatches) {
+		const request = await Request.findOne({ sender: userId, receiver: suggestion.user._id});
+		const altRequest = await Request.findOne({ sender: suggestion.user._id, receiver: userId,status: {$in: ["ACCEPTED", "REJECTED"]}});
+		if (!request && !altRequest) {
+			result.push(suggestion)
+		}
+	}
+	res.status(200).json({
+		status: 200,
+		message: "",
+		data: result
+	});
 };

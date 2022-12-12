@@ -13,8 +13,8 @@ export const login = (req, res, next) => {
 		if (!user) {
 			return res.status(401).json(info);
 		}
-		if (req.user && !req.user._id.equals(user._id)) {
-			throw new ExpressError("Another user has already logged in", 401);
+		if (req.user && req.user._id !== user._id) {
+			return next(new ExpressError("Another user has already logged in", 401));
 		}
 		req.logIn(user, (err) => {
 			if (err) {
@@ -47,10 +47,16 @@ export const signup = async (req, res, next) => {
 };
 
 export const logout = (req, res, next) => {
-	req.logout();
-	res.status(200).json({ status: 200, message: "Log Out" });
+	req.logout((err) => {
+		if (err) return next(err);
+		res.redirect("/");
+	});
 };
 
 export const getCurrentUser = (req, res, next) => {
-	res.status(200).json({ status: 200, message: "", data: req.user });
+	res.status(200).json({
+		status: 200,
+		message: "",
+		data: { ...req.user._doc, hash: undefined, salt: undefined },
+	});
 };

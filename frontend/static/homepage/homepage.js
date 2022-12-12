@@ -1,165 +1,244 @@
-const matchDeck = document.getElementById('matchDeck');
-const like = document.getElementById('like');
-const reject = document.getElementById('reject');
-const reload = document.getElementById('reload');
+const matchDeck = document.getElementById("matchDeck");
 
-const displayMatchDeck = ({src, name, description, route, schedule}) => {
-    // const imgElem = document.createElement('img');
-    // imgElem.setAttribute('src',src)
-    // document.getElementById('displayMap').append(imgElem);
+let currentUser = {};
+const all_decks = document.getElementById("all_decks");
 
-    const displayInfo = document.getElementById('displayInfo');
-    removeAllChildNodes(displayInfo);
-    const nameElem = document.createElement('h5');
-    nameElem.innerText = name;
+const displayMatchDeck = (sug, i) => {
+  let { description, pinpoints, date, user, speed, time } = sug;
+  const coords = pinpoints.map((p) => p.coord);
+  let coord_str = "";
+  if (coords.length > 0 && coords[0].length > 0) {
+    coords.forEach((c) => (coord_str += "|" + c[1] + "," + c[0]));
+  } else {
+    coord_str = "|42.379098,-72.519482";
+  }
 
-    const descripElem = document.createElement('div');
-    descripElem.innerText = description;
+  const userName = document.createElement("h5");
+  userName.innerText = user.username;
 
-    const scheduleElem = document.createElement('div');
-    const scheduleHeader = document.createElement('h6');
-    scheduleHeader.innerText = '\nSchedule:';
-    const daysElem = document.createElement('div');
-    for(const day of schedule.days){
-        daysElem.innerText += day + ' ';
-    }
-    const time = document.createElement('div');
-    time.innerText = 'From: ' + schedule.time.from + '\n' + 'To: ' + schedule.time.to;
-    scheduleElem.append(scheduleHeader, daysElem, time);
+  let src = `https://maps.googleapis.com/maps/api/staticmap?size=500x350&maptype=roadmap\&markers=size:large%7Ccolor:red${coord_str}&&key=AIzaSyB0jyJR3M9-q6Tn5uGvEsbYVS7MAU5b7VI`;
+  const imgElem = document.createElement("img");
+  imgElem.style.width = "50%";
+  imgElem.setAttribute("src", src);
 
-    const routeElem = document.createElement('div');
-    routeElem.innerText = 'From: ' + route.from + '\n' + 'To: ' + route.to;
+  const scheduleElem = document.createElement("div");
+  const scheduleHeader = document.createElement("h6");
+  scheduleHeader.innerText = "Schedule:";
+  const daysElem = document.createElement("div");
+  daysElem.innerText = "- Days: "
+  for (const day of date) {
+    daysElem.innerText += day + " ";
+  }
+  const timeElem = document.createElement("div");
+  timeElem.innerText = "- Time: " + time;
 
-    displayInfo.append(nameElem, descripElem, scheduleElem);
-    const routeInfo = document.getElementById('routeInfo');
-    const routeHeader = document.createElement('h6');
-    removeAllChildNodes(routeInfo);
-    routeHeader.innerText = 'Route: ';
-    routeInfo.append(routeHeader, routeElem);
-}
+  const speedElem = document.createElement("div");
+  speedElem.innerText = "- Speed: " + speed;
 
-const getSuggestions = async () => {
+  scheduleElem.append(userName, scheduleHeader, daysElem, timeElem, speedElem);
+
+  const routeElem = document.createElement("div");
+  let allRoutes = "";
+  pinpoints.forEach((x) => (allRoutes += "- " + x.address + "\n"));
+  routeElem.innerText = allRoutes;
+
+  const displayInfo = document.createElement("div");
+  displayInfo.append(scheduleElem);
+
+  const routeInfo = document.createElement("div");
+  const routeHeader = document.createElement("h6");
+  routeHeader.innerText = "Route: ";
+  routeInfo.append(routeHeader, routeElem);
+
+  const matchButtons = document.createElement("div");
+  matchButtons.classList.add("matchDeckButtons");
+  const like = document.createElement("button");
+  like.innerText = "Like";
+  like.classList.add("btn");
+  like.classList.add("btn-info");
+  like.setAttribute("id", user._id);
+
+  const reject = document.createElement("button");
+  reject.innerText = "Nope";
+  reject.classList.add("btn");
+  reject.classList.add("btn-secondary");
+  reject.setAttribute("id", user._id);
+
+  matchButtons.append(like, reject);
+  const cur_deck = document.createElement("div");
+  cur_deck.classList.add("cur_deck");
+
+  const descrip = document.createElement("div");
+  descrip.append(scheduleElem, displayInfo, routeInfo);
+
+  const divide = document.createElement('div');
+  divide.classList.add('divide');
+  divide.append(descrip, imgElem);
+
+  cur_deck.append(divide, matchButtons);
+
+  all_decks.append(cur_deck);
+
+  like.addEventListener("click", async (event) => {
+    const curId = event.target.id;
     const accessToken = localStorage.getItem("accessToken");
-	const currentUser = localStorage.getItem("currentUser");
+    const response = await fetch("/api/request", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({
+        sender: currentUser._id,
+        receiver: curId,
+      }),
+    });
 
-    const response = await fetch('/api/request/suggestion', {
-		method: "POST",
-		credentials: "same-origin",
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${accessToken}`,
-		},
-		body: JSON.stringify({ id: currentUser }),
-	});
-    const res = await response.json();
+    const {status, message} = await response.json();
 
-	return res.data;
-}
+    if (status === 200) {
+      location.reload();
+    }
+  });
 
-onload = async () => {
-	let suggestions = await getSuggestions();
-
-    const curSuggestion = suggestions.pop();
-    localStorage.setItem('curSuggestion', JSON.stringify(curSuggestion));
-    displayMatchDeck(curSuggestion);
-    localStorage.setItem('suggestions', JSON.stringify(suggestions));
-
-    displayUserInfo();
+  reject.addEventListener("click", async (event) => {
+    const curId = event.target.id;
+    const response = await fetch("/api/request/reject", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({
+        sender: currentUser._id,
+        receiver: curId,
+      }),
+    });
+    const {status, message} = await response.json();
+    if (status === 200) {
+      location.reload();
+    }
+  });
 };
 
-like.addEventListener('click', async() => {
-    let curSuggestion = JSON.parse(localStorage.getItem('curSuggestion'));
+const getSuggestions = async () => {
 
-    const accessToken = localStorage.getItem("accessToken");
-	const currentUser = localStorage.getItem("currentUser");
+  const response = await fetch("/api/request/suggestion", {
+    method: "POST",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ userId: currentUser._id }),
+  });
+  const res = await response.json();
+  return res.data;
+};
 
-    const response = await fetch('/api/request', {
-		method: "PUT",
-		credentials: "same-origin",
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${accessToken}`,
-		},
-		body: JSON.stringify({ 
-            id : currentUser,
-            matchId: curSuggestion.id 
-        }),
-	})
-    let suggestions = JSON.parse(localStorage.getItem('suggestions'));
-    const newSuggestion = suggestions.pop();
-    alert('Added into matched list!')
-    displayMatchDeck(newSuggestion);
-    localStorage.setItem('curSuggestion', JSON.stringify(newSuggestion));
-});
+onload = async () => {
+  const res = await fetch("/api/users/currentUser");
+  const { status, message, data } = await res.json();
+  if (!status === 200) {
+    location.href("/users/login");
+  } else {
+    currentUser = data;
+  }
+  await renderRoute();
+  let suggestions = await getSuggestions();
+  if (suggestions.length == 0) {
+    const displayInfo = document.getElementById("matchDeck");
+    displayInfo.innerText = "Nothing to show";
+    displayInfo.style.margin = "auto";
+  } else {
+    suggestions.forEach((sug, i) => displayMatchDeck(sug, i));
+  }
+};
 
-reject.addEventListener('click', () => {
-    let suggestions = JSON.parse(localStorage.getItem('suggestions'));
+const renderRoute = async () => {
+  const res = await fetch(`/api/paths/${currentUser._id}`);
+  const { message, status, data } = await res.json();
+  if (status !== 200) {
+    location.href = "/routesPanel";
+  }
+  const route = data;
 
-    if(suggestions.length > 0){
-        displayMatchDeck(suggestions.pop());
+  const pinpoints = data.pinpoints.map((x) => x.address);
+  const speed = data.speed;
+  const date = data.date;
+  const time = data.time;
+
+  const userRoute = document.getElementById("userRoute");
+  removeAllChildNodes(userRoute);
+  for (const pinpoint of pinpoints) {
+    const temp = document.createElement("li");
+    temp.classList.add("list-group-item");
+    temp.appendChild(document.createTextNode(pinpoint));
+    userRoute.appendChild(temp);
+  }
+
+  const routeDetails = document.getElementById("routeDetails");
+
+  removeAllChildNodes(routeDetails);
+
+  const routeSpeed = document.createElement("li");
+  routeSpeed.classList.add("list-group-item");
+  routeSpeed.appendChild(document.createTextNode(`Your Speed: ${speed}`));
+  const routeDate = document.createElement("li");
+  routeDate.classList.add("list-group-item");
+  routeDate.appendChild(document.createTextNode(`Your dates: ${date}`));
+  const routeTime = document.createElement("li");
+  routeTime.classList.add("list-group-item");
+  routeTime.appendChild(document.createTextNode(`Your time: ${time}`));
+
+  routeDetails.appendChild(routeSpeed);
+  routeDetails.appendChild(routeDate);
+  routeDetails.appendChild(routeTime);
+
+  const routeMap = document.getElementById('routeMap');
+    const coords = data.pinpoints.map((p) => p.coord);
+    let coord_str = "";
+    if (coords.length > 0 && coords[0].length > 0) {
+        coords.forEach((c) => (coord_str += "|" + c[1] + "," + c[0]));
+    } else {
+        coord_str = "|42.379098,-72.519482";
     }
-    else{
-        alert('No more users to show');
-    }
-    localStorage.setItem('suggestions', JSON.stringify(suggestions));
-});
-
-reload.addEventListener('click', async () => {
-    let suggestions = await getSuggestions();
-    displayMatchDeck(suggestions.pop());
-    localStorage.setItem('suggestions', JSON.stringify(suggestions));
-})
+    let url = `https://maps.googleapis.com/maps/api/staticmap?size=750x300&maptype=roadmap\&markers=size:large%7Ccolor:red${coord_str}&&key=AIzaSyB0jyJR3M9-q6Tn5uGvEsbYVS7MAU5b7VI`;
+    const imgElem = document.createElement("img");
+    imgElem.setAttribute("src", url);
+    imgElem.style.marginBottom = '10px';
+    imgElem.style.width = '48%';
+    imgElem.style.margin = '5px'
+    removeAllChildNodes(routeMap);
+    routeMap.appendChild(imgElem);
+};
 
 const removeAllChildNodes = (parent) => {
-    while(parent.firstChild){
-        parent.removeChild(parent.firstChild)
-    }
-}
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
+};
 
-const displayUserInfo = async () => {
-    const accessToken = localStorage.getItem("accessToken");
-	const currentUser = localStorage.getItem("currentUser");
+const matchesPage = document.getElementById("matchesPage");
+matchesPage.addEventListener("click", () => {
+  window.location.assign(`/users/${currentUser._id}/match`);
+});
 
-    const response = await fetch(`/api/users/${currentUser}`, {
-		method: "GET",
-		credentials: "same-origin",
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${accessToken}`,
-		},
-	});
-    const res = await response.json();
-    
-    const userInfo = res.data;
+const profilePage = document.getElementById("routesPanel");
+profilePage.addEventListener("click", () => {
+  window.location.assign("/routesPanel");
+});
 
-    const userRoute = document.getElementById('userRoute');
-    const route = document.createElement('div');
-    route.innerText = 'From: ' + userInfo.route.from + '\n' + 'To: ' + userInfo.route.to;
-    userRoute.append(route);
-}
+const logout = document.getElementById("logoutPage");
+logout.addEventListener("click", async () => {
+  await fetch("api/users/logout");
+  window.location.assign("/users/login");
+});
 
-const matchesPage = document.getElementById('matchesPage');
-matchesPage.addEventListener('click', () => {
-    window.location.assign("/users/1234/match");
-})
-
-const profilePage = document.getElementById('routesPanel');
-profilePage.addEventListener('click', () => {
-    window.location.assign("/routesPanel");
-})
-
-const chatPage = document.getElementById('chatPage');
-chatPage.addEventListener('click', () => {
-    window.location.assign("/chatroom");
-})
-
-const logout = document.getElementById('logoutPage');
-logout.addEventListener('click', () => {
-    window.location.assign("/users/login");
-})
-
-const account = document.getElementById('account');
-account.addEventListener('click', () => {
-	const currentUser = localStorage.getItem("currentUser");
-    window.location.assign(`/users/${currentUser}`);
-})
+const account = document.getElementById("account");
+account.addEventListener("click", (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  window.location.href = "/users/profile";
+});

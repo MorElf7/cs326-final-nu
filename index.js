@@ -27,7 +27,7 @@ import RoutesPanelFrontendRouter from "./frontend/routes/paths.js";
 import UserFrontendRouter from "./frontend/routes/users.js";
 
 // Middlewares
-import { isSignIn } from "./api/middleware.js";
+import { isSignIn } from "./middleware.js";
 
 const app = express();
 

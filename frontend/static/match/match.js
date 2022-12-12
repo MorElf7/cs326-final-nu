@@ -3,160 +3,189 @@ const matchList = document.getElementById("matchesList");
 import { getUserId, httpRequest } from "../utils.js";
 
 export const createAvatar = (username) => {
-	const roundImg = document.createElement("img");
-	roundImg.classList.add("rounded-circle");
+  const roundImg = document.createElement("img");
+  roundImg.classList.add("rounded-circle");
 
-	roundImg.src = `https://ui-avatars.com/api/name=${username}&background=random`;
-	roundImg.classList.add("img-fluid");
-	roundImg.width = "100";
-	roundImg.height = "100";
+  roundImg.src = `https://ui-avatars.com/api/name=${username}&background=random`;
+  roundImg.classList.add("img-fluid");
+  roundImg.width = "100";
+  roundImg.height = "100";
 
-	return roundImg;
+  return roundImg;
 };
 
-// const createCarouselItem = (image, i) => {
-// 	const carouselItem = document.createElement("div");
-// 	carouselItem.classList.add("carousel-item");
-// 	if (i === 0) carouselItem.classList.add("active");
+export const fillOutHref = async (userId) => {
+  const matchLink = document.getElementById("matchLink"),
+    suggestionLink = document.getElementById("suggestionLink"),
+    requestLink = document.getElementById("requestLink"),
+    profileLink = document.getElementById("profileLink");
 
-// 	const img = document.createElement("img");
-// 	img.src = image.src;
-// 	img.classList.add("img-fluid", "float-left");
-// 	img.width = "400";
-// 	img.height = "400";
-// 	img.alt = image.name;
-// 	carouselItem.appendChild(img);
-// 	return carouselItem;
-// };
+  let path = location.pathname.split("/");
+  path.pop();
 
-// const createCarouselButton = (carousel) => {
-// 	const id = carousel.id;
-// 	const prev = document.createElement("a");
-// 	prev.classList.add("carousel-control-prev");
-// 	prev.href = `#${id}`;
-// 	prev.setAttribute("role", "button");
-// 	prev.setAttribute("data-slide", "prev");
+  profileLink.href = "/users/profile";
 
-// 	const prevIcon = document.createElement("span");
-// 	prevIcon.classList.add("carousel-control-prev-icon");
-// 	prevIcon.setAttribute("aria-hidden", "true");
-// 	const prevText = document.createElement("span");
-// 	prevText.classList.add("sr-only");
-// 	prevText.appendChild(document.createTextNode("Previous"));
-// 	prev.appendChild(prevIcon);
-// 	prev.appendChild(prevText);
+  const user = (await httpRequest("/api/users/currentUser", "GET", {}, []))
+    .data;
+  if (!user) {
+    alert("The user you are looking for does not exist");
+    location.href = "/";
+  }
+  profileLink.appendChild(document.createTextNode(user.username));
+};
 
-// 	const next = document.createElement("a");
-// 	next.classList.add("carousel-control-next");
-// 	next.href = `#${id}`;
-// 	next.setAttribute("role", "button");
-// 	next.setAttribute("data-slide", "next");
+const addressList = (list, pinpoints) => {
+  for (let pinpoint of pinpoints) {
+    const li = document.createElement("li");
+    li.classList.add("list-group-item");
+    list.appendChild(li);
 
-// 	const nextIcon = document.createElement("span");
-// 	nextIcon.classList.add("carousel-control-next-icon");
-// 	nextIcon.setAttribute("aria-hidden", "true");
-// 	const nextText = document.createElement("span");
-// 	nextText.classList.add("sr-only");
-// 	nextText.appendChild(document.createTextNode("Next"));
-// 	next.appendChild(nextIcon);
-// 	next.appendChild(nextText);
+    li.appendChild(document.createTextNode(pinpoint.address));
+  }
+};
 
-// 	carousel.appendChild(prev);
-// 	carousel.appendChild(next);
-// };
+const dateList = (list, dates) => {
+  for (let date of dates) {
+    const li = document.createElement("li");
+    li.classList.add("list-group-item");
+    list.appendChild(li);
 
-// const createCarousel = (id, pictures) => {
-// 	const carousel = document.createElement("div");
-// 	carousel.id = `carousel${id}`;
-// 	carousel.classList.add("carousel");
-// 	carousel.setAttribute("data-interval", false);
-
-// 	const carouselfInner = document.createElement("div");
-// 	carouselfInner.classList.add("carousel-inner");
-// 	carousel.appendChild(carouselfInner);
-
-// 	pictures.forEach((v, i, arr) => {
-// 		carouselfInner.appendChild(createCarouselItem(v, i));
-// 	});
-
-// 	createCarouselButton(carousel);
-
-// 	return carousel;
-// };
-
-export const fillOutHref = () => {
-	const matchLink = document.getElementById("matchLink"),
-		suggestionLink = document.getElementById("suggestionLink"),
-		requestLink = document.getElementById("requestLink");
-
-	let path = location.pathname.split("/");
-	path.pop();
-
-	matchLink.href = path.join("/") + "/match";
-	suggestionLink.href = path.join("/") + "/suggestion";
-	requestLink.href = path.join("/") + "/request";
+    li.appendChild(document.createTextNode(date));
+  }
 };
 
 onload = async () => {
-	fillOutHref();
+  const userId = getUserId();
 
-	const currentUser = getUserId();
+  await fillOutHref(userId);
 
-	const { data, status, message } = await httpRequest(
-		`/api/users/${currentUser}/match`,
-		"GET",
-		{},
-		[]
-	);
+  const response = await httpRequest(
+    `/api/users/${userId}/match`,
+    "GET",
+    {},
+    []
+  );
 
-	if (status === 200) {
-		const matches = data;
+  if (response.status === 200) {
+    const matches = response.data;
 
-		matches.forEach((value, index, array) => {
-			const { username, description } = value;
-			const listItem = document.createElement("li");
-			listItem.classList.add("list-group-item");
-			matchList.appendChild(listItem);
+    matches.forEach(async (value, index, array) => {
+      const res = await fetch(`/api/paths/${value._id}`);
+      const { message, status, data } = await res.json();
+      const route = data;
 
-			const row = document.createElement("div");
-			row.classList.add("row");
-			listItem.appendChild(row);
+      const { username, description } = value;
+      const listItem = document.createElement("li");
+      listItem.classList.add("list-group-item", "border");
+      matchList.appendChild(listItem);
 
-			const col1 = document.createElement("div");
-			col1.classList.add("col-md-3", "offset-1", "text-left");
-			row.appendChild(col1);
+      const row = document.createElement("div");
+      row.classList.add("row");
+      listItem.appendChild(row);
 
-			col1.appendChild(createAvatar(username));
+      const col1 = document.createElement("div");
+      col1.classList.add("col-md-3", "offset-1", "text-left");
+      row.appendChild(col1);
 
-			const col2 = document.createElement("div");
-			col2.classList.add("col-md-5", "text-left", "align-self-center");
-			row.appendChild(col2);
+      col1.appendChild(createAvatar(username));
 
-			const innerRow1 = document.createElement("div");
-			innerRow1.classList.add("row", "pb-5");
-			col2.appendChild(innerRow1);
+      const col2 = document.createElement("div");
+      col2.classList.add("col-md-5", "text-left", "align-self-center");
+      row.appendChild(col2);
 
-			const col21 = document.createElement("div");
-			col21.classList.add("col-auto", "text-md-left");
-			innerRow1.appendChild(col21);
+      const innerRow1 = document.createElement("div");
+      innerRow1.classList.add("row", "pb-5");
+      col2.appendChild(innerRow1);
 
-			const usernameNode = document.createElement("a");
-			usernameNode.href = "#";
-			usernameNode.appendChild(document.createTextNode(username));
-			col21.appendChild(usernameNode);
+      const col21 = document.createElement("div");
+      col21.classList.add("col-auto", "text-md-left");
+      innerRow1.appendChild(col21);
 
-			const innerRow2 = document.createElement("div");
-			innerRow2.classList.add("row", "pt-3");
-			col2.appendChild(innerRow2);
+      const usernameNode = document.createElement("a");
+      usernameNode.appendChild(
+        document.createTextNode(`Username: ${username}`)
+      );
+      col21.appendChild(usernameNode);
 
-			const col22 = document.createElement("div");
-			col22.classList.add("col-auto");
-			innerRow2.appendChild(col22);
+      const innerRow2 = document.createElement("div");
+      innerRow2.classList.add("row", "pt-3");
+      col2.appendChild(innerRow2);
 
-			const descriptionNode = document.createElement("p");
-			descriptionNode.appendChild(document.createTextNode(description));
-			col22.appendChild(descriptionNode);
-		});
-	} else {
-	}
+      const col22 = document.createElement("div");
+      col22.classList.add("col-auto");
+      innerRow2.appendChild(col22);
+
+      const descriptionNode = document.createElement("p");
+      descriptionNode.appendChild(
+        document.createTextNode(`Description: ${description}`)
+      );
+      col22.appendChild(descriptionNode);
+
+      const row2 = document.createElement("div");
+      row2.classList.add("row", "pt-3");
+      listItem.appendChild(row2);
+
+      const col231 = document.createElement("div");
+      col231.classList.add("col-4");
+      row2.appendChild(col231);
+
+      const addresses = document.createElement("ul");
+      col231.appendChild(addresses);
+      addressList(addresses, route.pinpoints);
+
+      const col232 = document.createElement("div");
+      col232.classList.add("col-4", "offset-1");
+      row2.appendChild(col232);
+
+      const speed = document.createElement("div");
+      speed.appendChild(document.createTextNode("Speed: " + route.speed));
+      col232.appendChild(speed);
+
+      const time = document.createElement("div");
+      time.classList.add("pt-1");
+      time.appendChild(document.createTextNode("Time: " + route.time));
+      col232.appendChild(time);
+
+      const dateLabel = document.createElement("div");
+      dateLabel.classList.add("pt-1");
+      dateLabel.appendChild(document.createTextNode("Date: "));
+      col232.appendChild(dateLabel);
+
+      const date = document.createElement("ul");
+      date.classList.add("pt-1");
+      dateList(date, route.date);
+      col232.appendChild(date);
+
+      const btnDiv = document.createElement("div");
+      btnDiv.classList.add("row", "justify-content-center");
+      const removeMatchBtn = document.createElement("button");
+      removeMatchBtn.classList.add("btn", "btn-danger");
+      removeMatchBtn.appendChild(document.createTextNode("Remove Match"));
+      listItem.appendChild(btnDiv);
+      btnDiv.appendChild(removeMatchBtn);
+
+      removeMatchBtn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const response = await fetch("/api/request/removeMatch", {
+          method: "PUT",
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user1: userId,
+            user2: data.user,
+          }),
+        });
+
+				const {status, message} = await response.json();
+				if (status === 200) {
+					alert(message);
+					location.reload();
+				}
+      });
+    });
+  } else {
+  }
 };
