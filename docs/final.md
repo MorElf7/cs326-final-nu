@@ -111,3 +111,14 @@ The Profile page shows user's account information and allows user to change/upda
 # 9. URL:
 
 https://cardio-buddy.herokuapp.com/
+
+# 10 Authentication/Authorization:
+
+# 11 Division of labor
+
+# 12 Conclusion:
+
+Throughout the design and implementation of the project, our team has learned a lot of things:
+- How to design and implement backend server and databases that is efficient and has a wide range of functionalities to support our application.
+- How to design and build interactive web interfaces and compononents that are user-friendly and easy to navigate.
+- Collaboration and tools like Git, Github, Heroku.
