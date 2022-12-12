@@ -121,6 +121,12 @@ Nhan Lai:
 - Match Suggestion APIs
 - Homepage functionalities
 - Heroku deployment
+
+Vi Doan
+- Google Map API
+- Home Page and Edit User Front End
+- Render Suggestions
+- UI Touch Ups
 # 12 Conclusion:
 
 Throughout the design and implementation of the project, our team has learned a lot of things:
