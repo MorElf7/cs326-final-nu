@@ -113,6 +113,7 @@ The Profile page shows user's account information and allows user to change/upda
 https://cardio-buddy.herokuapp.com/
 
 # 10 Authentication/Authorization:
+Users are authenticated using their username and password and using session store. The information about session are stored using MongoDB. Every registered user would have the same permission. They can access their match list, request list, and suggestion list and their own homepage and other users profile page. They can make change to request that involved them as the sender or receiver, but they cannot make change to other user requests. They can also make change to their own profile, such as personal information or route information.
 
 # 11 Division of labor
 Nhan Lai:
