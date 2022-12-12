@@ -197,24 +197,21 @@ const renderRoute = async () => {
   routeDetails.appendChild(routeTime);
 
   const routeMap = document.getElementById('routeMap');
-  for (const pinpoint of data.pinpoints) {
-    const coords = pinpoint.coord;
+    const coords = data.pinpoints.map((p) => p.coord);
     let coord_str = "";
     if (coords.length > 0 && coords[0].length > 0) {
         coords.forEach((c) => (coord_str += "|" + c[1] + "," + c[0]));
     } else {
         coord_str = "|42.379098,-72.519482";
     }
-    let src = `https://maps.googleapis.com/maps/api/staticmap?size=750x300&maptype=roadmap\&markers=size:large%7Ccolor:red${coord_str}&&key=AIzaSyB0jyJR3M9-q6Tn5uGvEsbYVS7MAU5b7VI`;
+    let url = `https://maps.googleapis.com/maps/api/staticmap?size=750x300&maptype=roadmap\&markers=size:large%7Ccolor:red${coord_str}&&key=AIzaSyB0jyJR3M9-q6Tn5uGvEsbYVS7MAU5b7VI`;
     const imgElem = document.createElement("img");
-    imgElem.setAttribute("src", src);
+    imgElem.setAttribute("src", url);
     imgElem.style.marginBottom = '10px';
     imgElem.style.width = '48%';
     imgElem.style.margin = '5px'
-
-    routeMap.appendChild(imgElem)
-  }
-
+    removeAllChildNodes(routeMap);
+    routeMap.appendChild(imgElem);
 };
 
 const removeAllChildNodes = (parent) => {
