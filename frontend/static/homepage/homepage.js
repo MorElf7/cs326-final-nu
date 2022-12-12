@@ -211,6 +211,10 @@ const renderRoute = async () => {
     let src = `https://maps.googleapis.com/maps/api/staticmap?size=750x300&maptype=roadmap\&markers=size:large%7Ccolor:red${coord_str}&&key=AIzaSyB0jyJR3M9-q6Tn5uGvEsbYVS7MAU5b7VI`;
     const imgElem = document.createElement("img");
     imgElem.setAttribute("src", src);
+    imgElem.style.marginBottom = '10px';
+    imgElem.style.width = '48%';
+    imgElem.style.margin = '5px'
+
     routeMap.appendChild(imgElem)
   }
 
