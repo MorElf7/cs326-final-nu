@@ -89,12 +89,6 @@ export const rejectRequest = async (req, res, next) => {
 	if (oppositeRequest) {
 		oppositeRequest.status = "REJECTED";
 		await oppositeRequest.save();
-		// const user1 = await User.findOne({ _id: sender }),
-		// user2 = await User.findOne({ _id: receiver });
-		// user1.connections.push(receiver);
-		// // user2.connections.push(sender);
-		// await user1.save();
-		// await user2.save();
 		res.status(200).json({ status: 200, message: "REJECTED", data: oppositeRequest });
 	}
 

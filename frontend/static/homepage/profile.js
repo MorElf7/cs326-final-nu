@@ -14,33 +14,18 @@ onload = async () => {
     const {username, email, description} = currentUser;
     document.getElementById('usernameInput').value = username;
     document.getElementById('emailInput').value = email;
-    // document.getElementById('phoneInput').value = phone;
-    // document.getElementById('addressInput').value = address;
+    
     document.getElementById('desInput').value = description;
     document.getElementById('profileImg').setAttribute('src',`https://robohash.org/${username}?set=set4`)
 }
 
 const editButton = document.getElementById('editButton');
 editButton.addEventListener('click', async() => {
-    // const currentUser = localStorage.getItem("currentUser");
     const username = document.getElementById('usernameInput');
     const email = document.getElementById('emailInput');
-    // const phone = document.getElementById('phoneInput');
-    // const address = document.getElementById('addressInput');
+   
     const des = document.getElementById('desInput');
     if(editButton.innerText === 'Edit'){
-        // window.location.assign(`/users/${currentUser}/edit`);
-        // username.readOnly = false;
-        // username.classList.remove('readOnly');
-
-        // email.readOnly = false;
-        // email.classList.remove('readOnly');
-
-        // phone.readOnly = false;
-        // phone.classList.remove('readOnly');
-
-        // address.readOnly = false;
-        // address.classList.remove('readOnly');
 
         des.readOnly = false;
         des.classList.remove('readOnly');
@@ -53,12 +38,6 @@ editButton.addEventListener('click', async() => {
 
         email.readOnly = true;
         email.classList.add('readOnly');
-
-        // phone.readOnly = true;
-        // phone.classList.add('readOnly');
-
-        // address.readOnly = true;
-        // address.classList.add('readOnly');
 
         des.readOnly = true;
         des.classList.add('readOnly');
@@ -85,8 +64,6 @@ editButton.addEventListener('click', async() => {
             editButton.innerText = "Edit";
         } else {
             alert(`Error: ${res.message}`)
-        }
-    
-        // window.location.assign(`/users/${currentUser}`);
+        }    
     }
 });

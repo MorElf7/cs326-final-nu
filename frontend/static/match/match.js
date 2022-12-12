@@ -23,9 +23,6 @@ export const fillOutHref = async (userId) => {
   let path = location.pathname.split("/");
   path.pop();
 
-  // matchLink.href = path.join("/") + "/match";
-  // suggestionLink.href = path.join("/") + "/suggestion";
-  // requestLink.href = path.join("/") + "/request";
   profileLink.href = "/users/profile";
 
   const user = (await httpRequest("/api/users/currentUser", "GET", {}, []))
@@ -39,7 +36,6 @@ export const fillOutHref = async (userId) => {
 
 const addressList = (list, pinpoints) => {
   for (let pinpoint of pinpoints) {
-    console.log(pinpoint);
     const li = document.createElement("li");
     li.classList.add("list-group-item");
     list.appendChild(li);
@@ -74,7 +70,6 @@ onload = async () => {
     const matches = response.data;
 
     matches.forEach(async (value, index, array) => {
-      console.log(value);
       const res = await fetch(`/api/paths/${value._id}`);
       const { message, status, data } = await res.json();
       const route = data;

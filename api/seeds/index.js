@@ -8,7 +8,6 @@ import { paths, requests, users } from "./seedHelper.js";
 const mc = new MiniCrypt();
 
 const dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017/cardio-buddy";
-// const dbUrl = "mongodb://127.0.0.1:27017/cardio-buddy";
 
 mongoose.connect(dbUrl);
 

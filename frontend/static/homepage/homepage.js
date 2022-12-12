@@ -170,7 +170,6 @@ const renderRoute = async () => {
   const speed = data.speed;
   const date = data.date;
   const time = data.time;
-  console.log(data);
 
   const userRoute = document.getElementById("userRoute");
   removeAllChildNodes(userRoute);
