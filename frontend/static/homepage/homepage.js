@@ -14,7 +14,7 @@ const displayMatchDeck = (sug, i) => {
   }
 
   const userName = document.createElement("h5");
-  userName.innerText = user.username + ' ~ ' + user.email;
+  userName.innerText = user.username;
 
   let src = `https://maps.googleapis.com/maps/api/staticmap?size=500x350&maptype=roadmap\&markers=size:large%7Ccolor:red${coord_str}&&key=AIzaSyB0jyJR3M9-q6Tn5uGvEsbYVS7MAU5b7VI`;
   const imgElem = document.createElement("img");
