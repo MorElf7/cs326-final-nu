@@ -1,7 +1,9 @@
 body{
     margin: 0;
     font-family: 'Josefin Sans', sans-serif;
+    overscroll-behavior: none;
 }
+  
 #leftNav{
     width: 17vw;
     height: 100vh;
@@ -71,7 +73,7 @@ hr{
 #matchDeck{
     display: grid;
     padding: 15px;
-    height: 40vh;
+    height: 55vh;
     overflow: scroll;
     border-bottom: solid #ececec7f;
 }
@@ -80,9 +82,6 @@ hr{
     justify-content: center;
 }
 .description{
-    display: grid;
-}
-#myroute{
     display: grid;
 }
 .cur_deck{
@@ -96,4 +95,12 @@ hr{
     display: flex;
     column-gap: 10px;
     padding-bottom: 20px;
+}
+#myroute{
+    display: grid;
+}
+#routeMap{
+    margin: auto;
+    position: relative;
+    text-align: center;
 }

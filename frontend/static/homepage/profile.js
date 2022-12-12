@@ -17,6 +17,7 @@ onload = async () => {
     // document.getElementById('phoneInput').value = phone;
     // document.getElementById('addressInput').value = address;
     document.getElementById('desInput').value = description;
+    document.getElementById('profileImg').setAttribute('src',`https://robohash.org/${username}?set=set4`)
 }
 
 const editButton = document.getElementById('editButton');
