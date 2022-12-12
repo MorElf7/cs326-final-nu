@@ -44,7 +44,7 @@ This is the page for user to create and edit their route. Users can add pinpoint
 
 If the user has already created a route, then they would be redirected to a page where they can view their current route and edit it.
 ## c. Home Page:
-Our Home Page allows user to go through all suggestions where they can decide to Like or Reject. Each suggestion card display other user's basic information, their time and route, along with a map with pinpoints where their routes are. From the home page, user can navigate to Matches, Routes Panel, and Profile page.
+Our Home Page allows user to go through all suggestions where they can decide to Like or Reject. Each suggestion card display other user's basic information, their time, days, and routes, along with a map with pinpoints of where their routes are. From the home page, user can navigate to Matches, Routes Panel, and Profile page.
 
 ## d. Matches page:
 

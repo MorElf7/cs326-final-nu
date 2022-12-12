@@ -82,8 +82,6 @@ const displayMatchDeck = (sug, i) => {
   like.addEventListener("click", async (event) => {
     const curId = event.target.id;
     const accessToken = localStorage.getItem("accessToken");
-    // const currentUser = localStorage.getItem("currentUser");
-
     const response = await fetch("/api/request", {
       method: "POST",
       credentials: "same-origin",
