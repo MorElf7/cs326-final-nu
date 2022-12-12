@@ -51,7 +51,7 @@ Our Home Page allows user to go through all suggestions where they can decide to
 This is a page to display all the users that have matched with the logged in user and their information, including their routes info, their name and description. There would be a nav bar at the top to redirect the user to their home page.
 
 ## e. Profile page:
-The Profile page shows user's account information and allows user to change/update their information if needed. 
+The Profile page shows user's account information and allows user to change/update their description if needed. A random image will be generated for user profile.
 
 # 7. API:
 
@@ -134,8 +134,8 @@ Bang Cao:
 - Match models and APIs functionality
 - Match page
 - User Model and APIs functionality
-# 12 Conclusion:
 
+# 12 Conclusion:
 Throughout the design and implementation of the project, our team has learned a lot of things:
 - How to design and implement backend server and databases that is efficient and has a wide range of functionalities to support our application.
 - How to design and build interactive web interfaces and compononents that are user-friendly and easy to navigate.
