@@ -115,10 +115,25 @@ https://cardio-buddy.herokuapp.com/
 # 10 Authentication/Authorization:
 
 # 11 Division of labor
-
+Nhan Lai:
+- Paths Model and APIs
+- Route Panel and Edit Route Panel Front end 
+- Match Suggestion APIs
+- Homepage functionalities
+- Heroku deployment
 # 12 Conclusion:
 
 Throughout the design and implementation of the project, our team has learned a lot of things:
 - How to design and implement backend server and databases that is efficient and has a wide range of functionalities to support our application.
 - How to design and build interactive web interfaces and compononents that are user-friendly and easy to navigate.
-- Collaboration and tools like Git, Github, Heroku.
+- Effective collaboration and tools like Git, Github, Heroku.
+- Product designing
+
+Difficulties we encountered:
+- Using location related APIs
+- Building complex front-end features. Implementing location maps was difficult due to the amount of knowledge needed.
+
+Things we wish we knew:
+- Advanced CSS/Bootstrap, MongoDB queries and Express techniques
+- Session/Cookies
+- How to use location APIs
